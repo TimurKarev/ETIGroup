@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>Чек лист телемеханики</title>
+    </head>
+    <body>
+        <header>
+            <h1><a href="{% url 'checklist_list'%}">Checklist</a></h1>
+            <div>
+                {% for tmchecklist in object_list  %}
+                    <h2><a href="">{{ tmchecklist.man_number }}</a></h2>
+                {% endfor %}
+            </div>
+        </header>
+    </body>
+</html>
