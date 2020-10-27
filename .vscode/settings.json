@@ -1,3 +1,11 @@
 {
-    "python.pythonPath": "C:\\Users\\User\\.conda\\envs\\django\\python.exe"
+    "python.pythonPath": "C:\\Users\\User\\.conda\\envs\\django\\python.exe",
+    "[django-html]": {
+    
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": true,
+            "strings": true
+        }
+    }
 }

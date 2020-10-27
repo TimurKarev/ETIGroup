@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from .models import TMCheckList
 
@@ -10,3 +10,13 @@ class CheckListListView(ListView):
 class CkeckListDetailView(DetailView):
     model = TMCheckList
     template_name = 'checklist_detail.html'
+    
+class CheckListListCreate(CreateView):
+    model = TMCheckList
+    template_name = 'checklist_new.html'
+    fields = '__all__'
+
+class CheckListListEdit(UpdateView):
+    model = TMCheckList
+    template_name = 'checklist_edit.html'
+    fields = '__all__'

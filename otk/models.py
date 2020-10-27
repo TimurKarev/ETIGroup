@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 ELEMENT_CHOICES = (
     ('NOT_TESTED', 'Не проверено'),
@@ -22,10 +23,18 @@ class TMCheckList(models.Model):
     SKTM_klemmas_blocks = models.CharField(max_length=10, choices=ELEMENT_CHOICES, default='NOT_TESTED')
     SKTM_UZIP = models.CharField(max_length=10, choices=ELEMENT_CHOICES, default='NOT_TESTED')
     SKTM_supply = models.CharField(max_length=10, choices=ELEMENT_CHOICES, default='NOT_TESTED')
-    SKTM_GSM_antenna = models.CharField(max_length=10, choices=ELEMENT_CHOICES, default='NOT_TESTED')
+    SKTM_GPS_antenna = models.CharField(max_length=10, choices=ELEMENT_CHOICES, default='NOT_TESTED')
     SKTM_GSM_antenna = models.CharField(max_length=10, choices=ELEMENT_CHOICES, default='NOT_TESTED')
     SKTM_antennas_bracket = models.CharField(max_length=10, choices=ELEMENT_CHOICES, default='NOT_TESTED')
-    SKTM_crait = models.CharField(max_length=10, choices=ELEMENT_CHOICES, default='NOT_TESTED')
-
+    
+    SRTM = models.CharField(max_length=10, choices=ELEMENT_CHOICES, default='UNUSED')
+    SRTM_crait = models.CharField(max_length=10, choices=ELEMENT_CHOICES, default='NOT_TESTED')
+    SRTM_commutations = models.CharField(max_length=10, choices=ELEMENT_CHOICES, default='NOT_TESTED')
+    SRTM_klemmas_blocks = models.CharField(max_length=10, choices=ELEMENT_CHOICES, default='NOT_TESTED')
+    
     def __str__(self):
         return self.man_number
+    
+    def get_absolute_url(self):
+        return reverse("checklist_detail", args=[str(self.id)])
+    

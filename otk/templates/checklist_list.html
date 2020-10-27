@@ -1,15 +1,9 @@
-<html>
-    <head>
-        <title>Чек лист телемеханики</title>
-    </head>
-    <body>
-        <header>
-            <h1><a href="{% url 'checklist_list'%}">Checklist</a></h1>
-            <div>
-                {% for tmchecklist in object_list  %}
-                    <h2><a href="">{{ tmchecklist.man_number }}</a></h2>
-                {% endfor %}
-            </div>
-        </header>
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for tmchecklist in object_list %}
+        <div class="post-entry">
+            <h2><a href="{% url 'checklist_detail' tmchecklist.pk %}"> {{ tmchecklist.man_number }}</h2>
+        </div>
+    {% endfor %}
+{% endblock content %}

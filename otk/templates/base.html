@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Чек лист телемеханики</title>
+    </head>
+    <body>
+        <div>
+            <header>
+                <div class="nav-left">
+                    <h1><a href="{% url 'checklist_list' %}">Список заказов</a></h1>
+                </div>
+                <div class="nav-right">
+                    <a href="{% url 'checklist_new'%}"> +Новый чек лист</a>
+                </div>
+            </header>
+            <div>
+                {% block content %}
+                {% endblock content %}
+            </div>
+        </div>
+    </body>
+</html>
