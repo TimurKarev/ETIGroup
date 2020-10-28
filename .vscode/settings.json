@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\User\\.conda\\envs\\django\\python.exe",
+    "python.pythonPath": "/home/timur/anaconda3/envs/django/bin/python",
     "[django-html]": {
     
         "editor.quickSuggestions": {

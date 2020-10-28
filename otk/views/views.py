@@ -11,13 +11,11 @@ class CheckListListView(ListView):
     model = OTKOrder
     template_name = 'checklist_list.html'
     
-    def get(self, request):
-        
-        if request.GET.get('print_btn'):
-            #OTKOrder(man_number = '1555', )
+    def get_queryset(self):
+        if self.request.GET.get('print_btn'):
             print ("Click")
-        print ("kasladfk;dk;lasdk;LASDK;LASKD;LASKD;Laskds;ladsad;lk")
-        return HttpResponseRedirect('')
+        print ("TYTUYYUYUYTUYU")
+        return super().get_queryset()
 
 # class CkeckListDetailView(DetailView):
 #     model = TMCheckList
