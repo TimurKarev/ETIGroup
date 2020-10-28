@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% for tmchecklist in object_list %}
+    {% for otkorder in object_list %}
         <div class="post-entry">
-            <h2><a href="{% url 'checklist_detail' tmchecklist.pk %}"> {{ tmchecklist.man_number }}</h2>
+            <h2><a href=""> {{ otkorder }}</h2>
         </div>
     {% endfor %}
+    <form method="get">
+        <input type="submit" class="btn" value="Click" name="print_btn">
+    </form>
+
 {% endblock content %}
