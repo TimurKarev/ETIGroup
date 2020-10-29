@@ -1,13 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% for otkorder in object_list %}
-        <div class="post-entry">
-            <h2><a href=""> {{ otkorder }}</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                Заводской заказ
+            </div>
+            <div class="col-sm">
+                Телемеханика
+            </div>
         </div>
-    {% endfor %}
-    <form method="get">
-        <input type="submit" class="btn" value="Click" name="print_btn">
-    </form>
+        <br/>
 
+        {% for otkorder in object_list %}
+            <div class="row">
+                <div class="col-2">
+                    <a href=""> {{ otkorder }} </a>
+                </div>
+                <div class="col-sm">
+                    {% if  otkorder.tm_checklist  %}
+                        просмотр
+                    {% else %}
+                        создать
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
 {% endblock content %}
