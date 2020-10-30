@@ -19,9 +19,9 @@
                 </div>
                 <div class="col-sm">
                     {% if  otkorder.tm_checklist  %}
-                        просмотр
+                        <a href="">просмотр </a>
                     {% else %}
-                        создать
+                        <a href="{% url 'tm_checklist_create' otkorder.pk %}">создать </a>
                     {% endif %}
                 </div>
             </div>

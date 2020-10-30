@@ -15,10 +15,3 @@ class TMCheckList(models.Model):
     Type_KTM_UE = models.CharField(max_length=20, default = '', verbose_name = 'Тип КТМиУЭ', blank = True)
     Number_KTM_UE = models.CharField(max_length=20, default = '', verbose_name = 'зав. №', blank = True)
     
-    
-    # def __str__(self):
-    #     return self.
-    
-    # def get_absolute_url(self):
-    #     return reverse("checklist_detail", args=[str(self.id)])
-
