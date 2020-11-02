@@ -3,6 +3,11 @@
 {% block content %}
 <form action="" method="post">{% csrf_token %}
     {{ form.as_p }}
+    <h6>RM 6</h6>
+    {{ children.as_p}}
+    <h6>Еще какая нибудь шляпа</h6>
+    {{ one.as_p}}
+
     <input type="submit" value="Update">
 </form>
 {% endblock content %}

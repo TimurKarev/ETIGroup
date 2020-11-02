@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load addition_tags %}
+
+{% block content %}
+    {% for name, value in chlist_dict.items  %}
+        <p>{{name}} - {{value}}</p>
+    {% endfor %}
+    {% for name, value in rm6s.items  %}
+        <p>{{name}}  {{value}}</p>
+    {% endfor %}
+{% endblock content %}
