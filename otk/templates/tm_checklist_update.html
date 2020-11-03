@@ -3,10 +3,25 @@
 {% block content %}
 <form action="" method="post">{% csrf_token %}
     {{ form.as_p }}
+
+    <h6>SKTM</h6>
+    {{ sktm.as_p}}
+
+    <h6>SRTM</h6>
+    {{ srtm.as_p}}
+
+    <h6>KTMUE</h6>
+    {{ ktmue.as_p}}
+
+    <!--TODO: сделать проверку на отсутствие-->
     <h6>RM 6</h6>
-    {{ children.as_p}}
-    <h6>Еще какая нибудь шляпа</h6>
-    {{ one.as_p}}
+    {{ rm6.as_p}}
+
+    <h6>УВР</h6>
+    {{ ybp.as_p}}
+
+    <h6>ШУ</h6>
+    {{ su.as_p}}
 
     <input type="submit" value="Update">
 </form>

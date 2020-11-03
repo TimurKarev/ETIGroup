@@ -12,3 +12,9 @@ class CheckListListView(ListView):
     model = OTKOrder
     template_name = 'checklist_list.html'
     
+
+class OrderCreateView(CreateView):
+    model = OTKOrder
+    template_name = 'order_create.html'
+    success_url = '/'
+    fields = ['man_number']

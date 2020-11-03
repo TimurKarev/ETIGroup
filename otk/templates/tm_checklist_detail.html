@@ -2,10 +2,59 @@
 {% load addition_tags %}
 
 {% block content %}
+
+<a href="{% url 'checklist_list' %}"> Домой  </a>
+<br />
+<a href="{% url 'tm_checklist_update' tmchecklist.id %}"> Заполнить  </a>
+<br />
+<br />
+<h4> Заказ №{{man_number}}</h4>
+<h5>  Чек лист телемеханики </h5>
+
     {% for name, value in chlist_dict.items  %}
         <p>{{name}} - {{value}}</p>
     {% endfor %}
-    {% for name, value in rm6s.items  %}
-        <p>{{name}}  {{value}}</p>
-    {% endfor %}
+
+    {% if  sktm|length > 0 %}
+        <h6> ШКТМ </h6>
+        {% for name, value in sktm.items  %}
+            <p>{{name}}  {{value}}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% if  srtm|length > 0 %}
+        <h6> ШРТМ </h6>
+        {% for name, value in srtm.items  %}
+            <p>{{name}}  {{value}}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% if  ktmue|length > 0 %}
+        <h6> КТМиУЭ </h6>
+        {% for name, value in ktmue.items  %}
+            <p>{{name}}  {{value}}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% if  rm6s|length > 0 %}
+        <h6> RM6 </h6>
+        {% for name, value in rm6s.items  %}
+            <p>{{name}}  {{value}}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% if  ybp|length > 0 %}
+        <h6> УВР </h6>
+        {% for name, value in ybp.items  %}
+            <p>{{name}}  {{value}}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% if  su|length > 0 %}
+        <h6> ШУ </h6>
+        {% for name, value in su.items  %}
+            <p>{{name}}  {{value}}</p>
+        {% endfor %}
+    {% endif %}    
+
 {% endblock content %}

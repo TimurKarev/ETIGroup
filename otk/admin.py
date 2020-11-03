@@ -1,12 +1,14 @@
 from django.contrib import admin
 from otk.models.order import OTKOrder
-from otk.models.tm_checklists import TMCheckList
-from otk.models.tm_checklists import RM6CheckList
-from otk.models.tm_checklists import OneMoreTables
+from otk.models.tm_checklists import *
 
 
 # Register your models here.
-admin.site.register(TMCheckList)
 admin.site.register(OTKOrder)
+admin.site.register(TMCheckList)
 admin.site.register(RM6CheckList)
-admin.site.register(OneMoreTables)
+admin.site.register(SKTMCheckList)
+admin.site.register(SRTMCheckList)
+admin.site.register(KTMUECheckList)
+admin.site.register(YBPCheckList)
+admin.site.register(SUCheckList)
