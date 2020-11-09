@@ -1,27 +1,42 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 <form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
+    <table>{{ form.as_table }}</table>
 
+    <br/>
     <h6>SKTM</h6>
-    {{ sktm.as_p}}
+    <table>{{ sktm.as_table}}</table>
 
+    <br/>
     <h6>SRTM</h6>
-    {{ srtm.as_p}}
+    <table>{{ srtm.as_table}}</table>
 
+    <br/>
     <h6>KTMUE</h6>
-    {{ ktmue.as_p}}
+    <table>{{ ktmue.as_table}}</table>
 
-    <!--TODO: сделать проверку на отсутствие-->
-    <h6>RM 6</h6>
-    {{ rm6.as_p}}
+    {% if rm6 %}
+        <br/>
+        <br/>
+        <h4>Проверка моноблоков RM6</h4>
+        {% for f in rm6.forms %}
+        <br />
+        Моноблок № {{forloop.counter}}
+        <table>{{ f.as_table }} </table>
+        {% endfor %}
+    {% endif %}
 
+    <br/>
     <h6>УВР</h6>
-    {{ ybp.as_p}}
+    <table>{{ ybp.as_table }}</table>
+<!-- {{ ybp.as_p}}-->   
 
+    <br/>
     <h6>ШУ</h6>
-    {{ su.as_p}}
+    <table>{{ su.as_table}}</table>
 
     <input type="submit" value="Update">
 </form>

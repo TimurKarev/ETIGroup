@@ -14,6 +14,7 @@ class TMCheckListDetailView(DetailView):
     model = TMCheckList
     template_name = "tm_checklist_detail.html"
     
+    #TODO: сделать значения полей на русском
     def get_context_data(self, **kwargs):
         context = super(TMCheckListDetailView, self).get_context_data(**kwargs)
 
@@ -39,7 +40,7 @@ class TMCheckListDetailView(DetailView):
         if len(rm6s) > 0:
             for i in range(len(rm6s)):
                 rm = {}
-                rm["rm6-"] = ' '
+                rm["rm6 "] = ' '
                 rm.update(model_to_dict_verbose(rm6s[i], exclude=['id', 'checklist']))
                 rm = {str(key) + '(' + str(i+1) + ')' : val for key, val in rm.items()}
                 context['rm6s'].update(rm)
@@ -49,7 +50,7 @@ class TMCheckListDetailView(DetailView):
         if len(ybp) > 0:
             for i in range(len(ybp)):
                 y = {}
-                y["ybp-"] = ' '
+                y["ybp "] = ' '
                 y.update(model_to_dict_verbose(ybp[i], exclude=['id', 'checklist']))
                 y = {str(key) + '(' + str(i+1) + ')' : val for key, val in y.items()}
                 context['ybp'].update(y)
@@ -59,7 +60,7 @@ class TMCheckListDetailView(DetailView):
         if len(su) > 0:
             for i in range(len(su)):
                 y = {}
-                y["su-"] = ' '
+                y["su "] = ' '
                 y.update(model_to_dict_verbose(su[i], exclude=['id', 'checklist']))
                 y = {str(key) + '(' + str(i+1) + ')' : val for key, val in y.items()}
                 context['su'].update(y)

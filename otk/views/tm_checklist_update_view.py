@@ -10,29 +10,29 @@ from otk.models.tm_checklists import *
 #TODO убрать ACCEPTED fields from 
 
 RM6Formset = inlineformset_factory(
-    TMCheckList, RM6CheckList, exclude=('id',), extra = 0,
+    TMCheckList, RM6CheckList, exclude=('id','passed'), extra = 0, can_delete=False,
 )
 SKTMFormset = inlineformset_factory(
-    TMCheckList, SKTMCheckList, exclude=('id',), extra = 0,
+    TMCheckList, SKTMCheckList, exclude=('id','passed'), extra = 0, can_delete=False,
 )
 SRTMFormset = inlineformset_factory(
-    TMCheckList, SRTMCheckList, exclude=('id',), extra = 0,
+    TMCheckList, SRTMCheckList, exclude=('id','passed'), extra = 0,
 )
 KTMUEFormset = inlineformset_factory(
-    TMCheckList, KTMUECheckList, exclude=('id',), extra = 0,
+    TMCheckList, KTMUECheckList, exclude=('id','passed'), extra = 0,
 )
 YBPFormset = inlineformset_factory(
-    TMCheckList, YBPCheckList, exclude=('id',), extra = 0,
+    TMCheckList, YBPCheckList, exclude=('id','passed'), extra = 0,
 )
 SUFormset = inlineformset_factory(
-    TMCheckList, SUCheckList, exclude=('id',), extra = 0,
+    TMCheckList, SUCheckList, exclude=('id','passed'), extra = 0,
 )
 
 class TMCheckListUpdateView(UpdateView):
     model = TMCheckList
     #form_class = UpdateTMChecklistForm
     template_name = "tm_checklist_update.html"
-    fields = '__all__'
+    fields = ['UE_Code', 'TM_Code', 'Type_KTM_UE', 'Number_KTM_UE']
     success_url = '/tm_checklist_detail/'
 
     def get_context_data(self, **kwargs):
@@ -57,6 +57,8 @@ class TMCheckListUpdateView(UpdateView):
             data["ktmue"] = KTMUEFormset(instance=self.object)
             data["ybp"] = YBPFormset(instance=self.object)
             data["su"] = SUFormset(instance=self.object)
+        
+        print(data["rm6"])
         return data
 
     def form_valid(self, form):

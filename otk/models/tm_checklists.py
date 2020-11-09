@@ -2,15 +2,15 @@ from django.db import models
 from django.urls import reverse
 
 ELEMENT_CHOICES = (
-    ('NOT_TESTED', 'Не проверено'),
-    ('UNUSED','Не используется'),
-    ('ACCEPTED', 'Принято'),
-    ('DECLINE','Замечания'),
+    ('Не проверено', 'Не проверено'),
+    ('НЕ используется','Не используется'),
+    ('Принято', 'Принято'),
+    ('Замечания','Замечания'),
 )
 
 PASSED_CHOICES = (
-    ('NO', 'НЕ принято'),
-    ("YES", 'Принято'),
+    ('НЕ принято', 'НЕ принято'),
+    ("Принято", 'Принято'),
 )
 
 # Create your models here.
