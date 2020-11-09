@@ -33,7 +33,6 @@ class TMCheckListDetailView(DetailView):
         context['ktmue'] = {}
         if len(ktmue) > 0:
             context['ktmue'] = model_to_dict_verbose(ktmue[0], exclude=['id', 'checklist'])
-            print(context['ktmue'])
 
         context['rm6s'] = {}
         rm6s = self.object.rm6checklist_set.all()

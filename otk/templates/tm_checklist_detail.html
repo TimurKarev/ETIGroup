@@ -39,21 +39,21 @@
     {% if  rm6s|length > 0 %}
         <h6> RM6 </h6>
         {% for name, value in rm6s.items  %}
-            <p>{{name}}  {{value}}</p>
+            <p>{{name|del_suffix}}  {{value}}</p>
         {% endfor %}
     {% endif %}
 
     {% if  ybp|length > 0 %}
         <h6> УВР </h6>
         {% for name, value in ybp.items  %}
-            <p>{{name}}  {{value}}</p>
+            <p>{{name|del_suffix}}  {{value}}</p>
         {% endfor %}
     {% endif %}
 
     {% if  su|length > 0 %}
         <h6> ШУ </h6>
         {% for name, value in su.items  %}
-            <p>{{name}}  {{value}}</p>
+            <p>{{name|del_suffix}}  {{value}}</p>
         {% endfor %}
     {% endif %}    
 
