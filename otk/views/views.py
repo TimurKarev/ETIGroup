@@ -1,3 +1,5 @@
+from otk.views.mixins.user_access_mixin import UserAccessMixin
+
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
@@ -13,7 +15,10 @@ class CheckListListView(ListView):
     template_name = 'checklist_list.html'
     
 
-class OrderCreateView(CreateView):
+class OrderCreateView(UserAccessMixin, CreateView):
+    permission_required = 'order.add_order'
+    redirect_without_permission = 'checklist_list'
+    
     model = OTKOrder
     template_name = 'order_create.html'
     success_url = '/'

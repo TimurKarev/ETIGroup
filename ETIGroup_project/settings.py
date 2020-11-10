@@ -28,7 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['10.40.247.58', '127.0.0.1']
 
-
+LOGIN_REDIRECT_URL = 'checklist_list'
+LOGOUT_REDIRECT_URL = 'checklist_list'
 # Application definition
 
 INSTALLED_APPS = [

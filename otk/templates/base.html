@@ -7,6 +7,25 @@
         <title>Общий заголовок</title>
     </head>
     <body>
+        <div>
+            <header>
+                <div class="nav-left">
+                    <a href="{% url 'checklist_list' %}">К списку заказов</a>
+                    <a href="{% url 'order_create' %}"> Создать заказ</a>
+                </div>
+                <div class="nav-right">
+                    {% if  user.is_authenticated %}
+                        <p>{{ user.username }}</p>
+                        <a href="{% url 'logout' %}">Выйти</a>
+                    {% else %}
+                        <p>Незнакомец</p>
+                        <a href="{% url 'login' %}">Войти</a>
+                    {% endif %}
+                    
+                </div>
+
+            </header>
+        </div>
         {% block content %}
         {% endblock content %}
     </body>

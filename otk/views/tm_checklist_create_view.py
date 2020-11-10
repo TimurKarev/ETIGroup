@@ -1,3 +1,5 @@
+from otk.views.mixins.user_access_mixin import UserAccessMixin
+
 from django.views.generic.edit import FormView
 
 from otk.views.forms.tm_checklist_forms import CreateTMChecklistForm
@@ -11,7 +13,11 @@ from otk.utils import model_to_dict_verbose
 
 from django.forms.models import inlineformset_factory
 
-class TMCheckListCreateView(FormView):
+class TMCheckListCreateView(UserAccessMixin, FormView):
+    permission_required = 'otk.add_otkchecklist'
+    raise_exception = False
+    redirect_without_permission = 'checklist_list'
+    
     template_name = 'tm_checklist_create.html'
     form_class = CreateTMChecklistForm
     success_url = '/'
