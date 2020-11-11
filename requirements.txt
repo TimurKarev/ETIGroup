@@ -17,7 +17,6 @@ pytz==2020.1
 rope==0.18.0
 setuptools==49.6.0
 six==1.15.0
-sqlite==3.33.0
 sqlparse==0.3.1
 tk==8.6.10
 toml==0.10.1
