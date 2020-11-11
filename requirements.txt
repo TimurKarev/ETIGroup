@@ -22,4 +22,3 @@ toml==0.10.1
 wheel==0.35.1
 wincertstore==0.2
 wrapt==1.11.2
-zlib==1.2.11
