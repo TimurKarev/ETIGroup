@@ -12,10 +12,10 @@ from otk.models.tm_checklists import *
 #TODO убрать ACCEPTED fields from 
 
 RM6Formset = inlineformset_factory(
-    TMCheckList, RM6CheckList, exclude=('id','passed'), extra = 0, can_delete=False,
+    TMCheckList, RM6CheckList, exclude=('id','passed'), extra = 0,
 )
 SKTMFormset = inlineformset_factory(
-    TMCheckList, SKTMCheckList, exclude=('id','passed'), extra = 0, can_delete=False,
+    TMCheckList, SKTMCheckList, exclude=('id','passed'), extra = 0,
 )
 SRTMFormset = inlineformset_factory(
     TMCheckList, SRTMCheckList, exclude=('id','passed'), extra = 0,

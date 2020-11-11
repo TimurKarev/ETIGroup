@@ -6,20 +6,25 @@
 <form action="" method="post">{% csrf_token %}
     <table>{{ form.as_table }}</table>
 
-    <br/>
-    <h6>SKTM</h6>
-    <table>{{ sktm.as_table}}</table>
+    {% if sktm %}
+        <br/>
+        <h6>ШКТМ</h6>
+        <table>{{ sktm.as_table}}</table>
+    {% endif %}
 
-    <br/>
-    <h6>SRTM</h6>
-    <table>{{ srtm.as_table}}</table>
-
-    <br/>
-    <h6>KTMUE</h6>
-    <table>{{ ktmue.as_table}}</table>
+    {% if  srtm %}
+        <br/>
+        <h6>ШРТМ</h6>
+        <table>{{ srtm.as_table}}</table>
+    {% endif %}
+    
+    {% if ktmue %}
+        <br/>
+        <h6>КТМиУЭ</h6>
+        <table>{{ ktmue.as_table}}</table>
+    {% endif %}
 
     {% if rm6 %}
-        <br/>
         <br/>
         <h4>Проверка моноблоков RM6</h4>
         {% for f in rm6.forms %}
@@ -29,14 +34,25 @@
         {% endfor %}
     {% endif %}
 
-    <br/>
-    <h6>УВР</h6>
-    <table>{{ ybp.as_table }}</table>
-<!-- {{ ybp.as_p}}-->   
+    {% if ybp %}
+        <br/>
+        <h4>Проверка УВР</h4>
+        {% for f in ybp.forms %}
+        <br />
+        УВР № {{forloop.counter}}
+        <table>{{ f.as_table }} </table>
+        {% endfor %}
+    {% endif %}
 
-    <br/>
-    <h6>ШУ</h6>
-    <table>{{ su.as_table}}</table>
+    {% if su %}
+        <br/>
+        <h4>Проверка ШУ</h4>
+        {% for f in ybp.forms %}
+        <br />
+        ШУ № {{forloop.counter}}
+        <table>{{ f.as_table }} </table>
+        {% endfor %}
+    {% endif %}
 
     <input type="submit" value="Update">
 </form>
