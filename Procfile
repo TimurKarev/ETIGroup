@@ -1,1 +1,1 @@
-ETIGROUP.wsgi --log-file -
+web: gunicorn ETIGroup_project.wsgi --log-file -
