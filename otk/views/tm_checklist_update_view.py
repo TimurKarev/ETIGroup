@@ -1,3 +1,5 @@
+from otk.views.mixins.user_access_mixin import UserAccessMixin
+
 from django.forms.models import inlineformset_factory
 
 from django.views.generic.edit import  UpdateView
@@ -28,12 +30,24 @@ SUFormset = inlineformset_factory(
     TMCheckList, SUCheckList, exclude=('id','passed'), extra = 0,
 )
 
-class TMCheckListUpdateView(UpdateView):
+class TMCheckListUpdateView(UserAccessMixin, UpdateView):
     model = TMCheckList
     #form_class = UpdateTMChecklistForm
     template_name = "tm_checklist_update.html"
     fields = ['UE_Code', 'TM_Code', 'Type_KTM_UE', 'Number_KTM_UE']
     success_url = '/tm_checklist_detail/'
+
+    permission_required = 'otk.change_otkchecklist'
+    raise_exception = False
+    view_name = 'tm_checklist_detail'
+
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     print(request, args, kwargs)
+    #     self.redirect_without_permission = '/tm_checklist_update/' + str(kwargs['pk']) + '/'
+    #     # do something extra here ...
+    #     return super(TMCheckListUpdateView, self).dispatch(request, *args, **kwargs)
+
 
     def get_context_data(self, **kwargs):
         # we need to overwrite get_context_data
@@ -42,6 +56,7 @@ class TMCheckListUpdateView(UpdateView):
         # on this view we pass instance argument
         # to the formset because we already have
         # the instance created
+        print(kwargs)
         data = super().get_context_data(**kwargs)
         if self.request.POST:
             data["rm6"] = RM6Formset(self.request.POST, instance=self.object)

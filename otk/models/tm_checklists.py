@@ -23,6 +23,10 @@ class TMCheckList(models.Model):
                                 verbose_name = 'Чек лист телемеханики прошел все проверки')
 
 
+    def get_absolute_url(self):
+        return reverse('tm_checklist_detail', args=[str(self.id)])
+
+
 class RM6CheckList(models.Model):
     checklist = models.ForeignKey(TMCheckList, on_delete=models.CASCADE, null=True)
     serial = models.CharField(max_length=20, default = '', verbose_name = 'Заводской номер', blank = True)

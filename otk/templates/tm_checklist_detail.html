@@ -3,11 +3,10 @@
 
 {% block content %}
 
-<a href="{% url 'checklist_list' %}"> Домой  </a>
 <br />
 <a href="{% url 'tm_checklist_update' tmchecklist.id %}"> Заполнить  </a>
 <br />
-<br />
+
 <div class="container">
     <div class="row">
         <h4> Заказ №{{man_number}}</h4>
@@ -141,4 +140,7 @@
         {% endif %}
         </div>
     </div>
+    <a href="{% url 'tm_checklist_update' tmchecklist.id %}"> Заполнить  </a>
+    <br />
+    <br />
 {% endblock content %}

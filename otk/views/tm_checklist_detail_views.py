@@ -1,3 +1,5 @@
+from otk.views.mixins.user_access_mixin import UserAccessMixin
+
 from django.views.generic import DetailView
 
 from otk.models.order import OTKOrder
@@ -10,7 +12,11 @@ from otk.utils import model_to_dict_verbose
 
 
     
-class TMCheckListDetailView(DetailView):
+class TMCheckListDetailView(UserAccessMixin, DetailView):
+    permission_required = 'otk.view_otkchecklist'
+    raise_exception = False
+    redirect_without_permission = 'checklist_list'
+    
     model = TMCheckList
     template_name = "tm_checklist_detail.html"
     

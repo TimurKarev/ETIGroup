@@ -10,13 +10,16 @@ from otk.models.tm_checklists import TMCheckList
 
 
 # Create your views here.
-class CheckListListView(ListView):
+class CheckListListView(UserAccessMixin, ListView):
+    permission_required = 'otk.view_order'
+    redirect_without_permission = 'login'
+    
     model = OTKOrder
     template_name = 'checklist_list.html'
     
 
 class OrderCreateView(UserAccessMixin, CreateView):
-    permission_required = 'order.add_order'
+    permission_required = 'otk.add_order'
     redirect_without_permission = 'checklist_list'
     
     model = OTKOrder
