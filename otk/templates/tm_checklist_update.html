@@ -24,6 +24,8 @@
         <table>{{ ktmue.as_table}}</table>
     {% endif %}
 
+
+    {{ rm6.management_form }}
     {% if rm6 %}
         <br/>
         <h4>Проверка моноблоков RM6</h4>
@@ -34,6 +36,7 @@
         {% endfor %}
     {% endif %}
 
+    {{ ybp.management_form }}
     {% if ybp %}
         <br/>
         <h4>Проверка УВР</h4>
@@ -44,6 +47,7 @@
         {% endfor %}
     {% endif %}
 
+    {{ su.management_form }}
     {% if su %}
         <br/>
         <h4>Проверка ШУ</h4>
