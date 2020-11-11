@@ -1,0 +1,21 @@
+asgiref @ file:///tmp/build/80754af9/asgiref_1594338739818/work
+astroid @ file:///C:/ci/astroid_1592487315634/work
+certifi==2020.6.20
+colorama==0.4.3
+Django @ file:///tmp/build/80754af9/django_1600355803933/work
+django-crispy-forms==1.8.1
+gunicorn==20.0.4
+isort @ file:///C:/ci/isort_1600697297430/work
+Jinja2==2.11.2
+lazy-object-proxy==1.4.3
+MarkupSafe @ file:///D:/bld/markupsafe_1602267501600/work
+mccabe==0.6.1
+psycopg2 @ file:///C:/ci/psycopg2_1594305172475/work
+pylint @ file:///C:/ci/pylint_1598617153160/work
+pytz==2020.1
+rope @ file:///tmp/build/80754af9/rope_1602264064449/work
+six==1.15.0
+sqlparse==0.3.1
+toml @ file:///tmp/build/80754af9/toml_1592853716807/work
+wincertstore==0.2
+wrapt==1.11.2
