@@ -1,21 +1,35 @@
-asgiref @ file:///tmp/build/80754af9/asgiref_1594338739818/work
-astroid @ file:///C:/ci/astroid_1592487315634/work
+asgiref==3.2.10
+astroid==2.4.2
+ca-certificates==2020.10.14
 certifi==2020.6.20
 colorama==0.4.3
-Django @ file:///tmp/build/80754af9/django_1600355803933/work
+django==3.1.1
 django-crispy-forms==1.8.1
 gunicorn==20.0.4
-isort @ file:///C:/ci/isort_1600697297430/work
-Jinja2==2.11.2
+isort==5.5.3
+jinja2==2.11.2
+krb5==1.17.1
 lazy-object-proxy==1.4.3
-MarkupSafe @ file:///D:/bld/markupsafe_1602267501600/work
+libpq==12.2
+markupsafe==1.1.1
 mccabe==0.6.1
-psycopg2 @ file:///C:/ci/psycopg2_1594305172475/work
-pylint @ file:///C:/ci/pylint_1598617153160/work
+openssl==1.1.1h
+pip==20.2.2
+psycopg2==2.8.5
+pylint==2.6.0
+python==3.8.5
+python_abi==3.8
 pytz==2020.1
-rope @ file:///tmp/build/80754af9/rope_1602264064449/work
+rope==0.18.0
+setuptools==49.6.0
 six==1.15.0
+sqlite==3.33.0
 sqlparse==0.3.1
-toml @ file:///tmp/build/80754af9/toml_1592853716807/work
+tk==8.6.10
+toml==0.10.1
+vc==14.1
+vs2015_runtime==14.16.27012
+wheel==0.35.1
 wincertstore==0.2
 wrapt==1.11.2
+zlib==1.2.11
