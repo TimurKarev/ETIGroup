@@ -10,7 +10,6 @@ jinja2==2.11.2
 lazy-object-proxy==1.4.3
 markupsafe==1.1.1
 mccabe==0.6.1
-openssl==1.1.1h
 pip==20.2.2
 psycopg2==2.8.5
 pylint==2.6.0
