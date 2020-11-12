@@ -35,15 +35,26 @@
         </div>
             {% for name, value in sktm.items  %}
                 <div class="row">
-                <div class="col-md-6">
-                    {{name}} 
-                </div>
-                <div class="col-md-4">
-                    {{value}}
-                </div>
+                    <div class="col-md-8">
+                        {{name}} 
+                    </div>
+                    <div class="col-md-2">
+                    {% if  value == 'Не проверено' %}
+                        <div class="not_checked">{{value}}</div>
+                    {% elif value == 'Не используется'%}
+                        <div class="not_used">{{value}}</div>
+                    {% elif value == 'Принято'%}
+                        <div class="apply">{{value}}</div>
+                    {% elif value == 'Замечания'%}
+                        <div class="comment">{{value}}</div>
+                    {% else %}
+                        {{value}}
+                    {% endif %}
+                    </div>
                 </div>
             {% endfor %}
         {% endif %}
+
 
         {% if  srtm|length > 0 %}
         <br />
@@ -72,7 +83,7 @@
                 <div class="col-md-8">
                     {{name}} 
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 color_red">
                     {{value}}
                 </div>
                 </div>

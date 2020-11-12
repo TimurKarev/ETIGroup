@@ -1,0 +1,16 @@
+.not_checked {
+  background-color: white;
+}
+
+.not_used {
+  background-color: grey;
+}
+
+.apply {
+  background-color: green;
+}
+
+.comment {
+  background-color: red;
+}
+/*# sourceMappingURL=tm_chl_detail.css.map */

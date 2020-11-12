@@ -1,0 +1,17 @@
+$not_checked_color: white;
+$not_used_color: grey;
+$apply_color: green;
+$comment_color: red;
+
+.not_checked {
+  background-color: $not_checked_color;
+}
+.not_used {
+  background-color: $not_used_color;
+}
+.apply {
+  background-color: $apply_color;
+}
+.comment {
+  background-color: $comment_color;
+}

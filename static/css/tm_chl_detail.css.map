@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAKA,AAAA,YAAY,CAAC;EACX,gBAAgB,EANE,KAAK;CAOxB;;AACD,AAAA,SAAS,CAAC;EACR,gBAAgB,EARD,IAAI;CASpB;;AACD,AAAA,MAAM,CAAC;EACL,gBAAgB,EAVJ,KAAK;CAWlB;;AACD,AAAA,QAAQ,CAAC;EACP,gBAAgB,EAZF,GAAG;CAalB",
+    "sources": [
+        "tm_chl_detail.scss"
+    ],
+    "names": [],
+    "file": "tm_chl_detail.css"
+}
