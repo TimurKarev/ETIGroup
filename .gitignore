@@ -88,4 +88,6 @@ local_settings.py
 .env
 
 #DB
+#git update-index --no-assume-unchanged - unhide from git
+#git update-index --assume-unchanged  - hide from git
 *.sqlite3
