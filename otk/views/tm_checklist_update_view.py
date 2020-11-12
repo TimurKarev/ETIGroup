@@ -56,7 +56,7 @@ class TMCheckListUpdateView(UserAccessMixin, UpdateView):
         # on this view we pass instance argument
         # to the formset because we already have
         # the instance created
-        print(kwargs)
+
         data = super().get_context_data(**kwargs)
         if self.request.POST:
             data["rm6"] = RM6Formset(self.request.POST, instance=self.object)
@@ -73,7 +73,6 @@ class TMCheckListUpdateView(UserAccessMixin, UpdateView):
             data["ybp"] = YBPFormset(instance=self.object)
             data["su"] = SUFormset(instance=self.object)
         
-        print(data["rm6"])
         return data
 
     def form_valid(self, form):
