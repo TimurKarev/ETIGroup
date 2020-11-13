@@ -4,6 +4,10 @@
 
 {% block content %}
 <form action="" method="post">{% csrf_token %}
+    <input type="submit" value="Update">
+    <br />
+    <br />
+
     <table class="table table-responsive">{{ form.as_table }}</table>
 
     {% if sktm %}
@@ -51,7 +55,7 @@
     {% if su %}
         <br/>
         <h4>Проверка ШУ</h4>
-        {% for f in ybp.forms %}
+        {% for f in su.forms %}
         <br />
         ШУ № {{forloop.counter}}
         <table class="table table-responsive">{{ f.as_table }} </table>
