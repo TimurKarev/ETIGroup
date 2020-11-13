@@ -30,6 +30,7 @@ class TMCheckListCreateView(UserAccessMixin, FormView):
                         'YBP_number_form': 2,
                         'SU_number_form': 2,
                         })
+
         return initial
 
     def get_context_data(self, **kwargs):

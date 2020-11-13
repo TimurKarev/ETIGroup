@@ -10,5 +10,8 @@ class OrderCreateView(UserAccessMixin, CreateView):
     
     model = OTKOrder
     template_name = 'order_create.html'
-    success_url = '/'
     fields = ['man_number', 'substation_type', 'rm_number', 'ybp_number', 'su_number']
+
+    # def form_valid(self, form):
+    #     form.save()
+    #     return super(OrderCreateView, self).form_valid(form)
