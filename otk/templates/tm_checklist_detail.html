@@ -3,6 +3,9 @@
 
 {% block content %}
 
+{% load static %}
+<script type="text/javascript" src="{%static 'js/color_choise.js' %}"></script>
+
 <br />
 <a href="{% url 'tm_checklist_update' tmchecklist.id %}"> Заполнить  </a>
 <br />
@@ -64,9 +67,9 @@
             {% for name, value in srtm.items  %}
                 <div class="row">
                 <div class="col-md-6">
-                    {{name}} 
+                    {{name}}
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 choise_color">
                     {{value}}
                 </div>
                 </div>
