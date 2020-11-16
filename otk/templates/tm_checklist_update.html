@@ -3,6 +3,10 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+
+{% load static %}
+<script type="text/javascript" src="{%static 'js/tm_checklist_hide_comment.js' %}"></script>
+
 <form action="" method="post">{% csrf_token %}
     <input type="submit" value="Update">
     <br />
@@ -13,7 +17,12 @@
     {% if sktm %}
         <br/>
         <h6>ШКТМ</h6>
-        <table class="table table-responsive">{{ sktm.as_table}}</table>
+        <table class="table table-responsive sktm_table">
+        {% for field in sktm %}
+            {{ field }}
+        {% endfor %}
+        </table>
+        <!--<table class="table table-responsive">{{ sktm.as_table}}</table> -->
     {% endif %}
 
     {% if  srtm %}
