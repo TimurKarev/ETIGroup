@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load addition_tags %}
+
+{% block content %}
+   {{object.name}} <br/> <br/>
+
+   {% for section in data %}
+        {{ section.name}} <br/>
+        {% for i,four_point_values in section.four_point.items %}
+            {{four_point_values}} <br/>
+        {% endfor %}
+        {{section.yes_no.choise}} <br/><br/>
+   {% endfor %}
+
+
+{% endblock content %}
