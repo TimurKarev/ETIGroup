@@ -1,5 +1,6 @@
 from django.db import models
 from otk.models.tm_checklists import TMCheckList
+from otk.models.checklists import Checklist
 from django.urls import reverse
 
 SUBSTATION_TYPE_CHOICES = (
@@ -11,7 +12,14 @@ class OTKOrder(models.Model):
     man_number = models.IntegerField(unique=True)
     
     tm_checklist = models.OneToOneField(TMCheckList, 
-                                        on_delete=models.SET_NULL, 
+                                        on_delete=models.CASCADE, 
+                                        unique=True,
+                                        blank = True, 
+                                        null = True, 
+                                        default = None)
+
+    bm_checklist = models.OneToOneField(Checklist, 
+                                        on_delete=models.CASCADE, 
                                         unique=True,
                                         blank = True, 
                                         null = True, 
