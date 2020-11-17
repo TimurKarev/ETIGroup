@@ -149,9 +149,9 @@ def create_four_point_entry(name: str, key: ChListSection) -> Optional[FourChois
 
 
 ''' Создает проверочный ДА/НЕТ пункт и добавляет ее в секцию'''
-def create_yes_no_entry(name: str, key: ChListSection) -> Optional[YseNoChoisePoint]:
+def create_yes_no_entry(name: str, key: ChListSection) -> Optional[YesNoChoisePoint]:
     try:
-        yes_no_point_entry = YseNoChoisePoint(name = name, checklist = key)
+        yes_no_point_entry = YesNoChoisePoint(name = name, checklist = key)
         yes_no_point_entry.save()
     except Exception as e:
         print(e, '- create_yes_no_entry')

@@ -10,3 +10,6 @@ class CheckListDetailView(UserAccessMixin, DetailView):
     
     model = Checklist
     template_name = "checklist_detail.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super(CheckListDetailView, self).get_context_data(**kwargs)

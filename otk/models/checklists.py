@@ -57,7 +57,7 @@ class FourChoisePoint(SimplePoint):
                                         blank = True)
 
     class Meta:
-        db_table = 'four_choise_point'
+        db_table = 'fourchoisepoint'
     
     #TODO добавить заказ (???)
     # def __str__(self):
@@ -68,7 +68,7 @@ PASSED_CHOICES = (
     ('НЕ принято', 'НЕ принято'),
     ("Принято", 'Принято'),
 )
-class YseNoChoisePoint(SimplePoint):
+class YesNoChoisePoint(SimplePoint):
     choise = models.CharField(max_length=15,
                             choices = PASSED_CHOICES, 
                             default = 'НЕ принято',
@@ -76,4 +76,4 @@ class YseNoChoisePoint(SimplePoint):
                             null = False,
                             )
     class Meta:
-        db_table = 'yesno_choise_point'
+        db_table = 'yesnochoisepoint'
