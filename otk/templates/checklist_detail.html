@@ -3,6 +3,8 @@
 {% load addition_tags %}
 
 {% block content %}
+
+    <a href="{% url 'checklist_update' object.pk %}"> Заполнить  </a>     <br/> <br/>
    {{object.name}} <br/> <br/>
 
    {% for section in data %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load addition_tags %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <input type="submit" value="Update">
+<br />
+
+{{ four.management_form }}
+{% for l in four  %}
+<br />
+   {{l}}
+{% endfor %}
+
+
+{% endblock content %}
