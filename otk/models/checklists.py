@@ -18,14 +18,14 @@ class Checklist(General):
 
 
 class ChListSection(General):
-    checklist = models.ForeignKey(Checklist, on_delete=models.SET_NULL, null=True)
+    checklist = models.ForeignKey(Checklist, on_delete=models.CASCADE, null=True)
     
     class Meta:
         db_table = 'chlistsection'
         
 
 class SimplePoint(General):
-    checklist = models.ForeignKey(ChListSection, on_delete=models.SET_NULL, null=True)
+    checklist = models.ForeignKey(ChListSection, on_delete=models.CASCADE, null=True)
     
     class Meta:
         abstract = True
