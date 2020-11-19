@@ -24,7 +24,7 @@ class CheckListDetailView(UserAccessMixin, DetailView):
                 fp_list = [fourchoisepoint.name, 
                            fourchoisepoint.choise,
                            fourchoisepoint.comment]
-                fp_dict['four_point'] = fp_list
+                fp_dict['four_point' + str(fp_count)] = fp_list
             sec_dict['four_point'] = fp_dict
             yes_no = section.yesnochoisepoint_set.all()[0]
             sec_dict['yes_no'] = {'name': yes_no.name,
