@@ -21,7 +21,6 @@ class TMCheckListCreateView(UserAccessMixin, TemplateView):
     template_name = 'tm_checklist_create.html'
     
 
-
     def get(self, request, *args, **kwargs):
         tm_checklist_id = create_tmchecklist_from_order_model(int(kwargs['pk']))
         print(tm_checklist_id, type(tm_checklist_id))

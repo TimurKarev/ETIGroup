@@ -77,6 +77,7 @@ def create_tmchecklist_from_order_model(num_order: str) -> Optional[int]:
 
     return tm_checklist.id if tm_checklist else None
 
+'''
 def create_bmchecklist_from_json(order: OTKOrder) -> Optional[int]:
 
     if order.bm_checklist is not None:
@@ -110,7 +111,60 @@ def create_bmchecklist_from_json(order: OTKOrder) -> Optional[int]:
         return None
     
     return checklist_entry.id
+'''
 
+def create_checklist_from_json(order: OTKOrder,
+                                checklist_type: str,
+                                checklist_name: str,
+                                json_path: Path) -> Optional[int]:
+
+    '''Проверяем, есть ли уже такой чеклист в базе '''
+    if checklist_type=='bm_checklist' and order.bm_checklist is not None:
+        return None
+    
+    if checklist_type == 'el_checklist' and order.el_checklist is not None:
+        return None
+    
+    checklist_entry = create_checklist(name = checklist_name)
+    if checklist_entry is None:
+        return None
+
+    with open(
+            json_path, 
+            "r", encoding="utf-8"
+            ) as read_file:
+        data = json.load(read_file)
+
+    for section in data['sections']:
+        section_entry = create_section_entry(section['name'], checklist_entry)
+        if section_entry is not None:
+            
+            if 'four_points' in section:
+                for four_point in section['four_points']:
+                    create_four_point_entry(four_point, section_entry)
+            
+            if 'string_points' in section:
+                for string_point in section['string_points']:
+                    create_string_point_entry(string_point, section_entry)
+            
+            if 'yes_no' in section:
+                create_yes_no_entry(section['yes_no'], section_entry)
+    
+    try:
+        if checklist_type=='bm_checklist':
+            order.bm_checklist = checklist_entry
+            order.save()
+
+        if checklist_type=='el_checklist':
+            order.el_checklist = checklist_entry
+            order.save()
+
+    except Exception as e:
+        print(e)
+        print('Error- order.save()')
+        return None
+    
+    return checklist_entry.id
 
 
 ''' Создает чеклист'''
@@ -135,6 +189,16 @@ def create_section_entry(name: str, key) -> Optional[ChListSection]:
         print(e, '- create_section_entry')
         return None
     return section
+
+''' Создает текстовой пункт и добавляет ее в секцию'''
+def create_string_point_entry(name: str, key: ChListSection) -> Optional[FourChoisePoint]:
+    try:
+        string_point_entry = StringPoint(name = name, checklist = key)
+        string_point_entry.save()
+    except Exception as e:
+        print(e, '- create_string_point_entry')
+        return None
+    return string_point_entry
 
 
 ''' Создает проверочный пункт и добавляет ее в секцию'''

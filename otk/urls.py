@@ -7,6 +7,7 @@ from otk.views.tm_checklist_detail_views import TMCheckListDetailView
 from otk.views.checklist_detail_view import CheckListDetailView
 from otk.views.checklist_update_view import CheckListUpdateView
 from otk.views.bm_checklist_create import BMCheckListCreateView
+from otk.views.el_checklist_create import ELCheckListCreateView
 from otk.views.order_detail_view import OrderDetailView
 
 urlpatterns = [
@@ -17,6 +18,7 @@ urlpatterns = [
     path('tm_checklist_detail/<int:pk>/', TMCheckListDetailView.as_view(), name='tm_checklist_detail'),
     path('tm_checklist_update/<int:pk>/', TMCheckListUpdateView.as_view(), name='tm_checklist_update'),
     path('bm_checklist_create/<int:pk>/', BMCheckListCreateView.as_view(), name='bm_checklist_create'),
+    path('el_checklist_create/<int:pk>/', ELCheckListCreateView.as_view(), name='el_checklist_create'),
     path('checklist_detail/<int:pk>/', CheckListDetailView.as_view(), name='checklist_detail'),
     path('checklist_update/<int:pk>/', CheckListUpdateView.as_view(), name='checklist_update'),
     
