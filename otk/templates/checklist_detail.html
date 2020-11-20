@@ -9,7 +9,12 @@
 
    {% for section in data %}
         {{ section.name}} <br/>
-        {% for i,four_point_values in section.four_point.items %}
+
+        {% for i,string_point_values in section.string_points.items %}
+            {{string_point_values}} <br/>
+        {% endfor %}
+
+        {% for i,four_point_values in section.four_points.items %}
             {{four_point_values}} <br/>
         {% endfor %}
         {{section.yes_no.choise}} <br/><br/>

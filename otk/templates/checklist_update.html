@@ -11,8 +11,18 @@
 {% for section in sections %}
 <br /><br />
     {{section.name}} <br />
+
+    {{ section.string_forms.management_form }}
+    {% for f in section.string_forms %}
+        {{ f.management_form }}
+        {{f.id}}
+        <br />
+        {{section.string_names|index:forloop.counter0}} {{f.string}}
+        <br />
+        {{f.comment}}         <br />
+    {% endfor %}
+
     {{ section.four_forms.management_form }}
-    
     {% for f in section.four_forms %}
         {{ f.management_form }}
         {{f.id}}
@@ -21,6 +31,7 @@
         <br />
         {{f.comment}}         <br />
     {% endfor %}
+
 {% endfor %}
 
 

@@ -139,13 +139,13 @@ def create_checklist_from_json(order: OTKOrder,
         section_entry = create_section_entry(section['name'], checklist_entry)
         if section_entry is not None:
             
-            if 'four_points' in section:
-                for four_point in section['four_points']:
-                    create_four_point_entry(four_point, section_entry)
-            
             if 'string_points' in section:
                 for string_point in section['string_points']:
                     create_string_point_entry(string_point, section_entry)
+
+            if 'four_points' in section:
+                for four_point in section['four_points']:
+                    create_four_point_entry(four_point, section_entry)
             
             if 'yes_no' in section:
                 create_yes_no_entry(section['yes_no'], section_entry)

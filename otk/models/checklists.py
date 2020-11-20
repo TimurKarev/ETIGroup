@@ -35,7 +35,7 @@ class StringPoint(SimplePoint):
     string = models.CharField(max_length=100, default = '', blank = True)
     
     class Meta:
-        db_table = 'string_point'
+        db_table = 'stringpoint'
 
 ELEMENT_CHOICES = (
     ('Не проверено', 'Не проверено'),
