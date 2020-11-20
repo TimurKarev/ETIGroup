@@ -7,10 +7,20 @@
     <input type="submit" value="Update">
 <br />
 
-{{ four.management_form }}
-{% for l in four  %}
-<br />
-   {{l}}
+{{ section.management_form }}
+{% for section in sections %}
+<br /><br />
+    {{section.name}} <br />
+    {{ section.four_forms.management_form }}
+    
+    {% for f in section.four_forms %}
+        {{ f.management_form }}
+        {{f.id}}
+        <br />
+        {{section.four_names|index:forloop.counter0}} {{f.choise}}
+        <br />
+        {{f.comment}}         <br />
+    {% endfor %}
 {% endfor %}
 
 

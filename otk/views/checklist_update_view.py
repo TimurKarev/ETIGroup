@@ -15,15 +15,6 @@ class ChecklistForm(forms.ModelForm):
         fields = []
         
 
-class FourChoisePointForm(forms.ModelForm):
-    class Meta:
-        model = FourChoisePoint
-        fields = ['choise', 'comment']
-
-
-FourChoisePointFormset = inlineformset_factory(
-    ChListSection, FourChoisePoint, exclude=('id', 'name'), extra = 0,
-)
 
 class CheckListUpdateView(UpdateView):
     model = Checklist
@@ -33,21 +24,32 @@ class CheckListUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        section = self.object.chlistsection_set.all()[0]
         if self.request.POST:
-            context['four'] = FourChoisePointFormset(self.request.POST, instance=section)
+            context['sections'] = get_update_context_from_checklist_object(self.object, self.request.POST)
         else:
-            context['four'] = FourChoisePointFormset(instance=section)
+            context['sections'] = get_update_context_from_checklist_object(self.object)
         
         return context
 
     def form_valid(self, form):
         context = self.get_context_data()
 
-        su = context["four"]
+        #print(context["sections"][0])
+        
+        su = context["sections"][0]['four_forms']
         if su.is_valid():
             su.instance = self.object.chlistsection_set.all()[0]
             su.save()
+        else:
+            print(su.errors)
+
+        su = context["sections"][1]['four_forms']
+        if su.is_valid():
+            su.instance = self.object.chlistsection_set.all()[1]
+            su.save()
+        else:
+            print(su.errors)
+
 
         return super().form_valid(form)
 

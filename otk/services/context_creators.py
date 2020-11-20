@@ -25,38 +25,31 @@ def get_detail_context_from_checklist_object(checklist_object) -> Optional[list]
 
     return data
 
-###########
-    # def form_valid(self, form):
-    #     # This method is called when valid form data has been POSTed.
-    #     # It should return an HttpResponse.
-    #     print('#####################################form_valid', form)
-    #     return super().form_valid(form)
+from django.forms.models import inlineformset_factory
+from django import forms
 
-    # def form_invalid(self, form):
-    #     # This method is called when valid form data has been POSTed.
-    #     # It should return an HttpResponse.
-    #     print('#####################################form_valid', form)
-    #     return super().form_valid(form)
-#############
-
+class FourChoisePointForm(forms.ModelForm):
+    class Meta:
+        model = FourChoisePoint
+        fields = ['choise', 'comment']
 
 '''Возвращает список сущностей для присоединения к context в UpdateView 
     для конкретного чеклиста'''
-def get_update_context_from_checklist_object(checklist_object) -> Optional[list]:
+def get_update_context_from_checklist_object(checklist_object, post=None) -> Optional[list]:
+    
+    FourChoisePointFormset = inlineformset_factory(
+        ChListSection, FourChoisePoint, form = FourChoisePointForm, extra = 0,
+)
     sections = checklist_object.chlistsection_set.all()
     data = []
-    for _, section in enumerate(sections):
+    for num, section in enumerate(sections):
         sec_dict = {'name': section.name}
-        fp_dict = {}
+        sec_dict['four_forms'] = FourChoisePointFormset(post, instance=section, prefix = 'id_sec'+ str(num))
         fourchoisepoints = section.fourchoisepoint_set.all()
-        for fp_count, fourchoisepoint in enumerate(fourchoisepoints):
-            fp_list = [fourchoisepoint.name, 
-                        FourChoisePointForm(instance = fourchoisepoint)]
-            fp_dict['four_point' + str(fp_count)] = fp_list
-        sec_dict['four_point'] = fp_dict
-        yes_no = section.yesnochoisepoint_set.all()[0]
-        sec_dict['yes_no'] = {'name': yes_no.name,
-                            'choise': yes_no.choise}
+        fp_names = []
+        for _, fourchoisepoint in enumerate(fourchoisepoints):
+            fp_names.append(fourchoisepoint.name)
+        sec_dict['four_names'] = fp_names
         data.append(sec_dict)
 
     return data
