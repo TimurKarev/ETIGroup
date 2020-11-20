@@ -82,6 +82,7 @@ def get_update_context_from_checklist_object(checklist_object, post=None) -> Opt
     return data
 
 
+'''Сохраняет все формсеты'''
 def save_all_formsets(context, object):
 
     inst_list = object.chlistsection_set.all()
@@ -94,6 +95,7 @@ def save_all_formsets(context, object):
         _save_formset(formset, inst)
 
 
+'''Сохраняет один формсет'''
 def _save_formset(formset, inst):
         if formset.is_valid():
             formset.instance = inst
