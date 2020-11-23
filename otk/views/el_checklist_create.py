@@ -27,15 +27,14 @@ class ELCheckListCreateView(UserAccessMixin, TemplateView):
         
         checklist_name = "Электрическая часть заказ №" + str(order.man_number)
 
-        BASE_DIR = Path(__file__).resolve().parent.parent.parent
-        JSON_DIR = Path('static/json/el_checklist.json')
-        path = os.path.join(BASE_DIR, JSON_DIR)
+        # BASE_DIR = Path(__file__).resolve().parent.parent.parent
+        # JSON_DIR = Path('static/json/el_checklist.json')
+        # path = os.path.join(BASE_DIR, JSON_DIR)
 
         checklist_id = create_checklist_from_json(
                                                 order,
                                                 self.el_checklist_type,
-                                                checklist_name,
-                                                path
+                                                checklist_name
                                                 )
 
         if checklist_id is not None:

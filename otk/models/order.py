@@ -34,6 +34,30 @@ class OTKOrder(models.Model):
                                         default = None,
                                         related_name = 'el_checklist')
 
+    doc_checklist = models.OneToOneField(Checklist, 
+                                        on_delete=models.SET_NULL, 
+                                        unique=True,
+                                        blank = True, 
+                                        null = True, 
+                                        default = None,
+                                        related_name = 'doc_checklist')
+
+    zip_checklist = models.OneToOneField(Checklist, 
+                                        on_delete=models.SET_NULL, 
+                                        unique=True,
+                                        blank = True, 
+                                        null = True, 
+                                        default = None,
+                                        related_name = 'zip_checklist')
+
+    sal_checklist = models.OneToOneField(Checklist, 
+                                        on_delete=models.SET_NULL, 
+                                        unique=True,
+                                        blank = True, 
+                                        null = True, 
+                                        default = None,
+                                        related_name = 'sal_checklist')
+
     substation_type = models.CharField(max_length=15, 
                                         choices = SUBSTATION_TYPE_CHOICES,
                                         default = 'БКТП',

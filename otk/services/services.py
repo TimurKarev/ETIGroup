@@ -113,22 +113,21 @@ def create_bmchecklist_from_json(order: OTKOrder) -> Optional[int]:
     return checklist_entry.id
 '''
 
-def create_checklist_from_json(order: OTKOrder,
-                                checklist_type: str,
-                                checklist_name: str,
-                                json_path: Path) -> Optional[int]:
+def create_checklist_from_json(
+                            order: OTKOrder,
+                            checklist_type: str,
+                            checklist_name: str
+                            ) -> Optional[int]:
 
     '''Проверяем, есть ли уже такой чеклист в базе '''
-    if checklist_type=='bm_checklist' and order.bm_checklist is not None:
+    if is_checklist_exist(checklist_type, order):
         return None
-    
-    if checklist_type == 'el_checklist' and order.el_checklist is not None:
-        return None
-    
+
     checklist_entry = create_checklist(name = checklist_name)
     if checklist_entry is None:
         return None
 
+    json_path = get_json_path(checklist_type)
     with open(
             json_path, 
             "r", encoding="utf-8"
@@ -165,6 +164,45 @@ def create_checklist_from_json(order: OTKOrder,
         return None
     
     return checklist_entry.id
+
+'''Возвращает путь к соответствующему JSON файлу в зависимости от типа чеклиста '''
+def get_json_path(checklist_type) -> Path:
+    BASE_DIR = Path(__file__).resolve().parent.parent.parent
+    JSON_DIR = Path('static/json/')
+    path = os.path.join(BASE_DIR, JSON_DIR)
+    file_name = checklist_type + '.json'
+    path = os.path.join(path, file_name)
+    return path
+
+    
+
+'''Проверяет существует ли такой чеклист в базе
+    возвращает: 
+        True - если существует
+        False - если отсутствует
+    '''
+def is_checklist_exist(checklist_type, order) -> bool:
+
+    if checklist_type == 'bm_checklist' and order.bm_checklist is not None:
+        return True
+    
+    if checklist_type == 'el_checklist' and order.el_checklist is not None:
+        return True
+
+    if checklist_type == 'tm_checklist' and order.tm_checklist is not None:
+        return True
+
+    if checklist_type == 'doc_checklist' and order.doc_checklist is not None:
+        return True
+
+    if checklist_type == 'zip_checklist' and order.zip_checklist is not None:
+        return True
+
+    if checklist_type == 'sal_checklist' and order.sal_checklist is not None:
+        return True
+
+    return False
+
 
 
 ''' Создает чеклист'''

@@ -27,17 +27,16 @@ class BMCheckListCreateView(UserAccessMixin, TemplateView):
 
         checklist_name = "Строительная часть заказ №" + str(order.man_number)
 
-        BASE_DIR = Path(__file__).resolve().parent.parent.parent
-        JSON_DIR = Path('static/json/bm_checklist.json')
-        path = os.path.join(BASE_DIR, JSON_DIR)
+        # BASE_DIR = Path(__file__).resolve().parent.parent.parent
+        # JSON_DIR = Path('static/json/bm_checklist.json')
+        # path = os.path.join(BASE_DIR, JSON_DIR)
 
         
         bm_checklist_id = create_checklist_from_json(
                                                 order,
                                                 self.bm_checklist_type,
-                                                checklist_name,
-                                                path
-                                                    )
+                                                checklist_name
+                                                )
 
         if bm_checklist_id is not None:
             return HttpResponseRedirect(reverse('checklist_detail', kwargs={'pk': bm_checklist_id}))

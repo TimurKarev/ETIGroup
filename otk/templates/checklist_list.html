@@ -6,20 +6,32 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-2">
-                Заводской заказ
+            <div class="col-1">
+                Заказ
             </div>
 
-            <div class="col-2">
-                Телемеханика
+            <div class="col-1">
+                Стройка
             </div>
 
-            <div class="col-2">
-                Строительная часть
+            <div class="col-1">
+                Электрика
             </div>
 
-            <div class="col-2">
-                Электрическая часть
+            <div class="col-1">
+                ТМ
+            </div>
+
+            <div class="col-1">
+                Документы
+            </div>
+
+            <div class="col-1">
+                Зип
+            </div>
+
+            <div class="col-1">
+                Заказчик
             </div>
 
         </div>
@@ -27,21 +39,12 @@
 
         {% for otkorder in object_list %}
             <div class="row">
-                <div class="col-2">
+                <div class="col-1">
                     <a href="{% url 'order_detail' otkorder.pk %}"> {{ otkorder }} </a>
                 </div>
                 
-                <!-- Телемеханика-->
-                <div class="col-2">
-                    {% if  otkorder.tm_checklist  %}
-                        <a href="{% url 'tm_checklist_detail' otkorder.tm_checklist.id %}">просмотр </a>
-                    {% else %}
-                        <a href="{% url 'tm_checklist_create' otkorder.pk %}">создать </a>
-                    {% endif %}
-                </div>
-
                 <!-- Стройка-->
-                <div class="col-2">
+                <div class="col-1">
                     {% if  otkorder.bm_checklist  %}
                         <a href="{% url 'checklist_detail' otkorder.bm_checklist.id %}">просмотр </a>
                     {% else %}
@@ -50,9 +53,45 @@
                 </div>
 
                 <!-- Электрика-->
-                <div class="col-2">
+                <div class="col-1">
                     {% if  otkorder.el_checklist  %}
                         <a href="{% url 'checklist_detail' otkorder.el_checklist.id %}">просмотр </a>
+                    {% else %}
+                        <a href="{% url 'el_checklist_create' otkorder.pk %}">создать </a>
+                    {% endif %}
+                </div>
+
+                <!-- Телемеханика-->
+                <div class="col-1">
+                    {% if  otkorder.tm_checklist  %}
+                        <a href="{% url 'tm_checklist_detail' otkorder.tm_checklist.id %}">просмотр </a>
+                    {% else %}
+                        <a href="{% url 'tm_checklist_create' otkorder.pk %}">создать </a>
+                    {% endif %}
+                </div>
+
+                <!-- Документы-->
+                <div class="col-1">
+                    {% if  otkorder.doc_checklist  %}
+                        <a href="{% url 'checklist_detail' otkorder.doc_checklist.id %}">просмотр </a>
+                    {% else %}
+                        <a href="{% url 'el_checklist_create' otkorder.pk %}">создать </a>
+                    {% endif %}
+                </div>
+
+                <!-- Зип -->
+                <div class="col-1">
+                    {% if  otkorder.zip_checklist  %}
+                        <a href="{% url 'checklist_detail' otkorder.zip_checklist.id %}">просмотр </a>
+                    {% else %}
+                        <a href="{% url 'el_checklist_create' otkorder.pk %}">создать </a>
+                    {% endif %}
+                </div>
+
+                <!-- Ззаказчик -->
+                <div class="col-1">
+                    {% if  otkorder.sal_checklist  %}
+                        <a href="{% url 'checklist_detail' otkorder.sal_checklist.id %}">просмотр </a>
                     {% else %}
                         <a href="{% url 'el_checklist_create' otkorder.pk %}">создать </a>
                     {% endif %}
