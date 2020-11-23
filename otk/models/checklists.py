@@ -1,5 +1,7 @@
 from django.db import models
 
+from django.utils.translation import gettext_lazy as _
+
 class General(models.Model):
     name = models.CharField(max_length=100, 
                             default = '', 
@@ -64,14 +66,15 @@ class FourChoisePoint(SimplePoint):
     #     return str(self.name)
 
 
-PASSED_CHOICES = (
-    ('НЕ принято', 'НЕ принято'),
-    ("Принято", 'Принято'),
-)
 class YesNoChoisePoint(SimplePoint):
+    
+    class YesNo(models.TextChoices):
+        YES = 'Принято', _('ДА')
+        NO = 'НЕ Принято', _('НЕТ')
+    
     choise = models.CharField(max_length=15,
-                            choices = PASSED_CHOICES, 
-                            default = 'НЕ принято',
+                            choices = YesNo.choices, 
+                            default = YesNo.NO,
                             blank = False, 
                             null = False,
                             )
