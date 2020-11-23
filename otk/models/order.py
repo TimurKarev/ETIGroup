@@ -19,12 +19,21 @@ class OTKOrder(models.Model):
                                         default = None)
 
     bm_checklist = models.OneToOneField(Checklist, 
+                                        on_delete=models.SET_NULL,
+                                        unique=True,
+                                        blank = True, 
+                                        null = True, 
+                                        default = None,
+                                        related_name = 'bm_checklist')
+
+    el_checklist = models.OneToOneField(Checklist, 
                                         on_delete=models.SET_NULL, 
                                         unique=True,
                                         blank = True, 
                                         null = True, 
-                                        default = None)
-    
+                                        default = None,
+                                        related_name = 'el_checklist')
+
     substation_type = models.CharField(max_length=15, 
                                         choices = SUBSTATION_TYPE_CHOICES,
                                         default = 'БКТП',

@@ -5,15 +5,23 @@
 
     <div class="container">
         <div class="row">
+
             <div class="col-2">
                 Заводской заказ
             </div>
+
             <div class="col-2">
                 Телемеханика
             </div>
+
             <div class="col-2">
                 Строительная часть
             </div>
+
+            <div class="col-2">
+                Электрическая часть
+            </div>
+
         </div>
         <br/>
 
@@ -22,6 +30,8 @@
                 <div class="col-2">
                     <a href="{% url 'order_detail' otkorder.pk %}"> {{ otkorder }} </a>
                 </div>
+                
+                <!-- Телемеханика-->
                 <div class="col-2">
                     {% if  otkorder.tm_checklist  %}
                         <a href="{% url 'tm_checklist_detail' otkorder.tm_checklist.id %}">просмотр </a>
@@ -29,6 +39,8 @@
                         <a href="{% url 'tm_checklist_create' otkorder.pk %}">создать </a>
                     {% endif %}
                 </div>
+
+                <!-- Стройка-->
                 <div class="col-2">
                     {% if  otkorder.bm_checklist  %}
                         <a href="{% url 'checklist_detail' otkorder.bm_checklist.id %}">просмотр </a>
@@ -36,6 +48,16 @@
                         <a href="{% url 'bm_checklist_create' otkorder.pk %}">создать </a>
                     {% endif %}
                 </div>
+
+                <!-- Электрика-->
+                <div class="col-2">
+                    {% if  otkorder.el_checklist  %}
+                        <a href="{% url 'checklist_detail' otkorder.el_checklist.id %}">просмотр </a>
+                    {% else %}
+                        <a href="{% url 'el_checklist_create' otkorder.pk %}">создать </a>
+                    {% endif %}
+                </div>
+
             </div>
         {% endfor %}
 {% endblock content %}
