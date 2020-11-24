@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='fourchoisepoint',
-            name='choise',
+            name='choice',
             field=models.CharField(choices=[('Не проверено', 'Не проверено'), ('Не используется', 'Не используется'), ('Принято', 'Принято'), ('Коментарий', 'Коментарий')], default='Не проверено', max_length=15),
         ),
         migrations.CreateModel(
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(default='', max_length=100)),
-                ('choise', models.CharField(choices=[('БКТП', 'БКТП')], default='БКТП', max_length=15)),
+                ('choice', models.CharField(choices=[('БКТП', 'БКТП')], default='БКТП', max_length=15)),
                 ('checklist', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='otk.chlistsection')),
             ],
             options={

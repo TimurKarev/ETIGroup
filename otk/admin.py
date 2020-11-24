@@ -1,5 +1,5 @@
 from django.contrib import admin
-from otk.models.order import OTKOrder
+from otk.models.otk_order import OTKOrder
 from otk.models.tm_checklists import *
 from otk.models.checklists import *
 
@@ -20,6 +20,6 @@ admin.site.register(ChListSection)
 admin.site.register(StringPoint)
 admin.site.register(IntegerPoint)
 
-admin.site.register(FourChoisePoint)
+admin.site.register(FourChoicePoint)
 admin.site.register(YesNoChoisePoint)
 admin.site.register(SubstationTypePoint)

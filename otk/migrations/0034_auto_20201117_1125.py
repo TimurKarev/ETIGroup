@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(default='', max_length=40)),
-                ('choise', models.CharField(choices=[('НЕ принято', 'НЕ принято'), ('Принято', 'Принято')], default='НЕ принято', max_length=15)),
+                ('choice', models.CharField(choices=[('НЕ принято', 'НЕ принято'), ('Принято', 'Принято')], default='НЕ принято', max_length=15)),
                 ('checklist', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='otk.chlistsection')),
             ],
             options={
@@ -61,7 +61,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(default='', max_length=40)),
-                ('choise', models.CharField(choices=[('Не проверено', 'Не проверено'), ('Не используется', 'Не используется'), ('Принято', 'Принято'), ('Замечания', 'Замечания')], default='Не проверено', max_length=15)),
+                ('choice', models.CharField(choices=[('Не проверено', 'Не проверено'), ('Не используется', 'Не используется'), ('Принято', 'Принято'), ('Замечания', 'Замечания')], default='Не проверено', max_length=15)),
                 ('checklist', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='otk.chlistsection')),
             ],
             options={

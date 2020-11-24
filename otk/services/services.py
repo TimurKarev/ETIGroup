@@ -4,7 +4,7 @@ from typing import Optional
 from pathlib import Path
 import os
 
-from otk.models.order import OTKOrder
+from otk.models.otk_order import OTKOrder
 from otk.models.checklists import *
 
 ''' Создает чек лист телемеханики и добавляет его к номеру заказа 
@@ -229,7 +229,7 @@ def create_section_entry(name: str, key) -> Optional[ChListSection]:
     return section
 
 ''' Создает текстовой пункт и добавляет ее в секцию'''
-def create_string_point_entry(name: str, key: ChListSection) -> Optional[FourChoisePoint]:
+def create_string_point_entry(name: str, key: ChListSection) -> Optional[FourChoicePoint]:
     try:
         string_point_entry = StringPoint(name = name, checklist = key)
         string_point_entry.save()
@@ -240,9 +240,9 @@ def create_string_point_entry(name: str, key: ChListSection) -> Optional[FourCho
 
 
 ''' Создает проверочный пункт и добавляет ее в секцию'''
-def create_four_point_entry(name: str, key: ChListSection) -> Optional[FourChoisePoint]:
+def create_four_point_entry(name: str, key: ChListSection) -> Optional[FourChoicePoint]:
     try:
-        four_point_entry = FourChoisePoint(name = name, checklist = key)
+        four_point_entry = FourChoicePoint(name = name, checklist = key)
         four_point_entry.save()
     except Exception as e:
         print(e, '- create_four_point_entry')

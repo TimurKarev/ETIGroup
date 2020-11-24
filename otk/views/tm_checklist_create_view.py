@@ -5,7 +5,7 @@ from otk.services.services import create_tmchecklist_from_order_model
 from django.views.generic import TemplateView
 
 
-from otk.models.order import OTKOrder
+from otk.models.otk_order import OTKOrder
 from otk.models.tm_checklists import *
 
 from django.urls import reverse

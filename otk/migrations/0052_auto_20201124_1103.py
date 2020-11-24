@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='fourchoisepoint',
-            name='choise',
+            name='choice',
             field=models.CharField(choices=[('Не проверено', 'Unchecked'), ('Не используется', 'Unused'), ('Принято', 'Appoved'), ('Коментарий', 'Comment')], default='Не проверено', max_length=15),
         ),
     ]

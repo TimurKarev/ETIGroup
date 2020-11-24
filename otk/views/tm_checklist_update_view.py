@@ -4,7 +4,7 @@ from django.forms.models import inlineformset_factory
 
 from django.views.generic.edit import  UpdateView
 
-from otk.models.order import OTKOrder
+from otk.models.otk_order import OTKOrder
 from otk.models.tm_checklists import *
 # from otk.models.order import RM6CheckList
 # from otk.models.order import SKTMCheckList
