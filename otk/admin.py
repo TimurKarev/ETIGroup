@@ -18,5 +18,8 @@ admin.site.register(SUCheckList)
 admin.site.register(Checklist)
 admin.site.register(ChListSection)
 admin.site.register(StringPoint)
+admin.site.register(IntegerPoint)
+
 admin.site.register(FourChoisePoint)
 admin.site.register(YesNoChoisePoint)
+admin.site.register(SubstationTypePoint)

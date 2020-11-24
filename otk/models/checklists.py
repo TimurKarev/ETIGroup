@@ -13,6 +13,7 @@ class General(models.Model):
     def __str__(self):
         return str(self.name)
 
+
 class Checklist(General):
     
     class Meta:
@@ -24,14 +25,14 @@ class ChListSection(General):
     
     class Meta:
         db_table = 'chlistsection'
-        
+
 
 class SimplePoint(General):
     checklist = models.ForeignKey(ChListSection, on_delete=models.CASCADE, null=True)
     
     class Meta:
         abstract = True
-    
+
 
 class StringPoint(SimplePoint):
     string = models.CharField(max_length=100, default = '', blank = True)
@@ -39,16 +40,25 @@ class StringPoint(SimplePoint):
     class Meta:
         db_table = 'stringpoint'
 
-ELEMENT_CHOICES = (
-    ('Не проверено', 'Не проверено'),
-    ('Не используется','Не используется'),
-    ('Принято', 'Принято'),
-    ('Замечания','Замечания'),
-)
+
+class IntegerPoint(SimplePoint):
+    integer = models.IntegerField(default = 0, blank = True)
+    
+    class Meta:
+        db_table = 'integerpoint'
+
+
 class FourChoisePoint(SimplePoint):
-    choise = models.CharField(max_length=15, 
-                            choices = ELEMENT_CHOICES, 
-                            default = 'Не проверено',
+    
+    class Four(models.TextChoices):
+        UNCHECKED = 'Не проверено', _('Не проверено')
+        UNUSED = 'Не используется', _('Не используется')
+        APPOVED = 'Принято', _('Принято')
+        COMMENT = 'Коментарий', _('Коментарий')
+
+    choise = models.CharField(max_length=15,
+                            choices = Four.choices, 
+                            default = Four.UNCHECKED,
                             blank = False, 
                             null = False,
                             )
@@ -80,3 +90,18 @@ class YesNoChoisePoint(SimplePoint):
                             )
     class Meta:
         db_table = 'yesnochoisepoint'
+
+
+class SubstationTypePoint(SimplePoint):
+    
+    class SunType(models.TextChoices):
+        BKTP = 'БКТП', _('БКТП')
+    
+    choise = models.CharField(max_length=15,
+                            choices = SunType.choices, 
+                            default = SunType.BKTP,
+                            blank = False, 
+                            null = False,
+                            )
+    class Meta:
+        db_table = 'substationpoint'

@@ -58,6 +58,7 @@ class OTKOrder(models.Model):
                                         default = None,
                                         related_name = 'sal_checklist')
 
+
     substation_type = models.CharField(max_length=15, 
                                         choices = SUBSTATION_TYPE_CHOICES,
                                         default = 'БКТП',
