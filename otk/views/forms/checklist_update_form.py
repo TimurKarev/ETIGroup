@@ -4,7 +4,7 @@ from otk.models.checklists import *
 
 SectionFourChoiseFormset = inlineformset_factory(
     ChListSection,
-    FourChoisePoint,
+    FourChoicePoint,
     exclude=('id', 'key'),
     extra = 0
 )

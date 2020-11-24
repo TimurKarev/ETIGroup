@@ -1,6 +1,6 @@
 from otk.views.mixins.user_access_mixin import UserAccessMixin
 
-from otk.models.order import OTKOrder
+from otk.models.otk_order import OTKOrder
 
 from django.views.generic import  DetailView
 

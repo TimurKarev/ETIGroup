@@ -10,7 +10,7 @@ from django.http import HttpResponseRedirect
 from pathlib import Path
 import os
 
-from otk.models.order import OTKOrder
+from otk.models.otk_order import OTKOrder
 
 class BMCheckListCreateView(UserAccessMixin, TemplateView):
     permission_required = 'otk.add_otkchecklist'
