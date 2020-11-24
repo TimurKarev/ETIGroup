@@ -59,17 +59,6 @@ class OTKOrder(models.Model):
                                         related_name = 'sal_checklist')
 
 
-    substation_type = models.CharField(max_length=15, 
-                                        choices = SUBSTATION_TYPE_CHOICES,
-                                        default = 'БКТП',
-                                        blank = False, 
-                                        null = False,
-                                        verbose_name = 'Тип подстанции')
-    
-    rm_number = models.IntegerField(unique=False, default=4)
-    ybp_number = models.IntegerField(unique=False, default=2)
-    su_number = models.IntegerField(unique=False, default=2)
-    
     def __str__(self):
         return str(self.man_number)
 
