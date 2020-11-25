@@ -7,6 +7,8 @@ import os
 from otk.models.otk_order import OTKOrder, OrderConfigSection
 from otk.models.checklists import *
 
+from django.conf import settings
+
 ''' Создает чек лист телемеханики и добавляет его к номеру заказа 
     Возвращает id чеклиста'''
 
@@ -292,3 +294,9 @@ def create_substation_type_entry_for_order_config(
         print(e, '- substation_type_entry')
         return None
     return substation_type_entry
+
+def get_json_file(string):
+    STATIC_DIR = getattr(settings, "STATICFILES_DIRS", None)
+    STATIC_DIR = STATIC_DIR[0]
+    json_dir = os.path.join(STATIC_DIR, 'json')
+    return os.path.join(json_dir, string + '.json')
