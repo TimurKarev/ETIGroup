@@ -7,8 +7,6 @@ from django.urls import reverse
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 
-from pathlib import Path
-import os
 
 from otk.models.otk_order import OTKOrder
 
@@ -26,10 +24,6 @@ class ELCheckListCreateView(UserAccessMixin, TemplateView):
         order = OTKOrder.objects.get(id=int(kwargs['pk']))
         
         checklist_name = "Электрическая часть заказ №" + str(order.man_number)
-
-        # BASE_DIR = Path(__file__).resolve().parent.parent.parent
-        # JSON_DIR = Path('static/json/el_checklist.json')
-        # path = os.path.join(BASE_DIR, JSON_DIR)
 
         checklist_id = create_checklist_from_json(
                                                 order,

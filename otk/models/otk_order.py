@@ -1,6 +1,6 @@
 from django.db import models
 from otk.models.tm_checklists import TMCheckList
-from otk.models.checklists import Checklist
+from otk.models.checklists import Checklist, OrderConfigSection
 from django.urls import reverse
 
 
@@ -54,6 +54,14 @@ class OTKOrder(models.Model):
                                          null=True,
                                          default=None,
                                          related_name='sal_checklist')
+
+    config_section = models.OneToOneField(OrderConfigSection,
+                                          on_delete=models.SET_NULL,
+                                          unique=True,
+                                          blank=True,
+                                          null=True,
+                                          default=None,
+                                          related_name='config_section')
 
     def __str__(self):
         return str(self.man_number)

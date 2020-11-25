@@ -1,0 +1,20 @@
+[
+  {
+    "name": "config",
+    "points":
+      [
+        {
+          "name": "Количество ТСН",
+          "point_type": "integer"
+        },
+        {
+          "name": "Количество РУВН",
+          "point_type": "integer"
+        },
+        {
+          "name": "Количество RM6",
+          "point_type": "integer"
+        }
+      ]
+  }
+]

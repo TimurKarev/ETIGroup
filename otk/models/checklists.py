@@ -20,6 +20,12 @@ class Checklist(General):
         db_table = 'checklist'
 
 
+class OrderConfigSection(General):
+
+    class Meta:
+        db_table = 'orderconfigsection'
+
+
 class ChListSection(General):
     checklist = models.ForeignKey(Checklist, on_delete=models.CASCADE, null=True)
 
@@ -29,6 +35,7 @@ class ChListSection(General):
 
 class SimplePoint(General):
     checklist = models.ForeignKey(ChListSection, on_delete=models.CASCADE, null=True)
+    order_config = models.ForeignKey(OrderConfigSection, on_delete=models.CASCADE, null=True)
 
     class Meta:
         abstract = True
