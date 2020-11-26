@@ -40,7 +40,7 @@ class OrderCreateView(UserAccessMixin, TemplateView):
         if order.is_valid() and type_form.is_valid():
             print(order.cleaned_data, type_form.cleaned_data)
             order_num = order.cleaned_data['man_number']
-            type_string = type_form.cleaned_data['choice']
+            type_string = type_form.cleaned_data['point_value']
             order_id = self.create_order(order_num, type_string)
             if order_id is False:
                 return HttpResponse(str.format(f'Не удалось создать зааз'))
@@ -48,7 +48,7 @@ class OrderCreateView(UserAccessMixin, TemplateView):
             return HttpResponse(str.format(
                 f'Ошибка валидации \n {order.errors} \n {type_form.errors}'))
 
-        return HttpResponseRedirect(reverse('order_config', kwargs={'pk': order_id}))
+        return HttpResponseRedirect(reverse('order_create_config', kwargs={'pk': order_id}))
 
     def create_order(self, order_num, type_sub) -> Optional[int]:
 

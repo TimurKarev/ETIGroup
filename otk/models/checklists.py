@@ -37,19 +37,21 @@ class SimplePoint(General):
     checklist = models.ForeignKey(ChListSection, on_delete=models.CASCADE, null=True)
     order_config = models.ForeignKey(OrderConfigSection, on_delete=models.CASCADE, null=True)
 
+    serial_number = models.IntegerField(default=0, blank=True)
+
     class Meta:
         abstract = True
 
 
 class StringPoint(SimplePoint):
-    string = models.CharField(max_length=100, default='', blank=True)
+    point_value = models.CharField(max_length=100, default='', blank=True)
 
     class Meta:
         db_table = 'stringpoint'
 
 
 class IntegerPoint(SimplePoint):
-    integer = models.IntegerField(default=0, blank=True)
+    point_value = models.IntegerField(default=0, blank=True)
 
     class Meta:
         db_table = 'integerpoint'
@@ -62,7 +64,7 @@ class FourChoicePoint(SimplePoint):
         APPROVED = 'Принято', _('Принято')
         COMMENT = 'Коментарий', _('Коментарий')
 
-    choice = models.CharField(max_length=15,
+    point_value = models.CharField(max_length=15,
                               choices=Four.choices,
                               default=Four.UNCHECKED,
                               blank=False,
@@ -82,12 +84,12 @@ class FourChoicePoint(SimplePoint):
     #     return str(self.name)
 
 
-class YesNoChoisePoint(SimplePoint):
+class YesNoChoicePoint(SimplePoint):
     class YesNo(models.TextChoices):
         YES = 'Принято', _('ДА')
         NO = 'НЕ Принято', _('НЕТ')
 
-    choice = models.CharField(max_length=15,
+    point_value = models.CharField(max_length=15,
                               choices=YesNo.choices,
                               default=YesNo.NO,
                               blank=False,
@@ -102,7 +104,7 @@ class SubstationTypePoint(SimplePoint):
     class SunType(models.TextChoices):
         BKTP = 'БКТП', _('БКТП')
 
-    choice = models.CharField(max_length=15,
+    point_value = models.CharField(max_length=15,
                               choices=SunType.choices,
                               default=SunType.BKTP,
                               blank=False,

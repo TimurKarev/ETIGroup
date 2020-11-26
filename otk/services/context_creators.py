@@ -30,7 +30,7 @@ def get_detail_context_from_checklist_object(checklist_object) -> Optional[list]
             fp_dict['four_point' + str(fp_count)] = fp_list
         sec_dict['four_points'] = fp_dict
 
-        yes_no = section.yesnochoisepoint_set.all()[0]
+        yes_no = section.yesnochoicepoint_set.all()[0]
         sec_dict['yes_no'] = {'name': yes_no.name,
                             'choice': yes_no.choice}
         data.append(sec_dict)
@@ -39,11 +39,6 @@ def get_detail_context_from_checklist_object(checklist_object) -> Optional[list]
 
 from django.forms.models import inlineformset_factory
 from django import forms
-
-class FourChoisePointForm(forms.ModelForm):
-    class Meta:
-        model = FourChoicePoint
-        fields = ['choice', 'comment']
 
 '''Возвращает список сущностей для присоединения к context в UpdateView 
     для конкретного чеклиста'''

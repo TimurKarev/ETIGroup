@@ -22,5 +22,5 @@ admin.site.register(StringPoint)
 admin.site.register(IntegerPoint)
 
 admin.site.register(FourChoicePoint)
-admin.site.register(YesNoChoisePoint)
+admin.site.register(YesNoChoicePoint)
 admin.site.register(SubstationTypePoint)

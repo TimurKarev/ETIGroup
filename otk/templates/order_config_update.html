@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% load addition_tags %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <input type="submit" value="Update">
+<br/>
+    {% for point in section %}
+        {{ point.name }} - {{ point.form.point_value }} <br/>
+    {% endfor %}
+</form>
+
+{% endblock content %}

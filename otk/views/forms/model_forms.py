@@ -12,4 +12,28 @@ class OTKOrderForm(ModelForm):
 class SubstationTypePointForm(ModelForm):
     class Meta:
         model = SubstationTypePoint
-        fields = ['choice']
+        fields = ['point_value']
+
+
+class StringPointForm(ModelForm):
+    class Meta:
+        model = StringPoint
+        fields = ['point_value']
+
+
+class IntegerPointForm(ModelForm):
+    class Meta:
+        model = IntegerPoint
+        fields = ['point_value']
+
+    def is_valid(self):
+        super().is_valid()
+        print(self.instance)
+        print(self.cleaned_data)
+
+
+
+class FourChoicePointForm(ModelForm):
+    class Meta:
+        model = FourChoicePoint
+        fields = ['point_value', 'comment']

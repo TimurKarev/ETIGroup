@@ -249,9 +249,22 @@ def create_order_config_section_entry(name: str) -> Optional[OrderConfigSection]
 
 
 ''' Создает текстовой пункт и добавляет ее в секцию'''
-def create_string_point_entry(name: str, key: ChListSection) -> Optional[StringPoint]:
+
+
+def create_string_point_entry(name: str,
+                              def_value,
+                              serial_number,
+                              key,
+                              is_order_section: bool = False) -> Optional[StringPoint]:
+
     try:
-        string_point_entry = StringPoint(name=name, checklist=key)
+        if is_order_section:
+            string_point_entry = StringPoint(name=name, order_config=key)
+        else:
+            string_point_entry = StringPoint(name=name, checklist=key)
+
+        string_point_entry.point_value = str(def_value)
+        string_point_entry.serial_number = serial_number
         string_point_entry.save()
     except Exception as e:
         print(e, '- create_string_point_entry')
@@ -260,6 +273,8 @@ def create_string_point_entry(name: str, key: ChListSection) -> Optional[StringP
 
 
 ''' Создает проверочный пункт и добавляет ее в секцию'''
+
+
 def create_four_point_entry(name: str, key: ChListSection) -> Optional[FourChoicePoint]:
     try:
         four_point_entry = FourChoicePoint(name=name, checklist=key)
@@ -270,12 +285,10 @@ def create_four_point_entry(name: str, key: ChListSection) -> Optional[FourChoic
     return four_point_entry
 
 
-''' Создает проверочный ДА/НЕТ пункт и добавляет ее в секцию'''
-
-
-def create_yes_no_entry(name: str, key: ChListSection) -> Optional[YesNoChoisePoint]:
+def create_yes_no_entry(name: str, key: ChListSection) -> Optional[YesNoChoicePoint]:
+    """ Создает проверочный ДА/НЕТ пункт и добавляет ее в секцию"""
     try:
-        yes_no_point_entry = YesNoChoisePoint(name=name, checklist=key)
+        yes_no_point_entry = YesNoChoicePoint(name=name, checklist=key)
         yes_no_point_entry.save()
     except Exception as e:
         print(e, '- create_yes_no_entry')
@@ -283,17 +296,35 @@ def create_yes_no_entry(name: str, key: ChListSection) -> Optional[YesNoChoisePo
     return yes_no_point_entry
 
 
-def create_substation_type_entry_for_order_config(
-                                name: str,
-                                choice: str,
-                                key: OrderConfigSection) -> Optional[SubstationTypePoint]:
+def create_integer_point_entry(name: str, def_value, serial_number, key, is_order_section: bool = False):
+    """ Создает числовой пункт и добавляет ее в секцию"""
     try:
-        substation_type_entry = SubstationTypePoint(name=name, choice=choice, order_config=key)
+        if is_order_section:
+            integer_point_entry = IntegerPoint(name=name, order_config=key)
+        else:
+            integer_point_entry = IntegerPoint(name=name, checklist=key)
+        integer_point_entry.point_value = def_value
+        integer_point_entry.serial_number = serial_number
+        integer_point_entry.save()
+    except Exception as e:
+        print(e, '- create_integer_point_entry')
+        return None
+    return integer_point_entry
+
+
+def create_substation_type_entry_for_order_config(
+        name: str,
+        choice: str,
+        key: OrderConfigSection) -> Optional[SubstationTypePoint]:
+
+    try:
+        substation_type_entry = SubstationTypePoint(name=name, point_value=choice, order_config=key)
         substation_type_entry.save()
     except Exception as e:
         print(e, '- substation_type_entry')
         return None
     return substation_type_entry
+
 
 def get_json_file(string):
     STATIC_DIR = getattr(settings, "STATICFILES_DIRS", None)
