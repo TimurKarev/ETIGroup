@@ -37,6 +37,6 @@ class OrderConfigUpdateView(UserAccessMixin, TemplateView):
         print(context['section'])
         for point in context['section']:
             point['form'].is_valid()
-        #     print(point['form'].cleaned_data)
-        #     point['form'].save()
+            print(point['form'].cleaned_data)
+            point['form'].save()
 

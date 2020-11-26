@@ -10,23 +10,23 @@ def get_config_section_from_order_id(order_id):
 def get_section_context(section, data=None):
     all_points_entries = []
 
-    for p in section.stringpoint_set.all():
+    for i, p in enumerate(section.stringpoint_set.all()):
         all_points_entries.append(
             {
                 "serial_number": p.serial_number,
                 "name": p.name,
                 "value": p.point_value,
-                "form": StringPointForm(instance=p, data=data)
+                "form": StringPointForm(instance=p, data=data, prefix='s'+str(i))
             }
         )
 
-    for p in section.integerpoint_set.all():
+    for i, p in enumerate(section.integerpoint_set.all()):
         all_points_entries.append(
             {
                 "serial_number": p.serial_number,
                 "name": p.name,
                 "value": p.point_value,
-                "form": IntegerPointForm(instance=p, data=data)
+                "form": IntegerPointForm(instance=p, data=data, prefix='i'+str(i))
             }
         )
 
