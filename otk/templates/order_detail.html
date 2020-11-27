@@ -9,28 +9,29 @@
                     <tbody>
                         <tr>
                             <td>Номер заводского заказа</td>
-                            <td>{{ otkorder.man_number }}</td>
+                            <td>{{ order_number }}</td>
                         </tr>
                         <tr>
                             <td>Тип подстанции</td>
-                            <td>{{ otkorder.substation_type }}</td>
-                        </tr>
-                        <tr>
-                            <td>Количество RM6</td>
-                            <td>{{ otkorder.rm_number }}</td>
-                        </tr>
-                        <tr>
-                            <td>Количество УВР</td>
-                            <td>{{ otkorder.ybp_number }}</td>
-                        </tr>
-                        <tr>
-                            <td>Количество ШУ</td>
-                            <td>{{ otkorder.su_number }}</td>
+                            <td>{{ subst_type }}</td>
                         </tr>
 
+
+                        {% for point in config %}
+                        <tr>
+                            <td>{{point.name}}</td>
+                            <td>{{point.value}}</td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
+
+                <td><a href="{% url 'order_update_config' order_pk %}">Изменить конфигурацию</a> </td>
+                <br/><br/>
+                <td><a href="{% url 'checklist_list' %}">К списку заказов</a> </td>
+
             </div>
         </div>
     </div>
+
 {% endblock content %}

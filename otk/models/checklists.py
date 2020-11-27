@@ -112,4 +112,4 @@ class SubstationTypePoint(SimplePoint):
                               )
 
     class Meta:
-        db_table = 'substationpoint'
+        db_table = 'substationtypepoint'

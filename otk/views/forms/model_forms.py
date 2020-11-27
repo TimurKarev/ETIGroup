@@ -26,14 +26,14 @@ class IntegerPointForm(ModelForm):
         model = IntegerPoint
         fields = ['point_value']
 
-    def is_valid(self):
-        super().is_valid()
-        print(self.instance)
-        print(self.cleaned_data)
-
-
 
 class FourChoicePointForm(ModelForm):
     class Meta:
         model = FourChoicePoint
         fields = ['point_value', 'comment']
+
+
+class YesNoChoicePointForm(ModelForm):
+    class Meta:
+        model = FourChoicePoint
+        fields = ['point_value']
