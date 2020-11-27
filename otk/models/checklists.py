@@ -34,7 +34,7 @@ class ChListSection(General):
 
 
 class SimplePoint(General):
-    checklist = models.ForeignKey(ChListSection, on_delete=models.CASCADE, null=True)
+    checklist_section = models.ForeignKey(ChListSection, on_delete=models.CASCADE, null=True)
     order_config = models.ForeignKey(OrderConfigSection, on_delete=models.CASCADE, null=True)
 
     serial_number = models.IntegerField(default=0, blank=True)

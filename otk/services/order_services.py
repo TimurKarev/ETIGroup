@@ -14,6 +14,8 @@ def get_config_section_from_order_id(order_id):
 
 
 def get_section_context(section, data=None, section_prefix='sec'):
+    """Возвращает дату из модели"""
+    section_dict = {'name': section.name}
     all_points_entries = []
 
     for i, p in enumerate(section.stringpoint_set.all()):
@@ -74,4 +76,5 @@ def get_section_context(section, data=None, section_prefix='sec'):
 
     all_points_entries = sorted(all_points_entries, key=lambda serial: serial['serial_number'])
 
-    return all_points_entries
+    section_dict['points'] = all_points_entries
+    return section_dict

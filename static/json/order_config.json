@@ -9,19 +9,14 @@
           "value": 2
         },
         {
-          "point_type": "string",
-          "name": "Серийный номер",
-          "value": "Рото попо"
-        },
-        {
           "point_type": "integer",
           "name": "Количество РУВН",
-          "value": 5
+          "value": 2
         },
         {
           "point_type": "integer",
           "name": "Количество RM6",
-          "value": 9
+          "value": 2
         }
       ]
   }

@@ -2,7 +2,7 @@ from otk.services.order_services import get_config_section_from_order_id
 from otk.views.mixins.user_access_mixin import UserAccessMixin
 from django.views.generic.base import RedirectView
 
-from otk.services.services import get_json_file, create_integer_point_entry, create_string_point_entry
+from otk.services.services import get_json_data, create_integer_point_entry, create_string_point_entry
 
 from django.urls import reverse
 from django.http import HttpResponse
@@ -32,14 +32,7 @@ class OrderConfigCreateView(UserAccessMixin, RedirectView):
         return super().get_redirect_url(*args, **kwargs)
 
     def create_config(self, config_section_entry):
-        json_path = get_json_file(self.order_checklist_type)
-        print(json_path)
-
-        with open(
-                json_path,
-                "r", encoding="utf-8"
-        ) as read_file:
-            sections = json.load(read_file)
+        sections = get_json_data(self.order_checklist_type)
 
         config_section = None
         for section in sections:
@@ -65,7 +58,6 @@ class OrderConfigCreateView(UserAccessMixin, RedirectView):
             elif point['point_type'] == 'string':
                 create_string_point_entry(
                     point['name'],
-                    point['value'],
                     i + 1,
                     config_section_entry,
                     True)

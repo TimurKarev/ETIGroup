@@ -1,7 +1,7 @@
 from otk.views.mixins.user_access_mixin import UserAccessMixin
 from django.views.generic import TemplateView
 
-from otk.services.services import create_checklist_from_json
+from otk.services.services import create_checklist_by_checklist_type_from_json
 
 from django.urls import reverse
 from django.http import HttpResponse
@@ -19,13 +19,12 @@ class ELCheckListCreateView(UserAccessMixin, TemplateView):
     
     el_checklist_type = 'el_checklist'
 
-
     def get(self, request, *args, **kwargs):
         order = OTKOrder.objects.get(id=int(kwargs['pk']))
         
         checklist_name = "Электрическая часть заказ №" + str(order.man_number)
 
-        checklist_id = create_checklist_from_json(
+        checklist_id = create_checklist_by_checklist_type_from_json(
                                                 order,
                                                 self.el_checklist_type,
                                                 checklist_name

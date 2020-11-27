@@ -13,117 +13,13 @@ from django.conf import settings
     Возвращает id чеклиста'''
 
 
-def create_tmchecklist_from_order_model(num_order: str) -> Optional[int]:
-    try:
-        tm_checklist = TMCheckList()
-        tm_checklist.save()
-    except:
-        print('Error- create_tmchecklist_from_order_model -> tm_checklist.save()')
-        return None
-
-    try:
-        tm_srtm = SRTMCheckList(checklist=tm_checklist)
-        tm_srtm.save()
-    except:
-        print('Error- create_tmchecklist_from_order_model -> tm_srtm.save()')
-        return None
-
-    try:
-        tm_sktm = SKTMCheckList(checklist=tm_checklist)
-        tm_sktm.save()
-    except:
-        print('Error- create_tmchecklist_from_order_model -> tm_sktm.save()')
-        return None
-
-    try:
-        tm_ktmue = KTMUECheckList(checklist=tm_checklist)
-        tm_ktmue.save()
-    except:
-        print('Error- create_tmchecklist_from_order_model -> tm_ktmue.save()')
-        return None
-
-    order = OTKOrder.objects.get(id=num_order)
-    rm_number = order.rm_number
-
-    try:
-        for i in range(rm_number):
-            rm6_checklist = RM6CheckList(checklist=tm_checklist)
-            rm6_checklist.save()
-    except Exception as e:
-        print(e + '\nError- create_tmchecklist_from_order_model -> rm6_checklist.save() iteration' + str(i))
-        return None
-
-    ybp_number = order.ybp_number
-    try:
-        for i in range(ybp_number):
-            ybp_checklist = YBPCheckList(checklist=tm_checklist)
-            ybp_checklist.save()
-    except Exception as e:
-        print(e + '\nError- create_tmchecklist_from_order_model -> ybp_checklist.save() iteration' + str(i))
-        return None
-
-    su_number = order.su_number
-    try:
-        for i in range(su_number):
-            su_checklist = SUCheckList(checklist=tm_checklist)
-            su_checklist.save()
-    except Exception as e:
-        print(e + '\nError- create_tmchecklist_from_order_model -> su_checklist.save() iteration' + str(i))
-        return None
-
-    try:
-        order.tm_checklist = tm_checklist
-        order.save()
-    except Exception as e:
-        print(e + '\nError- create_tmchecklist_from_order_model -> order.save() iteration' + str(i))
-        return None
-
-    return tm_checklist.id if tm_checklist else None
-
-
-'''
-def create_bmchecklist_from_json(order: OTKOrder) -> Optional[int]:
-
-    if order.bm_checklist is not None:
-        return None
-    
-    checklist_entry = create_checklist(name = 'Строительная часть заказ №' + str(order.man_number))
-    if checklist_entry is None:
-        return None
-
-    #TODO вынести в отдельный функцию придумать фабрику
-    BASE_DIR = Path(__file__).resolve().parent.parent.parent
-    JSON_DIR = Path('static/json/bm_checklist.json')
-    with open(os.path.join(BASE_DIR, JSON_DIR), 
-                "r", encoding="utf-8") as read_file:
-        data = json.load(read_file)
-    ######################################################
-
-    for section in data['sections']:
-        section_entry = create_section_entry(section['name'], checklist_entry)
-        if section_entry is not None:
-            for four_point in section['four_points']:
-                create_four_point_entry(four_point, section_entry)
-            create_yes_no_entry(section['yes_no'], section_entry)
-    
-    try:
-        order.bm_checklist = checklist_entry
-        order.save()
-    except Exception as e:
-        print(e)
-        print('Error- order.save()')
-        return None
-    
-    return checklist_entry.id
-'''
-
-
-def create_checklist_from_json(
+def create_checklist_by_checklist_type_from_json(
         order: OTKOrder,
         checklist_type: str,
         checklist_name: str
-) -> Optional[int]:
-    '''Проверяем, есть ли уже такой чеклист в базе '''
+        ) -> Optional[int]:
+
+    # Проверяем, есть ли уже такой чеклист в базе
     if is_checklist_exist(checklist_type, order):
         return None
 
@@ -131,31 +27,29 @@ def create_checklist_from_json(
     if checklist_entry is None:
         return None
 
-    json_path = get_json_path(checklist_type)
-    with open(
-            json_path,
-            "r", encoding="utf-8"
-    ) as read_file:
-        data = json.load(read_file)
+    data = get_json_data(checklist_type)
 
-    for section in data['sections']:
-        section_entry = create_cl_section_entry(section['name'], checklist_entry)
-        if section_entry is not None:
+    for section in data:
+        section_quantity = get_section_number(order, section['name'], checklist_type)
 
-            if 'string_points' in section:
-                for string_point in section['string_points']:
-                    create_string_point_entry(string_point, section_entry)
+        for section_number in range(section_quantity):
 
-            if 'four_points' in section:
-                for four_point in section['four_points']:
-                    create_four_point_entry(four_point, section_entry)
+            if section_quantity == 1:
+                section_suffix = ''
+            else:
+                section_suffix = " - " + str(section_number + 1)
 
-            if 'yes_no' in section:
-                create_yes_no_entry(section['yes_no'], section_entry)
+            section_entry = create_cl_section_entry(section['name']+section_suffix, checklist_entry)
+            if section_entry is None:
+                return None
 
+            for i, point in enumerate(section['points']):
+                create_point_entry(point, i + 1, section_entry)
+
+    # Присщединение чеклиста к соответствующему полю Заказа
     try:
-        if checklist_type == 'bm_checklist':
-            order.bm_checklist = checklist_entry
+        if checklist_type == 'tm_checklist':
+            order.tm_checklist = checklist_entry
             order.save()
 
         if checklist_type == 'el_checklist':
@@ -170,26 +64,23 @@ def create_checklist_from_json(
     return checklist_entry.id
 
 
-'''Возвращает путь к соответствующему JSON файлу в зависимости от типа чеклиста '''
-
-
-def get_json_path(checklist_type) -> Path:
-    BASE_DIR = Path(__file__).resolve().parent.parent.parent
-    JSON_DIR = Path('static/json/')
-    path = os.path.join(BASE_DIR, JSON_DIR)
-    file_name = checklist_type + '.json'
-    path = os.path.join(path, file_name)
-    return path
-
-
-'''Проверяет существует ли такой чеклист в базе
-    возвращает: 
-        True - если существует
-        False - если отсутствует
-    '''
+def get_section_number(order, section_name, checklist_type):
+    """ Возвращает количество секций в чеклисте в зависимости от конфигурации заказа и чеклиста"""
+    if checklist_type == 'tm_checklist':
+        if section_name == 'Проверка RM6':
+            return order.config_section.integerpoint_set\
+                        .all()\
+                        .get(name='Количество RM6')\
+                        .point_value
+    return 1
 
 
 def is_checklist_exist(checklist_type, order) -> bool:
+    """Проверяет существует ли такой чеклист в базе
+        возвращает:
+            True - если существует
+            False - если отсутствует
+        """
     if checklist_type == 'bm_checklist' and order.bm_checklist is not None:
         return True
 
@@ -211,10 +102,8 @@ def is_checklist_exist(checklist_type, order) -> bool:
     return False
 
 
-''' Создает чеклист'''
-
-
 def create_checklist(name) -> Optional[Checklist]:
+    """ Создает чеклист таблицу"""
     try:
         checklist_entry = Checklist(name=name)
         checklist_entry.save()
@@ -248,22 +137,47 @@ def create_order_config_section_entry(name: str) -> Optional[OrderConfigSection]
     return section
 
 
-''' Создает текстовой пункт и добавляет ее в секцию'''
+def create_point_entry(point, serial_number, section):
+
+    if point['point_type'] == 'integer':
+        create_integer_point_entry(
+                                    point['name'],
+                                    point['value'],
+                                    serial_number,
+                                    section)
+
+    if point['point_type'] == 'string':
+        create_string_point_entry(
+                                    point['name'],
+                                    serial_number,
+                                    section)
+
+    if point['point_type'] == 'four':
+        create_four_point_entry(
+                                    point['name'],
+                                    serial_number,
+                                    section)
+
+    if point['point_type'] == 'yes':
+        create_yes_no_entry(
+                                    point['name'],
+                                    serial_number,
+                                    section)
 
 
-def create_string_point_entry(name: str,
-                              def_value,
+def create_string_point_entry(
+                              name: str,
                               serial_number,
                               key,
-                              is_order_section: bool = False) -> Optional[StringPoint]:
-
+                              is_order_section: bool = False
+                              ) -> Optional[StringPoint]:
+    """ Создает текстовой пункт и добавляет ее в секцию"""
     try:
         if is_order_section:
             string_point_entry = StringPoint(name=name, order_config=key)
         else:
-            string_point_entry = StringPoint(name=name, checklist=key)
+            string_point_entry = StringPoint(name=name, checklist_section=key)
 
-        string_point_entry.point_value = str(def_value)
         string_point_entry.serial_number = serial_number
         string_point_entry.save()
     except Exception as e:
@@ -272,12 +186,20 @@ def create_string_point_entry(name: str,
     return string_point_entry
 
 
-''' Создает проверочный пункт и добавляет ее в секцию'''
-
-
-def create_four_point_entry(name: str, key: ChListSection) -> Optional[FourChoicePoint]:
+def create_four_point_entry(
+        name: str,
+        serial_number,
+        key,
+        is_order_section: bool = False
+) -> Optional[FourChoicePoint]:
+    """ Создает проверочный пункт и добавляет ее в секцию"""
     try:
-        four_point_entry = FourChoicePoint(name=name, checklist=key)
+
+        if is_order_section:
+            four_point_entry = FourChoicePoint(name=name, order_config=key)
+        else:
+            four_point_entry = FourChoicePoint(name=name, checklist_section=key)
+        four_point_entry.serial_number = serial_number
         four_point_entry.save()
     except Exception as e:
         print(e, '- create_four_point_entry')
@@ -285,10 +207,14 @@ def create_four_point_entry(name: str, key: ChListSection) -> Optional[FourChoic
     return four_point_entry
 
 
-def create_yes_no_entry(name: str, key: ChListSection) -> Optional[YesNoChoicePoint]:
+def create_yes_no_entry(name: str, serial_number, key: ChListSection,is_order_section:bool=False) -> Optional[YesNoChoicePoint]:
     """ Создает проверочный ДА/НЕТ пункт и добавляет ее в секцию"""
     try:
-        yes_no_point_entry = YesNoChoicePoint(name=name, checklist=key)
+        if is_order_section:
+            yes_no_point_entry = YesNoChoicePoint(name=name, order_config=key)
+        else:
+            yes_no_point_entry = YesNoChoicePoint(name=name, checklist_section=key)
+        yes_no_point_entry.serial_number = serial_number
         yes_no_point_entry.save()
     except Exception as e:
         print(e, '- create_yes_no_entry')
@@ -302,7 +228,7 @@ def create_integer_point_entry(name: str, def_value, serial_number, key, is_orde
         if is_order_section:
             integer_point_entry = IntegerPoint(name=name, order_config=key)
         else:
-            integer_point_entry = IntegerPoint(name=name, checklist=key)
+            integer_point_entry = IntegerPoint(name=name, checklist_section=key)
         integer_point_entry.point_value = def_value
         integer_point_entry.serial_number = serial_number
         integer_point_entry.save()
@@ -313,10 +239,11 @@ def create_integer_point_entry(name: str, def_value, serial_number, key, is_orde
 
 
 def create_substation_type_entry_for_order_config(
-        name: str,
-        choice: str,
-        key: OrderConfigSection) -> Optional[SubstationTypePoint]:
-
+                                                    name: str,
+                                                    choice: str,
+                                                    key: OrderConfigSection
+                                                    ) -> Optional[SubstationTypePoint]:
+    """Создает секцию конфигурации заказа"""
     try:
         substation_type_entry = SubstationTypePoint(name=name, point_value=choice, order_config=key)
         substation_type_entry.save()
@@ -326,8 +253,16 @@ def create_substation_type_entry_for_order_config(
     return substation_type_entry
 
 
-def get_json_file(string):
+def get_json_data(string):
+    """Возвращает заполненный объект из JSON в зависимости от типа чеклиста """
     STATIC_DIR = getattr(settings, "STATICFILES_DIRS", None)
     STATIC_DIR = STATIC_DIR[0]
     json_dir = os.path.join(STATIC_DIR, 'json')
-    return os.path.join(json_dir, string + '.json')
+    json_path = os.path.join(json_dir, string + '.json')
+    with open(
+            json_path,
+            "r", encoding="utf-8"
+    ) as read_file:
+        data = json.load(read_file)
+    return data
+

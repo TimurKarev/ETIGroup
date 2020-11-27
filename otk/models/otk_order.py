@@ -8,7 +8,7 @@ from django.urls import reverse
 class OTKOrder(models.Model):
     man_number = models.IntegerField(unique=True)
 
-    tm_checklist = models.OneToOneField(TMCheckList,
+    tm_checklist = models.OneToOneField(Checklist,
                                         on_delete=models.SET_NULL,
                                         unique=True,
                                         blank=True,
