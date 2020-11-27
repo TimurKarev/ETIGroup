@@ -30,7 +30,7 @@ class OrderCreateView(UserAccessMixin, TemplateView):
         context['order'] = OTKOrderForm(data=(self.request.POST or None))
         context['type'] = SubstationTypePointForm(data=(self.request.POST or None))
 
-        print(context)
+        # print(context)
 
         return context
 

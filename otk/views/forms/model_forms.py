@@ -35,5 +35,5 @@ class FourChoicePointForm(ModelForm):
 
 class YesNoChoicePointForm(ModelForm):
     class Meta:
-        model = FourChoicePoint
-        fields = ['point_value']
+        model = YesNoChoicePoint
+        fields = []

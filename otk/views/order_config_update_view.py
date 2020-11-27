@@ -1,7 +1,7 @@
 from otk.services.order_services import get_section_context, get_config_section_from_order_id
 from otk.views.mixins.user_access_mixin import UserAccessMixin
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from otk.models.otk_order import OTKOrder
@@ -18,27 +18,27 @@ class OrderConfigUpdateView(UserAccessMixin, TemplateView):
     class_type = 'order_config_update_view'
 
     def get_context_data(self, **kwargs):
-        context = super(OrderConfigUpdateView, self).get_context_data(**kwargs)
-
+        #context = super(OrderConfigUpdateView, self).get_context_data(**kwargs)
+        context = {}
         if self.request.POST:
-            data = self.request.POST
+            post = self.request.POST
         else:
-            data = None
+            post = None
 
-        print('DATA  - ', data)
-
+        context['order_number'] = OTKOrder.objects.get(id=kwargs['pk'])
         context['section'] = get_section_context(
             get_config_section_from_order_id(int(kwargs['pk'])),
-            data
+            post
         )
-
+        print(context)
         return context
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        print(context['section'])
+        print('OrderConfigUpdateView', context['section'])
+
         # TODO сделать нормальную валидацию
-        for point in context['section']:
+        for point in context['section']['points']:
             point['form'].is_valid()
             print(point['form'].cleaned_data)
             point['form'].save()

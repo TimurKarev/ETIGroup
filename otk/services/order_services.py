@@ -66,6 +66,7 @@ def get_section_context(section, data=None, section_prefix='sec'):
                 "serial_number": p.serial_number,
                 "name": p.name,
                 "value": p.point_value,
+                "comment": p.comment,
                 "form": FourChoicePointForm(
                                             instance=p,
                                             data=data,

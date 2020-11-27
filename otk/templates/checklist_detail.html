@@ -12,6 +12,9 @@
        {% for section in sections.points %}
             {{ section.name}}
             {{ section.value}} <br/>
+           {% if section.comment %}
+           Комент - {{ section.comment }}<br/>
+           {% endif %}
        {% endfor %}
         <br/>
    {% endfor %}

@@ -4,13 +4,13 @@ from otk.models.checklists import *
 from otk.services.order_services import get_section_context
 
 
-def get_detail_context_from_checklist_object(checklist_object) -> Optional[list]:
+def get_detail_context_from_checklist_object(checklist_object, post_data=None) -> Optional[list]:
     """Возвращает список сущностей для присоединения к context в DetailView
         для конкретного чеклиста"""
     sections = checklist_object.chlistsection_set.all()
     data = []
     for i, section in enumerate(sections):
-        data.append(get_section_context(section, section_prefix='sec' + str(i)))
+        data.append(get_section_context(section, data=post_data, section_prefix='sec' + str(i)))
 
         # sec_dict = {'name': section.name}
         #
