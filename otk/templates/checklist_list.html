@@ -48,7 +48,7 @@
                     {% if  otkorder.bm_checklist  %}
                         <a href="{% url 'checklist_detail' otkorder.bm_checklist.id %}">просмотр </a>
                     {% else %}
-                        <a href="{% url 'bm_checklist_create' otkorder.pk %}">создать </a>
+                        <a href="{% url 'bm_config_create' otkorder.pk %}">создать </a>
                     {% endif %}
                 </div>
 

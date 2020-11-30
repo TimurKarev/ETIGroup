@@ -253,7 +253,7 @@ def create_substation_type_entry_for_order_config(
     return substation_type_entry
 
 
-def get_json_data(string):
+def get_json_data(string, config=False):
     """Возвращает заполненный объект из JSON в зависимости от типа чеклиста """
     STATIC_DIR = getattr(settings, "STATICFILES_DIRS", None)
     STATIC_DIR = STATIC_DIR[0]
@@ -264,5 +264,11 @@ def get_json_data(string):
             "r", encoding="utf-8"
     ) as read_file:
         data = json.load(read_file)
-    return data
 
+    if config is None:
+        return data
+
+    if data[0]['name'] == 'config':
+        return data[0]['points']
+
+    return None

@@ -20,11 +20,11 @@ from django import forms
 #         fields = []
 
 
-class CheckListUpdateView(TemplateView):
+class BMConfigUpdateView(TemplateView):
     template_name = 'checklist_update.html'
 
     def get_context_data(self, **kwargs):
-        context = super(CheckListUpdateView, self).get_context_data(**kwargs)
+        context = super(BMConfigUpdateView, self).get_context_data(**kwargs)
 
         checklist_entry = Checklist.objects.get(id=kwargs['pk'])
 

@@ -28,7 +28,6 @@ class OrderConfigCreateView(UserAccessMixin, RedirectView):
         config_section_entry = get_config_section_from_order_id(int(kwargs['pk']))
         self.create_config(config_section_entry)
 
-        print(args, kwargs)
         return super().get_redirect_url(*args, **kwargs)
 
     def create_config(self, config_section_entry):

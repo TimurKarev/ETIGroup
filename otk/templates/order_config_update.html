@@ -4,12 +4,13 @@
 
 {% block content %}
 <form action="" method="post">{% csrf_token %}
-    <input type="submit" value="Update">
 <br/>
-    Конфигурация заказа №{{ order_number }} <br/><br/>
+    <h5>Конфигурация заказа №{{ order_number }}</h5> <br/>
     {% for point in section.points %}
-        {{ point.name }} - {{ point.form }} <br/>
+        {{ point.name }} - {{ point.form.point_value }} <br/>
     {% endfor %}
+<br/>
+<input type="submit" value="Update">
 </form>
 
 {% endblock content %}
