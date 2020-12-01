@@ -6,6 +6,9 @@ from django.urls import reverse
 
 # TODO Rename all models class names
 class OTKOrder(models.Model):
+    class Meta:
+        db_table = 'otkorder'
+
     man_number = models.IntegerField(unique=True)
 
     tm_checklist = models.OneToOneField(Checklist,

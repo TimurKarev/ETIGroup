@@ -12,32 +12,6 @@ def get_detail_context_from_checklist_object(checklist_object, post_data=None) -
     for i, section in enumerate(sections):
         data.append(get_section_context(section, data=post_data, section_prefix='sec' + str(i)))
 
-        # sec_dict = {'name': section.name}
-        #
-        # str_dict = {}
-        # string_points = section.stringpoint_set.all()
-        # for str_count, string_point in enumerate(string_points):
-        #     str_list = [
-        #         string_point.name,
-        #         string_point.string,
-        #         ]
-        #     str_dict['string_point' + str(str_count)] = str_list
-        # sec_dict['string_points'] = str_dict
-        #
-        # fp_dict = {}
-        # fourchoisepoints = section.fourchoisepoint_set.all()
-        # for fp_count, fourchoisepoint in enumerate(fourchoisepoints):
-        #     fp_list = [fourchoisepoint.name,
-        #             fourchoisepoint.choice,
-        #             fourchoisepoint.comment]
-        #     fp_dict['four_point' + str(fp_count)] = fp_list
-        # sec_dict['four_points'] = fp_dict
-        #
-        # yes_no = section.yesnochoicepoint_set.all()[0]
-        # sec_dict['yes_no'] = {'name': yes_no.name,
-        #                     'choice': yes_no.choice}
-        # data.append(sec_dict)
-
     return data
 
 

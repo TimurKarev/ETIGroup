@@ -14,12 +14,6 @@ from otk.services.context_creators import *
 from django import forms
 
 
-# class ChecklistForm(forms.ModelForm):
-#     class Meta:
-#         model = Checklist
-#         fields = []
-
-
 class CheckListUpdateView(TemplateView):
     template_name = 'checklist_update.html'
 

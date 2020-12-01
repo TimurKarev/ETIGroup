@@ -2,6 +2,8 @@ from django.urls import path
 
 from otk.views.bm_config_create import BMConfigCreateView
 from otk.views.bm_config_update_view import BMConfigUpdateView
+from otk.views.checklist_config_update import CheckListConfigUpdateView
+from otk.views.checklist_create import CheckListCreateView
 from otk.views.order_config_create_view import OrderConfigCreateView
 from otk.views.order_config_update_view import OrderConfigUpdateView
 from otk.views.views import CheckListListView
@@ -15,6 +17,7 @@ from otk.views.bm_checklist_create import BMCheckListCreateView
 from otk.views.el_checklist_create import ELCheckListCreateView
 from otk.views.order_detail_view import OrderDetailView
 
+
 urlpatterns = [
     path('', CheckListListView.as_view(), name='checklist_list'),
 
@@ -25,6 +28,9 @@ urlpatterns = [
 
     path('bm_config_create/<int:pk>', BMConfigCreateView.as_view(), name='bm_config_create'),
     path('bm_config_update/<int:pk>', BMConfigUpdateView.as_view(), name='bm_config_update'),
+
+    path('checklist_create/<slug:tp>/<int:pk>', CheckListCreateView.as_view(), name='checklist_create'),
+    path('checklist_config_update/<slug:tp>/<int:pk>', CheckListConfigUpdateView.as_view(), name='checklist_config_update'),
 
 
     path('tm_checklist_create/<int:pk>/', TMCheckListCreateView.as_view(), name='tm_checklist_create'),

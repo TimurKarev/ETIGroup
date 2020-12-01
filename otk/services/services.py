@@ -43,9 +43,6 @@ def create_checklist_by_checklist_type_from_json(
             if section_entry is None:
                 return None
 
-            for i, point in enumerate(section['points']):
-                create_point_entry(point, i + 1, section_entry)
-
     # Присщединение чеклиста к соответствующему полю Заказа
     try:
         if checklist_type == 'tm_checklist':
@@ -68,38 +65,38 @@ def get_section_number(order, section_name, checklist_type):
     """ Возвращает количество секций в чеклисте в зависимости от конфигурации заказа и чеклиста"""
     if checklist_type == 'tm_checklist':
         if section_name == 'Проверка RM6':
-            return order.config_section.integerpoint_set\
-                        .all()\
-                        .get(name='Количество RM6')\
-                        .point_value
+            return order.config_section.integerpoint_set \
+                .all() \
+                .get() \
+                .point_value
     return 1
 
 
-def is_checklist_exist(checklist_type, order) -> bool:
+def is_checklist_exist(checklist_type, order) -> Optional[Checklist]:
     """Проверяет существует ли такой чеклист в базе
         возвращает:
             True - если существует
             False - если отсутствует
         """
     if checklist_type == 'bm_checklist' and order.bm_checklist is not None:
-        return True
+        return order.bm_checklist
 
     if checklist_type == 'el_checklist' and order.el_checklist is not None:
-        return True
+        return order.el_checklist
 
     if checklist_type == 'tm_checklist' and order.tm_checklist is not None:
-        return True
+        return order.tm_checklist
 
     if checklist_type == 'doc_checklist' and order.doc_checklist is not None:
-        return True
+        return order.doc_checklist
 
     if checklist_type == 'zip_checklist' and order.zip_checklist is not None:
-        return True
+        return order.zip_checklist
 
     if checklist_type == 'sal_checklist' and order.sal_checklist is not None:
-        return True
+        return order.sal_checklist
 
-    return False
+    return None
 
 
 def create_checklist(name) -> Optional[Checklist]:
@@ -259,16 +256,22 @@ def get_json_data(string, config=False):
     STATIC_DIR = STATIC_DIR[0]
     json_dir = os.path.join(STATIC_DIR, 'json')
     json_path = os.path.join(json_dir, string + '.json')
-    with open(
-            json_path,
-            "r", encoding="utf-8"
-    ) as read_file:
-        data = json.load(read_file)
 
-    if config is None:
-        return data
+    try:
+        with open(
+                json_path,
+                "r", encoding="utf-8"
+        ) as read_file:
+            data = json.load(read_file)
+    except Exception as e:
+        print(e)
+        return None
 
+    config_data = None
     if data[0]['name'] == 'config':
-        return data[0]['points']
+        config_data = data.pop(0)
 
-    return None
+    if config:
+        return config_data
+    else:
+        return data
