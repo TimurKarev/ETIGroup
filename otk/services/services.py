@@ -17,19 +17,21 @@ def create_checklist_by_checklist_type_from_json(
         order: OTKOrder,
         checklist_type: str,
         checklist_name: str
-        ) -> Optional[int]:
-
-    # Проверяем, есть ли уже такой чеклист в базе
-    if is_checklist_exist(checklist_type, order):
-        return None
-
-    checklist_entry = create_checklist(name=checklist_name)
+) -> Optional[int]:
+    # # Проверяем, есть ли уже такой чеклист в базе
+    # if is_checklist_exist(checklist_type, order):
+    #     return None
+    #
+    # checklist_entry = create_checklist(name=checklist_name)
+    checklist_entry = get_checklist_for_order_by_type(order, checklist_type)
     if checklist_entry is None:
         return None
 
     data = get_json_data(checklist_type)
 
     for section in data:
+        if section['name'] == 'config':
+            continue
         section_quantity = get_section_number(order, section['name'], checklist_type)
 
         for section_number in range(section_quantity):
@@ -39,9 +41,12 @@ def create_checklist_by_checklist_type_from_json(
             else:
                 section_suffix = " - " + str(section_number + 1)
 
-            section_entry = create_cl_section_entry(section['name']+section_suffix, checklist_entry)
+            section_entry = create_cl_section_entry(section['name'] + section_suffix, checklist_entry)
             if section_entry is None:
-                return None
+                continue
+
+            for i, point in enumerate(section['points']):
+                create_point_entry(point, i+1, section_entry)
 
     # Присщединение чеклиста к соответствующему полю Заказа
     try:
@@ -135,39 +140,38 @@ def create_order_config_section_entry(name: str) -> Optional[OrderConfigSection]
 
 
 def create_point_entry(point, serial_number, section):
-
     if point['point_type'] == 'integer':
         create_integer_point_entry(
-                                    point['name'],
-                                    point['value'],
-                                    serial_number,
-                                    section)
+            point['name'],
+            point['value'],
+            serial_number,
+            section)
 
     if point['point_type'] == 'string':
         create_string_point_entry(
-                                    point['name'],
-                                    serial_number,
-                                    section)
+            point['name'],
+            serial_number,
+            section)
 
     if point['point_type'] == 'four':
         create_four_point_entry(
-                                    point['name'],
-                                    serial_number,
-                                    section)
+            point['name'],
+            serial_number,
+            section)
 
     if point['point_type'] == 'yes':
         create_yes_no_entry(
-                                    point['name'],
-                                    serial_number,
-                                    section)
+            point['name'],
+            serial_number,
+            section)
 
 
 def create_string_point_entry(
-                              name: str,
-                              serial_number,
-                              key,
-                              is_order_section: bool = False
-                              ) -> Optional[StringPoint]:
+        name: str,
+        serial_number,
+        key,
+        is_order_section: bool = False
+) -> Optional[StringPoint]:
     """ Создает текстовой пункт и добавляет ее в секцию"""
     try:
         if is_order_section:
@@ -204,7 +208,8 @@ def create_four_point_entry(
     return four_point_entry
 
 
-def create_yes_no_entry(name: str, serial_number, key: ChListSection,is_order_section:bool=False) -> Optional[YesNoChoicePoint]:
+def create_yes_no_entry(name: str, serial_number, key: ChListSection, is_order_section: bool = False) -> Optional[
+    YesNoChoicePoint]:
     """ Создает проверочный ДА/НЕТ пункт и добавляет ее в секцию"""
     try:
         if is_order_section:
@@ -236,10 +241,10 @@ def create_integer_point_entry(name: str, def_value, serial_number, key, is_orde
 
 
 def create_substation_type_entry_for_order_config(
-                                                    name: str,
-                                                    choice: str,
-                                                    key: OrderConfigSection
-                                                    ) -> Optional[SubstationTypePoint]:
+        name: str,
+        choice: str,
+        key: OrderConfigSection
+) -> Optional[SubstationTypePoint]:
     """Создает секцию конфигурации заказа"""
     try:
         substation_type_entry = SubstationTypePoint(name=name, point_value=choice, order_config=key)
@@ -275,3 +280,40 @@ def get_json_data(string, config=False):
         return config_data
     else:
         return data
+
+
+def get_checklist_name_by_type(tp, man_number):
+    checklist_name = 'Чек лист'
+    if tp == 'bm_checklist':
+        checklist_name += ' строительной части'
+
+    if tp == 'el_checklist':
+        checklist_name += ' электрической части'
+
+    return checklist_name + ', заказ №' + str(man_number)
+
+
+def get_checklist_for_order_by_type(
+        order_entry: OTKOrder,
+        check_list_type: str,
+        checklist_name: str = 'Чек лист',
+):
+    if check_list_type == 'bm_checklist':
+        if order_entry.bm_checklist:
+            return order_entry.bm_checklist
+        else:
+            checklist_entry = create_checklist(checklist_name)
+            order_entry.bm_checklist = checklist_entry
+            order_entry.save()
+            return checklist_entry
+
+    elif check_list_type == 'el_checklist':
+        if order_entry.el_checklist:
+            return order_entry.el_checklist
+        else:
+            checklist_entry = create_checklist(checklist_name)
+            order_entry.el_checklist = checklist_entry
+            order_entry.save()
+            return checklist_entry
+
+    return None

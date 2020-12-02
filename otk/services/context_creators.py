@@ -10,6 +10,8 @@ def get_detail_context_from_checklist_object(checklist_object, post_data=None) -
     sections = checklist_object.chlistsection_set.all()
     data = []
     for i, section in enumerate(sections):
+        if section.name == 'config':
+            continue
         data.append(get_section_context(section, data=post_data, section_prefix='sec' + str(i)))
 
     return data

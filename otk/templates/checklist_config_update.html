@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load addition_tags %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <input type="submit" value="Update">
+<br/>
+
+ Конфигурация строительной части зз № {{ order_number }}
+       {{ config.managment_form }}
+    {% for point in config %}
+       {{ point.managment_form }}
+        <br/> {{ point.name }} - {{ point.form.point_value }}
+    {% endfor %}
+</form>
+{% endblock content %}

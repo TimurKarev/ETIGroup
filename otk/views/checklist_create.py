@@ -1,46 +1,17 @@
-from typing import Optional
-
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 from django.views.generic import RedirectView
 
 from otk.models.otk_order import OTKOrder
-from otk.models.checklists import Checklist
 
-from otk.services.services import get_json_data, is_checklist_exist, create_checklist, create_cl_section_entry, \
-    create_point_entry
+from otk.services.services import get_json_data, create_cl_section_entry, \
+    create_point_entry, get_checklist_name_by_type, get_checklist_for_order_by_type
 
 
 def get_config_data_by_type(tp):
     config_data = get_json_data(tp, True)
     return config_data
-
-
-def get_checklist_name_by_type(tp, man_number):
-    checklist_name = 'Чек лист'
-    if tp == 'bm_checklist':
-        checklist_name += ' строительной части'
-
-    if tp == 'el_checklist':
-        checklist_name += ' электрической части'
-
-    return checklist_name + ', заказ №' + str(man_number)
-
-
-def get_checklist_for_order_by_type(
-        order_entry: OTKOrder,
-        check_list_type: str,
-        checklist_name: str = 'Чек лист',
-):
-    if check_list_type == 'bm_checklist':
-        if order_entry.bm_checklist:
-            return order_entry.bm_checklist
-        else:
-            checklist_entry = create_checklist(checklist_name)
-            order_entry.bm_checklist = checklist_entry
-            order_entry.save()
-            return checklist_entry
 
 
 def create_config_section_by_data(checklist, config_data):
@@ -77,7 +48,9 @@ class CheckListCreateView(RedirectView):
 
         # TODO coздаем универсальнуй функцию для создания полного чеклиста
         if config_data is None:
-            return HttpResponse('Создаем полный чеклист')
+            return HttpResponseRedirect(
+                reverse('checklist_sections_create',
+                        kwargs={'tp': kwargs['tp'], 'pk': int(order.id)}))
 
         section_id = create_config_section_by_data(checklist, config_data)
 

@@ -31,22 +31,13 @@ class OrderConfigCreateView(UserAccessMixin, RedirectView):
         return super().get_redirect_url(*args, **kwargs)
 
     def create_config(self, config_section_entry):
-        sections = get_json_data(self.order_checklist_type)
-
-        config_section = None
-        for section in sections:
-            if section['name'] == 'config':
-                try:
-                    config_section = section['points']
-                except Exception as e:
-                    print(e)
-                    return None
-                break
+        config_section = get_json_data(self.order_checklist_type, True)
 
         if config_section is None:
             return None
+
         # TODO add more points in creation
-        for i, point in enumerate(config_section):
+        for i, point in enumerate(config_section['points']):
             if point['point_type'] == 'integer':
                 create_integer_point_entry(
                     point['name'],
