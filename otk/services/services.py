@@ -1,13 +1,14 @@
 import json
 from typing import Optional
 
-from pathlib import Path
 import os
 
-from otk.models.otk_order import OTKOrder, OrderConfigSection
+from otk.models.otk_order import OTKOrder
 from otk.models.checklists import *
 
 from django.conf import settings
+
+from otk.services.section_number_calc import get_section_number
 
 ''' Создает чек лист телемеханики и добавляет его к номеру заказа 
     Возвращает id чеклиста'''
@@ -32,7 +33,7 @@ def create_checklist_by_checklist_type_from_json(
     for section in data:
         if section['name'] == 'config':
             continue
-        section_quantity = get_section_number(order, section['name'], checklist_type)
+        section_quantity = get_section_number(order, checklist_entry, section['name'], checklist_type)
 
         for section_number in range(section_quantity):
 
@@ -46,7 +47,7 @@ def create_checklist_by_checklist_type_from_json(
                 continue
 
             for i, point in enumerate(section['points']):
-                create_point_entry(point, i+1, section_entry)
+                create_point_entry(point, i + 1, section_entry)
 
     # Присщединение чеклиста к соответствующему полю Заказа
     try:
@@ -66,17 +67,7 @@ def create_checklist_by_checklist_type_from_json(
     return checklist_entry.id
 
 
-def get_section_number(order, section_name, checklist_type):
-    """ Возвращает количество секций в чеклисте в зависимости от конфигурации заказа и чеклиста"""
-    if checklist_type == 'tm_checklist':
-        if section_name == 'Проверка RM6':
-            return order.config_section.integerpoint_set \
-                .all() \
-                .get() \
-                .point_value
-    return 1
-
-
+'''
 def is_checklist_exist(checklist_type, order) -> Optional[Checklist]:
     """Проверяет существует ли такой чеклист в базе
         возвращает:
@@ -102,6 +93,7 @@ def is_checklist_exist(checklist_type, order) -> Optional[Checklist]:
         return order.sal_checklist
 
     return None
+'''
 
 
 def create_checklist(name) -> Optional[Checklist]:
