@@ -76,6 +76,7 @@ def update_yesno_fields(checklist_entry: Checklist):
                         break
                     except Exception as e:
                         print(e)
+
             if not is_no_value:
                 try:
                     yesno_point.point_value = yesno_point.YesNo.YES
