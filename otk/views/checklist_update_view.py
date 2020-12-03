@@ -48,7 +48,7 @@ class CheckListUpdateView(TemplateView):
                 point['form'].is_valid()
                 point['form'].save()
 
-        update_yesno_fields()
+        # update_yesno_fields()
         #        return "/checklist_detail/" + str(self.object.id)
         return HttpResponseRedirect(
             reverse('checklist_detail',
