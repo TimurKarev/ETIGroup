@@ -21,7 +21,6 @@ class Checklist(General):
 
 
 class OrderConfigSection(General):
-
     class Meta:
         db_table = 'orderconfigsection'
 
@@ -65,11 +64,11 @@ class FourChoicePoint(SimplePoint):
         COMMENT = 'Коментарий', _('Коментарий')
 
     point_value = models.CharField(max_length=15,
-                              choices=Four.choices,
-                              default=Four.UNCHECKED,
-                              blank=False,
-                              null=False,
-                              )
+                                   choices=Four.choices,
+                                   default=Four.UNCHECKED,
+                                   blank=False,
+                                   null=False,
+                                   )
 
     comment = models.CharField(max_length=200,
                                default='',
@@ -90,11 +89,11 @@ class YesNoChoicePoint(SimplePoint):
         NO = 'НЕ Принято', _('НЕТ')
 
     point_value = models.CharField(max_length=15,
-                              choices=YesNo.choices,
-                              default=YesNo.NO,
-                              blank=False,
-                              null=False,
-                              )
+                                   choices=YesNo.choices,
+                                   default=YesNo.NO,
+                                   blank=False,
+                                   null=False,
+                                   )
 
     class Meta:
         db_table = 'yesnochoicepoint'
@@ -105,11 +104,11 @@ class SubstationTypePoint(SimplePoint):
         BKTP = 'БКТП', _('БКТП')
 
     point_value = models.CharField(max_length=15,
-                              choices=SunType.choices,
-                              default=SunType.BKTP,
-                              blank=False,
-                              null=False,
-                              )
+                                   choices=SunType.choices,
+                                   default=SunType.BKTP,
+                                   blank=False,
+                                   null=False,
+                                   )
 
     class Meta:
         db_table = 'substationtypepoint'

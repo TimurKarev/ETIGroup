@@ -28,8 +28,6 @@ class IntegerPointForm(ModelForm):
 
 
 class FourChoicePointForm(ModelForm):
-    comment = CharField(max_length=1000)
-
     class Meta:
         model = FourChoicePoint
         fields = ['point_value', 'comment']
