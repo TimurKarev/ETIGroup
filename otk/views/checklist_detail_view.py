@@ -20,6 +20,6 @@ class CheckListDetailView(UserAccessMixin, DetailView):
         data = get_detail_context_from_checklist_object(self.object)
 
         context['data'] = data
-        print(data)
+        # print(data)
 
         return context

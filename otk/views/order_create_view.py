@@ -25,7 +25,7 @@ class OrderCreateView(UserAccessMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(OrderCreateView, self).get_context_data(**kwargs)
 
-        print(self.request.POST)
+        # print(self.request.POST)
         # TODO проверить на уникальность номер
         context['order'] = OTKOrderForm(data=(self.request.POST or None))
         context['type'] = SubstationTypePointForm(data=(self.request.POST or None))
@@ -38,7 +38,7 @@ class OrderCreateView(UserAccessMixin, TemplateView):
         order = OTKOrderForm(data=request.POST)
         type_form = SubstationTypePointForm(data=request.POST)
         if order.is_valid() and type_form.is_valid():
-            print(order.cleaned_data, type_form.cleaned_data)
+            # print(order.cleaned_data, type_form.cleaned_data)
             order_num = order.cleaned_data['man_number']
             type_string = type_form.cleaned_data['point_value']
             order_id = self.create_order(order_num, type_string)

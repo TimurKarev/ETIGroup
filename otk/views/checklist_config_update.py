@@ -31,11 +31,11 @@ class CheckListConfigUpdateView(TemplateView):
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
 
-        print(context)
+        # print(context)
         # TODO сделать нормальную валидацию
         for form in context['config']:
             form['form'].is_valid()
-            print(form['form'].cleaned_data)
+            # print(form['form'].cleaned_data)
             form['form'].save()
 
         return HttpResponseRedirect(

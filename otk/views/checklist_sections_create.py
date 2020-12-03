@@ -10,7 +10,7 @@ from otk.services.services import get_checklist_name_by_type, create_checklist_b
 class CheckListSectionsCreateView(RedirectView):
 
     def get(self, request, *args, **kwargs):
-        print(request, args, kwargs)
+        # print(request, args, kwargs)
 
         order_entry = OTKOrder.objects.get(id=int(kwargs['pk']))
         checklist_name = get_checklist_name_by_type(kwargs['tp'], order_entry.man_number)

@@ -30,17 +30,17 @@ class OrderConfigUpdateView(UserAccessMixin, TemplateView):
             get_config_section_from_order_id(int(kwargs['pk'])),
             post
         )
-        print(context)
+        # print(context)
         return context
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        print('OrderConfigUpdateView', context['section'])
+        # print('OrderConfigUpdateView', context['section'])
 
         # TODO сделать нормальную валидацию
         for point in context['section']['points']:
             point['form'].is_valid()
-            print(point['form'].cleaned_data)
+            # print(point['form'].cleaned_data)
             point['form'].save()
 
         return HttpResponseRedirect(

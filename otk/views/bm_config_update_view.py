@@ -39,7 +39,7 @@ class BMConfigUpdateView(TemplateView):
 
         for section in context['sections']:
             for i, point in enumerate(section['points']):
-                print(point)
+                # print(point)
                 if (point['value'] == 'НЕ Принято') or (point['value'] == 'Принято'):
                     section['points'].pop(i)
 
@@ -52,7 +52,7 @@ class BMConfigUpdateView(TemplateView):
         for section in context['sections']:
             for point in section['points']:
                 point['form'].is_valid()
-                print(point['form'].cleaned_data)
+                # print(point['form'].cleaned_data)
                 point['form'].save()
 
         #        return "/checklist_detail/" + str(self.object.id)
