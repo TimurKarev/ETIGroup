@@ -2,7 +2,7 @@ from otk.views.mixins.user_access_mixin import UserAccessMixin
 
 from django.views.generic import DetailView
 
-from otk.models.order import OTKOrder
+from otk.models.otk_order import OTKOrder
 from otk.models.tm_checklists import *
 
 from django.urls import reverse

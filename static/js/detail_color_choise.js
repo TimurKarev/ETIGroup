@@ -23,6 +23,4 @@ document.addEventListener('DOMContentLoaded', () => {
             elem.style.backgroundColor = comment_color;
         }
     });
-
-
 });

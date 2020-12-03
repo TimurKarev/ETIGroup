@@ -9,26 +9,16 @@
                 <table class="table table-bordered ">
                     <tbody>
                         <tr>
+<!--                        <td>Номер заводского заказа</td>
+                            <td>{{ form.man_number }}</td>  -->
+                        <tr>
                             <td>Номер заводского заказа</td>
-                            <td>{{ form.man_number }}</td>
+                            <td>{{ order.man_number }}</td>
                         </tr>
                         <tr>
                             <td>Тип подстанции</td>
-                            <td>{{ form.substation_type }}</td>
+                            <td>{{ type.point_value }}</td>
                         </tr>
-                        <tr>
-                            <td>Количество RM6</td>
-                            <td>{{ form.rm_number }}</td>
-                        </tr>
-                        <tr>
-                            <td>Количество УВР</td>
-                            <td>{{ form.ybp_number }}</td>
-                        </tr>
-                        <tr>
-                            <td>Количество ШУ</td>
-                            <td>{{ form.su_number }}</td>
-                        </tr>
-
                     </tbody>
                 </table>
             </div>
