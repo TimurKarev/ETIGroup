@@ -85,8 +85,8 @@ class FourChoicePoint(SimplePoint):
 
 class YesNoChoicePoint(SimplePoint):
     class YesNo(models.TextChoices):
-        YES = 'Принято', _('ДА')
-        NO = 'НЕ Принято', _('НЕТ')
+        YES = 'Пройдены', _('Пройдены')
+        NO = 'Не Пройдены', _('Не Пройдены')
 
     point_value = models.CharField(max_length=15,
                                    choices=YesNo.choices,

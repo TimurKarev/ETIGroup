@@ -21,6 +21,7 @@ class CheckListUpdateView(TemplateView):
         # context = super(CheckListUpdateView, self).get_context_data(**kwargs)
 
         checklist_entry = Checklist.objects.get(id=kwargs['pk'])
+        self._checklist_entry = checklist_entry
         context = {'checklist_name': checklist_entry.name}
 
         if self.request.POST:
@@ -34,7 +35,7 @@ class CheckListUpdateView(TemplateView):
 
         for section in context['sections']:
             for i, point in enumerate(section['points']):
-                if (point['value'] == 'НЕ Принято') or (point['value'] == 'Принято'):
+                if (point['value'] == 'Пройдены') or (point['value'] == 'Не Пройдены'):
                     section['points'].pop(i)
 
         return context
@@ -48,9 +49,37 @@ class CheckListUpdateView(TemplateView):
                 point['form'].is_valid()
                 point['form'].save()
 
-        # update_yesno_fields()
+        update_yesno_fields(self._checklist_entry)
         #        return "/checklist_detail/" + str(self.object.id)
         return HttpResponseRedirect(
             reverse('checklist_detail',
                     kwargs={'pk': kwargs['pk']})
         )
+
+
+def update_yesno_fields(checklist_entry: Checklist):
+    sections = checklist_entry.chlistsection_set.all()
+    for section in sections:
+        yesno_points = section.yesnochoicepoint_set.all()
+        if len(yesno_points) > 0:
+            yesno_point = yesno_points[0]
+            # print(yesno_point, "  ---- ",  section.name)
+            four_points = section.fourchoicepoint_set.all()
+            is_no_value = False
+            for four_point in four_points:
+                if four_point.point_value == four_point.Four.UNCHECKED or \
+                        four_point.point_value == four_point.Four.COMMENT:
+                    is_no_value = True
+                    try:
+                        yesno_point.point_value = yesno_point.YesNo.NO
+                        yesno_point.save()
+                    except Exception as e:
+                        print(e)
+                    finally:
+                        continue
+            if not is_no_value:
+                try:
+                    yesno_point.point_value = yesno_point.YesNo.YES
+                    yesno_point.save()
+                except Exception as e:
+                    print(e)
