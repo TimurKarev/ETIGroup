@@ -3,21 +3,37 @@
 {% load addition_tags %}
 
 {% block content %}
-
-    <a href="{% url 'checklist_update' object.pk %}"> Заполнить  </a>     <br/> <br/>
-   {{object.name}} <br/> <br/>
-
-   {% for sections in data %}
-       {{ sections.name}} <br/>
-       {% for section in sections.points %}
-            {{ section.name}}
-            {{ section.value}} <br/>
-           {% if section.comment %}
-           Комент - {{ section.comment }}<br/>
-           {% endif %}
-       {% endfor %}
-        <br/>
-   {% endfor %}
-
-
+    <a href="{% url 'checklist_update' object.pk %}"> Заполнить  </a><br/>
+        <div class="container">
+            <div class="row">
+                <div class="col-7">
+                    <h4>{{object.name}}<br/> </h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-7">
+                    <table class="table table-bordered table-sm">
+                        <tbody>
+                        {% for sections in data %}
+                            <tr>
+                                <td colspan="2"> <h5>{{ sections.name}} </h5></td>
+                            </tr>
+                            {% for section in sections.points %}
+                                <tr>
+                                    <td>{{ section.name}}</td>
+                                    <td>{{ section.value}}</td>
+                                </tr>
+                                {% if section.comment %}
+                                <tr>
+                                    <td colspan="2">{{ section.comment }}</td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <a href="{% url 'checklist_update' object.pk %}"> Заполнить  </a><br/>
 {% endblock content %}

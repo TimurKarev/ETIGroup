@@ -5,10 +5,24 @@
 {% block content %}
 <form action="" method="post">{% csrf_token %}
 <br/>
-    <h5>Конфигурация заказа №{{ order_number }}</h5> <br/>
-    {% for point in section.points %}
-        {{ point.name }} - {{ point.form.point_value }} <br/>
-    {% endfor %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <table class="table table-bordered">
+                <tbody>
+                    <h5>Конфигурация заказа №{{ order_number }}</h5>
+                        {% for point in section.points %}
+                            <tr>
+                                <td>{{ point.name }}</td>
+                                <td>{{ point.form.point_value }}</td>
+                            </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 <br/>
 <input type="submit" value="Update">
 </form>

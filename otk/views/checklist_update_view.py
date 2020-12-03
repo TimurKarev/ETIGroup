@@ -18,9 +18,10 @@ class CheckListUpdateView(TemplateView):
     template_name = 'checklist_update.html'
 
     def get_context_data(self, **kwargs):
-        context = super(CheckListUpdateView, self).get_context_data(**kwargs)
+        #context = super(CheckListUpdateView, self).get_context_data(**kwargs)
 
         checklist_entry = Checklist.objects.get(id=kwargs['pk'])
+        context = {'checklist_name': checklist_entry.name}
 
         if self.request.POST:
             post = self.request.POST
@@ -33,7 +34,6 @@ class CheckListUpdateView(TemplateView):
 
         for section in context['sections']:
             for i, point in enumerate(section['points']):
-                print(point)
                 if (point['value'] == 'НЕ Принято') or (point['value'] == 'Принято'):
                     section['points'].pop(i)
 
@@ -46,7 +46,6 @@ class CheckListUpdateView(TemplateView):
         for section in context['sections']:
             for point in section['points']:
                 point['form'].is_valid()
-                print(point['form'].cleaned_data)
                 point['form'].save()
 
         #        return "/checklist_detail/" + str(self.object.id)

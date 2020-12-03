@@ -4,25 +4,40 @@
 
 {% block content %}
 <form action="" method="post">{% csrf_token %}
-    <input type="submit" value="Update">
-<br />
-
-{{ section.management_form }}
-{% for section in sections %}
-<br /><br />
-    {{section.name}} <br />
-
-    {{ section.string_forms.management_form }}
-    {% for point in section.points %}
-        {{ point.name }} - {{ point.form.point_value }}
-        {% if point.form.comment %}
-            <br />
-            Коментарий - {{ point.form.comment }}
-        {% endif %}
-        <br />
-    {% endfor %}
-
-{% endfor %}
-
+    <input type="submit" value="Сохранить">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h4>{{checklist_name}}</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <table class="table table-bordered table-sm">
+                        <tbody>
+                        {{ section.management_form }}
+                        {% for section in sections %}
+                            <tr>
+                                <td colspan="2"><h5>{{section.name}}</h5></td>
+                            </tr>
+                            {{ section.string_forms.management_form }}
+                            {% for point in section.points %}
+                                <tr>
+                                    <td>{{ point.name }}</td>
+                                    <td>{{ point.form.point_value }}</td>
+                                </tr>
+                                {% if point.form.comment %}
+                                <tr>
+                                    <td colspan="2">{{ point.form.comment }}</td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <input type="submit" value="Сохранить">
 </form>
 {% endblock content %}

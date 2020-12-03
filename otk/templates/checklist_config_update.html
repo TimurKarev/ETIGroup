@@ -4,14 +4,26 @@
 
 {% block content %}
 <form action="" method="post">{% csrf_token %}
-    <input type="submit" value="Update">
 <br/>
-
- Конфигурация строительной части зз № {{ order_number }}
-       {{ config.managment_form }}
-    {% for point in config %}
-       {{ point.managment_form }}
-        <br/> {{ point.name }} - {{ point.form.point_value }}
-    {% endfor %}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <table class="table table-bordered">
+                <tbody>
+                <h5>Конфигурация строительной части зз № {{ order_number }}</h5>
+                   {{ config.managment_form }}
+                   {% for point in config %}
+                       <tr>
+                           {{ point.managment_form }}
+                           <td>{{ point.name }}</td>
+                           <td>{{ point.form.point_value }}</td>
+                       </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<input type="submit" value="Update">
 </form>
 {% endblock content %}

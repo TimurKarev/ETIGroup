@@ -8,7 +8,7 @@ from otk.models.checklists import *
 
 from django.conf import settings
 
-from otk.services.section_number_calc import get_section_number
+from otk.services.section_number_calc import SectionNumberCalculator
 
 ''' Создает чек лист телемеханики и добавляет его к номеру заказа 
     Возвращает id чеклиста'''
@@ -24,16 +24,18 @@ def create_checklist_by_checklist_type_from_json(
     #     return None
     #
     # checklist_entry = create_checklist(name=checklist_name)
-    checklist_entry = get_checklist_for_order_by_type(order, checklist_type)
+    checklist_entry = get_checklist_for_order_by_type(order, checklist_type, checklist_name)
     if checklist_entry is None:
         return None
 
     data = get_json_data(checklist_type)
 
+    section_calc = SectionNumberCalculator(order, checklist_entry, checklist_type)
+
     for section in data:
         if section['name'] == 'config':
             continue
-        section_quantity = get_section_number(order, checklist_entry, section['name'], checklist_type)
+        section_quantity = section_calc.get_number(section['name'])
 
         for section_number in range(section_quantity):
 
@@ -309,3 +311,13 @@ def get_checklist_for_order_by_type(
             return checklist_entry
 
     return None
+
+
+def get_order_by_checklist(checklist_entry, checklist_type):
+    try:
+        if checklist_type == 'bm_checklist':
+            return checklist_entry.bm_checklist
+
+    except Exception as e:
+        print(e)
+        return None

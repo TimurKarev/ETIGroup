@@ -57,7 +57,7 @@
                     {% if  otkorder.el_checklist  %}
                         <a href="{% url 'checklist_detail' otkorder.el_checklist.id %}">просмотр </a>
                     {% else %}
-                        <a href="{% url 'checklist_create' 'el_checklist' otkorder.pk %}">создать </a>
+                        <!-- <a href="{% url 'checklist_create' 'el_checklist' otkorder.pk %}">создать </a> -->
                     {% endif %}
                 </div>
 
@@ -66,7 +66,7 @@
                     {% if  otkorder.tm_checklist  %}
                         <a href="{% url 'tm_checklist_detail' otkorder.tm_checklist.id %}">просмотр </a>
                     {% else %}
-                        <a href="{% url 'tm_checklist_create' otkorder.pk %}">создать </a>
+                        <!-- <a href="{% url 'tm_checklist_create' otkorder.pk %}">создать </a> -->
                     {% endif %}
                 </div>
 
@@ -75,7 +75,7 @@
                     {% if  otkorder.doc_checklist  %}
                         <a href="{% url 'checklist_detail' otkorder.doc_checklist.id %}">просмотр </a>
                     {% else %}
-                        <a href="{% url 'el_checklist_create' otkorder.pk %}">создать </a>
+                       <!-- <a href="{% url 'el_checklist_create' otkorder.pk %}">создать </a> -->
                     {% endif %}
                 </div>
 
@@ -84,7 +84,7 @@
                     {% if  otkorder.zip_checklist  %}
                         <a href="{% url 'checklist_detail' otkorder.zip_checklist.id %}">просмотр </a>
                     {% else %}
-                        <a href="{% url 'el_checklist_create' otkorder.pk %}">создать </a>
+                       <!-- <a href="{% url 'el_checklist_create' otkorder.pk %}">создать </a> -->
                     {% endif %}
                 </div>
 
@@ -93,10 +93,10 @@
                     {% if  otkorder.sal_checklist  %}
                         <a href="{% url 'checklist_detail' otkorder.sal_checklist.id %}">просмотр </a>
                     {% else %}
-                        <a href="{% url 'el_checklist_create' otkorder.pk %}">создать </a>
+                       <!-- <a href="{% url 'el_checklist_create' otkorder.pk %}">создать </a> -->
                     {% endif %}
                 </div>
-
+            </div>
             </div>
         {% endfor %}
 {% endblock content %}

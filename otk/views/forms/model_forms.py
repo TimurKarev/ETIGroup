@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, CharField, TextInput
 from otk.models.otk_order import OTKOrder
 from otk.models.checklists import *
 
@@ -28,6 +28,8 @@ class IntegerPointForm(ModelForm):
 
 
 class FourChoicePointForm(ModelForm):
+    comment = CharField(max_length=1000)
+
     class Meta:
         model = FourChoicePoint
         fields = ['point_value', 'comment']

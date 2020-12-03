@@ -3,6 +3,7 @@ from otk.models.otk_order import OTKOrder
 
 
 class SectionNumberCalculator:
+    DEFAULT_RETURN_VALUE = 1
 
     def __init__(
             self,
@@ -10,65 +11,63 @@ class SectionNumberCalculator:
             checklist_entry: Checklist,
             checklist_type: str,
     ):
-        self.order_entry = order
-        self.checklist_entry = checklist_entry
-        self.checklist_type = checklist_type
+        self._order_entry = order
+        self._checklist_entry = checklist_entry
+        self._checklist_type = checklist_type
 
-        self.bottom_bm = None
-        self.upper_bm = None
+        self._bottom_bm = None
+        self._upper_bm = None
 
-    def _init_bm_variables(self):
-        try:
-            self.bottom_bm = self.checklist_entry.chlistsection_set.all() \
-                    .filter(name='config')[0] \
-                    .integerpoint_set.all() \
-                    .filter(name='Количество нижних модулей')[0] \
-                    .point_value
-        except Exception as e:
-            print(e)
-            self.bottom_bm = 1
+    @property
+    def bottom_bm(self):
+        if self._bottom_bm:
+            return self._bottom_bm
 
         try:
-            self.upper_bm = self.checklist_entry.chlistsection_set.all() \
-                    .filter(name='config')[0] \
-                    .integerpoint_set.all() \
-                    .filter(name='Количество верхних модулей')[0] \
-                    .point_value
+            self._bottom_bm = self._checklist_entry.chlistsection_set.all() \
+                .filter(name='config')[0] \
+                .integerpoint_set.all() \
+                .filter(name='Количество нижних модулей')[0] \
+                .point_value
         except Exception as e:
             print(e)
-            self.upper_bm = 1
+            self._bottom_bm = self.DEFAULT_RETURN_VALUE
 
+        return self._bottom_bm
 
-def tm_checklist_number(order, section_name):
-    if section_name == 'Проверка RM6':
-        return order.config_section.integerpoint_set \
-            .all() \
-            .get() \
-            .point_value
+    @property
+    def upper_bm(self):
+        if self._upper_bm:
+            return self._upper_bm
 
-
-def bm_checklist_number(checklist_entry, section_name):
-    if section_name == 'Производство нижнего модуля':
         try:
-            sections = checklist_entry.chlistsection_set.all()
-            section = sections.filter(name='config')[0]
-            int_points_num = section.integerpoint_set.all()
-            nm_point = int_points_num.filter(name='Количество нижних модулей')[0]
-            num = nm_point.point_value
-            return num
+            self._upper_bm = self._checklist_entry.chlistsection_set.all() \
+                .filter(name='config')[0] \
+                .integerpoint_set.all() \
+                .filter(name='Количество верхних модулей')[0] \
+                .point_value
         except Exception as e:
             print(e)
-            return 1
+            self._upper_bm = self.DEFAULT_RETURN_VALUE
 
-    return 1
+        return self._upper_bm
 
+    def get_number(self, section_name):
 
-def get_section_number(order, checklist_entry, section_name, checklist_type):
-    """ Возвращает количество секций в чеклисте в зависимости от конфигурации заказа и чеклиста"""
-    if checklist_type == 'tm_checklist':
-        return tm_checklist_number(order, section_name)
+        if section_name == 'Производство нижнего модуля' or \
+                section_name == 'Металлоизделия нижний модуль' or \
+                section_name == 'Размеры нижнего модуля' or \
+                section_name == 'Проходные отверстия нижнего модуля' or \
+                section_name == 'Отделочные работы нижнего модуля' or \
+                section_name == 'Нижний модуль':
+            return self.bottom_bm
 
-    if checklist_type == 'bm_checklist':
-        return bm_checklist_number(checklist_entry, section_name)
+        if section_name == 'Производство верхнего модуля' or \
+                section_name == 'Металлоизделия верхнего модуля' or \
+                section_name == 'Размеры верхнего модуля' or \
+                section_name == 'Проходные отверстия верхнего модуля' or \
+                section_name == 'Отделочные работы верхнего модуля' or \
+                section_name == 'Верхний модуль':
+            return self.upper_bm
 
-    return 1
+        return self.DEFAULT_RETURN_VALUE

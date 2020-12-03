@@ -7,13 +7,7 @@ from otk.models.checklists import ChListSection
 
 # TODO дописать для всего
 from otk.services.order_services import get_section_context
-
-
-def get_order_by_checklist(checklist_entry):
-    try:
-        return checklist_entry.bm_checklist
-    except:
-        return None
+from otk.services.services import get_order_by_checklist
 
 
 class CheckListConfigUpdateView(TemplateView):
@@ -21,7 +15,7 @@ class CheckListConfigUpdateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         config_section = ChListSection.objects.get(id=kwargs['pk'])
-        self.order = get_order_by_checklist(config_section.checklist)
+        self.order = get_order_by_checklist(config_section.checklist, kwargs['tp'])
         order_man_number = self.order.man_number
         context = {'order_number': order_man_number}
 
