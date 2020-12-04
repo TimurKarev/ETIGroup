@@ -1,12 +1,8 @@
-from typing import Optional
-
 from django.urls import reverse
 
-from otk.services.services import create_order_config_section_entry, create_substation_type_entry_for_order_config
+from otk.services.order_services import create_order
 from otk.views.mixins.user_access_mixin import UserAccessMixin
 from django.http import HttpResponse, HttpResponseRedirect
-
-from otk.models.otk_order import OTKOrder
 
 from django.views.generic import TemplateView
 
@@ -41,7 +37,7 @@ class OrderCreateView(UserAccessMixin, TemplateView):
             # print(order.cleaned_data, type_form.cleaned_data)
             order_num = order.cleaned_data['man_number']
             type_string = type_form.cleaned_data['point_value']
-            order_id = self.create_order(order_num, type_string)
+            order_id = create_order(order_num, type_string)
             if order_id is False:
                 return HttpResponse(str.format(f'Не удалось создать зааз'))
         else:
@@ -49,23 +45,4 @@ class OrderCreateView(UserAccessMixin, TemplateView):
                 f'Ошибка валидации \n {order.errors} \n {type_form.errors}'))
 
         return HttpResponseRedirect(reverse('order_create_config', kwargs={'pk': order_id}))
-
-    def create_order(self, order_num, type_sub) -> Optional[int]:
-
-        section = create_order_config_section_entry('config')
-        if section is None:
-            return False
-
-        substation_type = create_substation_type_entry_for_order_config('Тип подстанции', type_sub, section)
-        if substation_type is None:
-            return False
-
-        try:
-            order = OTKOrder(man_number=order_num, config_section=section)
-            order.save()
-        except Exception as e:
-            print(e)
-            return False
-
-        return order.id
 

@@ -3,15 +3,14 @@ from typing import Optional
 
 import os
 
+from otk.models.checklists import Checklist
 from otk.models.otk_order import OTKOrder
 from otk.models.checklists import *
 
 from django.conf import settings
 
 from otk.services.section_number_calc import SectionNumberCalculator
-
-''' Создает чек лист телемеханики и добавляет его к номеру заказа 
-    Возвращает id чеклиста'''
+from otk.views.forms.model_forms import StringPointForm, IntegerPointForm, YesNoChoicePointForm, FourChoicePointForm
 
 
 def create_checklist_by_checklist_type_from_json(
@@ -19,11 +18,8 @@ def create_checklist_by_checklist_type_from_json(
         checklist_type: str,
         checklist_name: str
 ) -> Optional[int]:
-    # # Проверяем, есть ли уже такой чеклист в базе
-    # if is_checklist_exist(checklist_type, order):
-    #     return None
-    #
-    # checklist_entry = create_checklist(name=checklist_name)
+    """ Создает чек лист телемеханики и добавляет его к номеру заказа
+        Возвращает id чеклиста"""
     checklist_entry = get_checklist_for_order_by_type(order, checklist_type, checklist_name)
     if checklist_entry is None:
         return None
@@ -67,35 +63,6 @@ def create_checklist_by_checklist_type_from_json(
         return None
 
     return checklist_entry.id
-
-
-'''
-def is_checklist_exist(checklist_type, order) -> Optional[Checklist]:
-    """Проверяет существует ли такой чеклист в базе
-        возвращает:
-            True - если существует
-            False - если отсутствует
-        """
-    if checklist_type == 'bm_checklist' and order.bm_checklist is not None:
-        return order.bm_checklist
-
-    if checklist_type == 'el_checklist' and order.el_checklist is not None:
-        return order.el_checklist
-
-    if checklist_type == 'tm_checklist' and order.tm_checklist is not None:
-        return order.tm_checklist
-
-    if checklist_type == 'doc_checklist' and order.doc_checklist is not None:
-        return order.doc_checklist
-
-    if checklist_type == 'zip_checklist' and order.zip_checklist is not None:
-        return order.zip_checklist
-
-    if checklist_type == 'sal_checklist' and order.sal_checklist is not None:
-        return order.sal_checklist
-
-    return None
-'''
 
 
 def create_checklist(name) -> Optional[Checklist]:
@@ -321,3 +288,139 @@ def get_order_by_checklist(checklist_entry, checklist_type):
     except Exception as e:
         print(e)
         return None
+
+
+def get_section_context(section, data=None, section_prefix='sec'):
+    """Возвращает дату из модели"""
+    section_dict = {'name': section.name}
+    all_points_entries = []
+
+    for i, p in enumerate(section.stringpoint_set.all()):
+        all_points_entries.append(
+            {
+                "serial_number": p.serial_number,
+                "name": p.name,
+                "value": p.point_value,
+                "form": StringPointForm(
+                                        instance=p,
+                                        data=data,
+                                        prefix='s'+str(i)+str(section_prefix)
+                                        )
+            }
+        )
+
+    for i, p in enumerate(section.integerpoint_set.all()):
+        all_points_entries.append(
+            {
+                "serial_number": p.serial_number,
+                "name": p.name,
+                "value": p.point_value,
+                "form": IntegerPointForm(
+                                        instance=p,
+                                        data=data,
+                                        prefix='i'+str(i)+str(section_prefix)
+                                       )
+            }
+        )
+
+    for i, p in enumerate(section.yesnochoicepoint_set.all()):
+        all_points_entries.append(
+            {
+                "serial_number": p.serial_number,
+                "name": p.name,
+                "value": p.point_value,
+                "form": YesNoChoicePointForm(
+                                            instance=p,
+                                            data=data,
+                                            prefix='y' + str(i)+str(section_prefix)
+                                            )
+            }
+        )
+
+    for i, p in enumerate(section.fourchoicepoint_set.all()):
+        all_points_entries.append(
+            {
+                "serial_number": p.serial_number,
+                "name": p.name,
+                "value": p.point_value,
+                "comment": p.comment,
+                "form": FourChoicePointForm(
+                                            instance=p,
+                                            data=data,
+                                            prefix='f' + str(i)+str(section_prefix)
+                                            )
+            }
+        )
+
+    all_points_entries = sorted(all_points_entries, key=lambda serial: serial['serial_number'])
+
+    section_dict['points'] = all_points_entries
+    return section_dict
+
+
+def get_detail_context_from_checklist_object(checklist_object, post_data=None) -> Optional[list]:
+    """Возвращает список сущностей для присоединения к context в DetailView
+        для конкретного чеклиста"""
+    sections = checklist_object.chlistsection_set.all()
+    data = []
+    for i, section in enumerate(sections):
+        if section.name == 'config':
+            continue
+        data.append(get_section_context(section, data=post_data, section_prefix='sec' + str(i)))
+
+    return data
+
+
+def update_yesno_fields(checklist_entry: Checklist):
+    """Подчитывает значение поля Принято/Непринято и обновляет соответствующее поле"""
+    sections = checklist_entry.chlistsection_set.all()
+    for section in sections:
+        yesno_points = section.yesnochoicepoint_set.all()
+        if len(yesno_points) > 0:
+            yesno_point = yesno_points[0]
+            # print(yesno_point, "  ---- ",  section.name)
+            four_points = section.fourchoicepoint_set.all()
+            is_no_value = False
+            for four_point in four_points:
+                if four_point.point_value == four_point.Four.UNCHECKED or \
+                        four_point.point_value == four_point.Four.COMMENT:
+                    is_no_value = True
+                    try:
+                        yesno_point.point_value = yesno_point.YesNo.NO
+                        yesno_point.save()
+                        break
+                    except Exception as e:
+                        print(e)
+
+            if not is_no_value:
+                try:
+                    yesno_point.point_value = yesno_point.YesNo.YES
+                    yesno_point.save()
+                except Exception as e:
+                    print(e)
+
+
+def get_config_data_by_type(tp):
+    """Возвращает секцию 'config' в виде словаря"""
+    config_data = get_json_data(tp, True)
+    return config_data
+
+
+def create_config_section_by_data(checklist, config_data):
+    """Создает секцию config для чеклиста по словарю"""
+    existing_sections = checklist.chlistsection_set.all()
+    config_section = None
+    if len(existing_sections) > 0:
+        config_section = existing_sections.filter(name='config')[0]
+
+    if config_section is not None:
+        return config_section.id
+
+    config_section = create_cl_section_entry('config', checklist)
+    if config_section is None:
+        return None
+
+    for i, point in enumerate(config_data['points']):
+        create_point_entry(point, i + 1, config_section)
+
+    return config_section.id

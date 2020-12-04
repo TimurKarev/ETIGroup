@@ -36,20 +36,20 @@ def set_prefs(prefs):
     # You can extend python path for looking up modules
     # prefs.add('python_path', '~/python/')
 
-    # Should rope save object information or not.
+    # Should rope save order_entry information or not.
     prefs['save_objectdb'] = True
     prefs['compress_objectdb'] = False
 
     # If `True`, rope analyzes each module when it is being saved.
     prefs['automatic_soa'] = True
-    # The depth of calls to follow in static object analysis
+    # The depth of calls to follow in static order_entry analysis
     prefs['soa_followed_calls'] = 0
 
-    # If `False` when running modules or unit tests "dynamic object
+    # If `False` when running modules or unit tests "dynamic order_entry
     # analysis" is turned off.  This makes them much faster.
     prefs['perform_doa'] = True
 
-    # Rope can check the validity of its object DB when running.
+    # Rope can check the validity of its order_entry DB when running.
     prefs['validate_objectdb'] = True
 
     # How many undos to hold?
