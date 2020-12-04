@@ -53,7 +53,7 @@ class CheckListUpdateView(TemplateView):
         #        return "/checklist_detail/" + str(self.object.id)
         return HttpResponseRedirect(
             reverse('checklist_detail',
-                    kwargs={'pk': kwargs['pk']})
+                    kwargs={'tp': kwargs['tp'], 'pk': kwargs['pk']})
         )
 
 
