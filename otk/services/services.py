@@ -13,6 +13,15 @@ from otk.services.section_number_calc import SectionNumberCalculator
 from otk.views.forms.model_forms import StringPointForm, IntegerPointForm, YesNoChoicePointForm, FourChoicePointForm
 
 
+def is_checklist_have_several_sections(checklist_entry):
+    """Проверяет имеет ли чеклист какие-нибудь секции кроме конфиг"""
+    sections = checklist_entry.chlistsection_set.all()
+    if len(sections) > 1 \
+            or (len(sections) == 1 and sections[0].name != 'config'):
+        return True
+    return False
+
+
 def create_checklist_by_checklist_type_from_json(
         order: OTKOrder,
         checklist_type: str,
@@ -23,6 +32,10 @@ def create_checklist_by_checklist_type_from_json(
     checklist_entry = get_checklist_for_order_by_type(order, checklist_type, checklist_name)
     if checklist_entry is None:
         return None
+
+    # TODO сделать проверку на конфиг секцию, сделать уникальные номера и системму назначений уникальных config-имен
+    if is_checklist_have_several_sections(checklist_entry):
+        return checklist_entry.id
 
     data = get_json_data(checklist_type)
 
@@ -302,10 +315,10 @@ def get_section_context(section, data=None, section_prefix='sec'):
                 "name": p.name,
                 "value": p.point_value,
                 "form": StringPointForm(
-                                        instance=p,
-                                        data=data,
-                                        prefix='s'+str(i)+str(section_prefix)
-                                        )
+                    instance=p,
+                    data=data,
+                    prefix='s' + str(i) + str(section_prefix)
+                )
             }
         )
 
@@ -316,10 +329,10 @@ def get_section_context(section, data=None, section_prefix='sec'):
                 "name": p.name,
                 "value": p.point_value,
                 "form": IntegerPointForm(
-                                        instance=p,
-                                        data=data,
-                                        prefix='i'+str(i)+str(section_prefix)
-                                       )
+                    instance=p,
+                    data=data,
+                    prefix='i' + str(i) + str(section_prefix)
+                )
             }
         )
 
@@ -330,10 +343,10 @@ def get_section_context(section, data=None, section_prefix='sec'):
                 "name": p.name,
                 "value": p.point_value,
                 "form": YesNoChoicePointForm(
-                                            instance=p,
-                                            data=data,
-                                            prefix='y' + str(i)+str(section_prefix)
-                                            )
+                    instance=p,
+                    data=data,
+                    prefix='y' + str(i) + str(section_prefix)
+                )
             }
         )
 
@@ -345,10 +358,10 @@ def get_section_context(section, data=None, section_prefix='sec'):
                 "value": p.point_value,
                 "comment": p.comment,
                 "form": FourChoicePointForm(
-                                            instance=p,
-                                            data=data,
-                                            prefix='f' + str(i)+str(section_prefix)
-                                            )
+                    instance=p,
+                    data=data,
+                    prefix='f' + str(i) + str(section_prefix)
+                )
             }
         )
 
