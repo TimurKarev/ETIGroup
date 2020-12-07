@@ -4,6 +4,12 @@
 
 {% block content %}
     <a href="{% url 'checklist_update' checklist_type checklist.id %}"> Заполнить  </a><br/>
+
+    <div id="app">
+        [[ d ]]
+        <hello></hello>
+    </div>
+
         <div class="container">
             <div class="row">
                 <div class="col-7">
@@ -36,4 +42,9 @@
             </div>
         </div>
     <a href="{% url 'checklist_update' checklist_type checklist.id %}"> Заполнить  </a><br/>
+
+    {% load static %}
+
+    <script type="module" src="{% static 'index-bundle.js' %}"></script>
+
 {% endblock content %}
