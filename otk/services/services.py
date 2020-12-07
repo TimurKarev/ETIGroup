@@ -303,7 +303,7 @@ def get_order_by_checklist(checklist_entry, checklist_type):
         return None
 
 
-def get_section_context(section, data=None, section_prefix='sec'):
+def get_section_context(section, data=None, section_prefix='sec', form=True):
     """Возвращает дату из модели"""
     section_dict = {'name': section.name}
     all_points_entries = []
@@ -314,7 +314,7 @@ def get_section_context(section, data=None, section_prefix='sec'):
                 "serial_number": p.serial_number,
                 "name": p.name,
                 "value": p.point_value,
-                "form": StringPointForm(
+                "form": None if not form else StringPointForm(
                     instance=p,
                     data=data,
                     prefix='s' + str(i) + str(section_prefix)
@@ -328,7 +328,7 @@ def get_section_context(section, data=None, section_prefix='sec'):
                 "serial_number": p.serial_number,
                 "name": p.name,
                 "value": p.point_value,
-                "form": IntegerPointForm(
+                "form": None if not form else IntegerPointForm(
                     instance=p,
                     data=data,
                     prefix='i' + str(i) + str(section_prefix)
@@ -342,7 +342,7 @@ def get_section_context(section, data=None, section_prefix='sec'):
                 "serial_number": p.serial_number,
                 "name": p.name,
                 "value": p.point_value,
-                "form": YesNoChoicePointForm(
+                "form": None if not form else YesNoChoicePointForm(
                     instance=p,
                     data=data,
                     prefix='y' + str(i) + str(section_prefix)
@@ -357,7 +357,7 @@ def get_section_context(section, data=None, section_prefix='sec'):
                 "name": p.name,
                 "value": p.point_value,
                 "comment": p.comment,
-                "form": FourChoicePointForm(
+                "form": None if not form else FourChoicePointForm(
                     instance=p,
                     data=data,
                     prefix='f' + str(i) + str(section_prefix)
@@ -371,7 +371,7 @@ def get_section_context(section, data=None, section_prefix='sec'):
     return section_dict
 
 
-def get_detail_context_from_checklist_object(checklist_object, post_data=None) -> Optional[list]:
+def get_detail_context_from_checklist_object(checklist_object, post_data=None, form=True) -> Optional[list]:
     """Возвращает список сущностей для присоединения к context в DetailView
         для конкретного чеклиста"""
     sections = checklist_object.chlistsection_set.all()
@@ -379,7 +379,7 @@ def get_detail_context_from_checklist_object(checklist_object, post_data=None) -
     for i, section in enumerate(sections):
         if section.name == 'config':
             continue
-        data.append(get_section_context(section, data=post_data, section_prefix='sec' + str(i)))
+        data.append(get_section_context(section, data=post_data, section_prefix='sec' + str(i), form=form))
 
     return data
 

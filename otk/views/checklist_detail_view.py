@@ -20,9 +20,10 @@ class CheckListDetailView(UserAccessMixin, TemplateView):
 
         context = {'checklist': self._checklist_entry, 'checklist_type': kwargs['tp']}
 
-        data = get_detail_context_from_checklist_object(self._checklist_entry)
+        data = get_detail_context_from_checklist_object(self._checklist_entry, form=False)
 
         # context = {'data': data}
+        print(data)
         context['data'] = data
 
         return context
