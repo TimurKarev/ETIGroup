@@ -7,6 +7,6 @@ const app = new Vue({
   components:{ hello
       },
   data: {
-    d: 'jfdslkjfdlsk'
+    d: 'PAPAPAPA'
   }
 });
