@@ -25,7 +25,7 @@ module.exports = {
       // AND `<script>` blocks in `.vue` files
       {
         test: /\.js$/,
-        loader: 'babel-loader'
+        use: ['babel-loader', 'vue-hot-reload-loader']
       },
       // this will apply to both plain `.css` files
       // AND `<style>` blocks in `.vue` files
