@@ -3,44 +3,28 @@
 {% load addition_tags %}
 
 {% block content %}
+    <script>
+        const checklist_data = {{ json_context|safe }}
+    </script>
+
     <a href="{% url 'checklist_update' checklist_type checklist.id %}"> Заполнить  </a><br/>
 
     <div id="app">
-        [[ d ]]
-        <hello></hello>
-    </div>
-
         <div class="container">
             <div class="row">
                 <div class="col-7">
                     <h4>{{checklist.name}}<br/> </h4>
-                </div>
+               </div>
             </div>
-            <div class="row">
+            <div class="row" v-for="section in data_det">
                 <div class="col-7">
-                    <table class="table table-bordered table-sm">
-                        <tbody>
-                        {% for sections in data %}
-                            <tr>
-                                <td colspan="2"> <h5>{{ sections.name}} </h5></td>
-                            </tr>
-                            {% for section in sections.points %}
-                                <tr>
-                                    <td>{{ section.name}}</td>
-                                    <td>{{ section.value}}</td>
-                                </tr>
-                                {% if section.comment %}
-                                <tr>
-                                    <td colspan="2">{{ section.comment }}</td>
-                                </tr>
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                    <p>[[section.name]]</p>
+                    <hello v-for="point in section.points" :point="point"></hello>
                 </div>
             </div>
+            <hello value="Коко"></hello>
         </div>
+    </div>
     <a href="{% url 'checklist_update' checklist_type checklist.id %}"> Заполнить  </a><br/>
 
     {% load static %}

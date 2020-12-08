@@ -373,7 +373,7 @@ def get_section_context(section, data=None, section_prefix='sec', form=True):
 
 def get_detail_context_from_checklist_object(checklist_object, post_data=None, form=True) -> Optional[list]:
     """Возвращает список сущностей для присоединения к context в DetailView
-        для конкретного чеклиста"""
+        для конкретного чеклиста, игнорирует секцию config"""
     sections = checklist_object.chlistsection_set.all()
     data = []
     for i, section in enumerate(sections):

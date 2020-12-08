@@ -7,6 +7,7 @@ const app = new Vue({
   components:{ hello
       },
   data: {
-    d: 'jfdslkjfdlsk'
+    data_det: checklist_data,
+
   }
 });

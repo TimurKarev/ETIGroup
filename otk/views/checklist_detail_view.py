@@ -1,3 +1,5 @@
+import json
+
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -22,9 +24,9 @@ class CheckListDetailView(UserAccessMixin, TemplateView):
 
         data = get_detail_context_from_checklist_object(self._checklist_entry, form=False)
 
-        # context = {'data': data}
-        print(data)
-        context['data'] = data
+        self._is_data_empty = not data
+        # print('DATA', self._is_data_empty)
+        context['json_context'] = json.dumps(data)
 
         return context
 
@@ -32,7 +34,7 @@ class CheckListDetailView(UserAccessMixin, TemplateView):
         self._checklist_entry = Checklist.objects.get(id=kwargs['pk'])
         context = self.get_context_data(**kwargs)
 
-        if not context['data']:
+        if self._is_data_empty:
             try:
                 order_id = get_order_by_checklist(self._checklist_entry, kwargs['tp']).id
                 return HttpResponseRedirect(reverse
