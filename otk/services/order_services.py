@@ -1,10 +1,7 @@
+from typing import Optional
+
 from otk.models.otk_order import OTKOrder
-from otk.views.forms.model_forms import (
-                                         StringPointForm,
-                                         IntegerPointForm,
-                                         FourChoicePointForm,
-                                         YesNoChoicePointForm
-                                        )
+from otk.services.services import create_order_config_section_entry, create_substation_type_entry_for_order_config
 
 
 def get_config_section_from_order_id(order_id):
@@ -13,69 +10,21 @@ def get_config_section_from_order_id(order_id):
     return order_entry.config_section
 
 
-def get_section_context(section, data=None, section_prefix='sec'):
-    """Возвращает дату из модели"""
-    section_dict = {'name': section.name}
-    all_points_entries = []
+def create_order(order_num, type_sub) -> Optional[int]:
+    """Создает заказ и добавляет к нему секцию конфигурации """
+    section = create_order_config_section_entry('config')
+    if section is None:
+        return False
 
-    for i, p in enumerate(section.stringpoint_set.all()):
-        all_points_entries.append(
-            {
-                "serial_number": p.serial_number,
-                "name": p.name,
-                "value": p.point_value,
-                "form": StringPointForm(
-                                        instance=p,
-                                        data=data,
-                                        prefix='s'+str(i)+str(section_prefix)
-                                        )
-            }
-        )
+    substation_type = create_substation_type_entry_for_order_config('Тип подстанции', type_sub, section)
+    if substation_type is None:
+        return False
 
-    for i, p in enumerate(section.integerpoint_set.all()):
-        all_points_entries.append(
-            {
-                "serial_number": p.serial_number,
-                "name": p.name,
-                "value": p.point_value,
-                "form": IntegerPointForm(
-                                        instance=p,
-                                        data=data,
-                                        prefix='i'+str(i)+str(section_prefix)
-                                       )
-            }
-        )
+    try:
+        order = OTKOrder(man_number=order_num, config_section=section)
+        order.save()
+    except Exception as e:
+        print(e)
+        return False
 
-    for i, p in enumerate(section.yesnochoicepoint_set.all()):
-        all_points_entries.append(
-            {
-                "serial_number": p.serial_number,
-                "name": p.name,
-                "value": p.point_value,
-                "form": YesNoChoicePointForm(
-                                            instance=p,
-                                            data=data,
-                                            prefix='y' + str(i)+str(section_prefix)
-                                            )
-            }
-        )
-
-    for i, p in enumerate(section.fourchoicepoint_set.all()):
-        all_points_entries.append(
-            {
-                "serial_number": p.serial_number,
-                "name": p.name,
-                "value": p.point_value,
-                "comment": p.comment,
-                "form": FourChoicePointForm(
-                                            instance=p,
-                                            data=data,
-                                            prefix='f' + str(i)+str(section_prefix)
-                                            )
-            }
-        )
-
-    all_points_entries = sorted(all_points_entries, key=lambda serial: serial['serial_number'])
-
-    section_dict['points'] = all_points_entries
-    return section_dict
+    return order.id

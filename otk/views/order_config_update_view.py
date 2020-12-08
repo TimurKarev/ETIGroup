@@ -1,4 +1,5 @@
-from otk.services.order_services import get_section_context, get_config_section_from_order_id
+from otk.services.order_services import get_config_section_from_order_id
+from otk.services.services import get_section_context
 from otk.views.mixins.user_access_mixin import UserAccessMixin
 
 from django.http import HttpResponseRedirect

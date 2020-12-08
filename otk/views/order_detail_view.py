@@ -1,4 +1,4 @@
-from otk.services.order_services import get_section_context
+from otk.services.services import get_section_context
 from otk.views.mixins.user_access_mixin import UserAccessMixin
 
 from otk.models.otk_order import OTKOrder

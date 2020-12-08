@@ -94,7 +94,7 @@ class BaseSectionFormset(BaseInlineFormSet):
 # BookImages belonging to those Books.
 #
 # You'd use this by passing in a Publisher:
-#     PublisherBooksWithImagesFormset(**form_kwargs, instance=self.object)
+#     PublisherBooksWithImagesFormset(**form_kwargs, instance=self.order_entry)
 ChecklistSectionWithFourChoisesFormset = inlineformset_factory(
                                 Checklist,
                                 ChListSection,

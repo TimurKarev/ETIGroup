@@ -6,8 +6,7 @@ from django.views.generic import TemplateView
 from otk.models.checklists import ChListSection
 
 # TODO дописать для всего
-from otk.services.order_services import get_section_context
-from otk.services.services import get_order_by_checklist
+from otk.services.services import get_order_by_checklist, get_section_context
 
 
 class CheckListConfigUpdateView(TemplateView):

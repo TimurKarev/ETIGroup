@@ -1,5 +1,4 @@
 from django.db import models
-from otk.models.tm_checklists import TMCheckList
 from otk.models.checklists import Checklist, OrderConfigSection
 from django.urls import reverse
 

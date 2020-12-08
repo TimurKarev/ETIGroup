@@ -22,6 +22,6 @@ class CheckListSectionsCreateView(RedirectView):
         )
 
         if checklist_id is not None:
-            return HttpResponseRedirect(reverse('checklist_detail', kwargs={'pk': checklist_id}))
+            return HttpResponseRedirect(reverse('checklist_detail', kwargs={'tp': kwargs['tp'], 'pk': checklist_id}))
         else:
             return HttpResponse('Ошибка при создании чек листа')

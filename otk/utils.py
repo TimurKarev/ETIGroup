@@ -23,13 +23,13 @@ def model_to_dict_verbose(instance, fields=None, exclude=None):
             continue
         verbose_name = opts.get_field(f.name).verbose_name
         if isinstance(f, ManyToManyField):
-            # If the object doesn't have a primary key yet, just use an empty
+            # If the order_entry doesn't have a primary key yet, just use an empty
             # list for its m2m fields. Calling f.value_from_object will raise
             # an exception.
             if instance.pk is None:
                 data[verbose_name] = []
             else:
-                # MultipleChoiceWidget needs a list of pks, not object instances.
+                # MultipleChoiceWidget needs a list of pks, not order_entry instances.
                 qs = f.value_from_object(instance)
                 if qs._result_cache is not None:
                     data[verbose_name] = [item.pk for item in qs]

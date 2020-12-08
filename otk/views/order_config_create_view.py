@@ -4,14 +4,6 @@ from django.views.generic.base import RedirectView
 
 from otk.services.services import get_json_data, create_integer_point_entry, create_string_point_entry
 
-from django.urls import reverse
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
-
-from otk.models.otk_order import OTKOrder
-
-import json
-
 
 class OrderConfigCreateView(UserAccessMixin, RedirectView):
     permission_required = 'otk.add_otkchecklist'
