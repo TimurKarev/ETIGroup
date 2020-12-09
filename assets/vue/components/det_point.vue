@@ -53,7 +53,7 @@ export default {
 }
 
 .cell {
-  margin-left: 1%;
+  margin-left: 2%;
 }
 
 .name {
@@ -69,8 +69,8 @@ export default {
 }
 
 .comment {
-  font-size: small;
-  padding-left: 5%;
+  font-size: medium;
+  padding-left: 2%;
   border-width: thin;
   border-bottom-style: solid;
   border-color: darkgrey;
