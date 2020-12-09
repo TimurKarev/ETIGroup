@@ -16,13 +16,7 @@
                     <h4>{{checklist.name}}<br/> </h4>
                </div>
             </div>
-            <div class="row" v-for="section in data_det">
-                <div class="col-7">
-                    <p>[[section.name]]</p>
-                    <hello v-for="point in section.points" :point="point"></hello>
-                </div>
-            </div>
-            <hello value="Коко"></hello>
+            <det_section v-for="section in data_det" :section="section"></det_section>
         </div>
     </div>
     <a href="{% url 'checklist_update' checklist_type checklist.id %}"> Заполнить  </a><br/>

@@ -8,6 +8,17 @@ module.exports = {
   output: {
     filename: 'index-bundle.js',  // output bundle file name
     path: path.resolve(__dirname, './static'),  // path to our Django static directory
+    publicPath: "/static/"
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, './static'),
+    writeToDisk: true,
+    proxy: {
+     '!/static/**': {
+        target: 'http://localhost:8000', // points to django dev server
+        changeOrigin: true,
+      },
+    }
   },
   resolve: {
         alias: {

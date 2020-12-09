@@ -1,10 +1,11 @@
 import Vue from "vue";
-import hello from "/assets/vue/components/hello.vue";
+import det_section from "./vue/components/det_section";
 
 const app = new Vue({
   el: "#app",
   delimiters: ['[[',']]'],
-  components:{ hello
+  components:{
+    det_section,
       },
   data: {
     data_det: checklist_data,
