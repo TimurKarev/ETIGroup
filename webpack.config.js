@@ -19,7 +19,10 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
+        options: {
+         extractCSS: process.env.NODE_ENV === 'production'
+        }
       },
       // this will apply to both plain `.js` files
       // AND `<script>` blocks in `.vue` files
@@ -33,7 +36,12 @@ module.exports = {
         test: /\.css$/,
         use: [
           'vue-style-loader',
-          'css-loader'
+          {
+            loader: 'css-loader',
+            options: {
+              esModule: false
+            }
+          }
         ]
       }
     ]

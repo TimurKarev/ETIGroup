@@ -1,7 +1,7 @@
 <template>
   <div class="cell">
     <div class="row">
-      <div class="col-8 cell">
+      <div class="col-8">
         {{ name}}
       </div>
       <div class="col-4">
@@ -39,7 +39,7 @@ export default {
 <style scoped>
 
 .cell {
-  border-style: solid;
+  border-bottom-style: solid;
   border-color: black;
 }
 
