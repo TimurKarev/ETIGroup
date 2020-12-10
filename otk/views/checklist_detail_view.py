@@ -27,6 +27,7 @@ class CheckListDetailView(UserAccessMixin, TemplateView):
         self._is_data_empty = not data
         # print('DATA', self._is_data_empty)
         context['json_context'] = json.dumps(data)
+        context['json_checklist_name'] = json.dumps(self._checklist_entry.name)
 
         return context
 

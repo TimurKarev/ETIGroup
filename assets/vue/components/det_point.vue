@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import {VColor} from "../../variables"
+
 export default {
   name: "det-point",
   props: ['point'],
@@ -35,12 +37,12 @@ export default {
   },
   computed: {
     valueColor() {
-      if (this.value === 'Не используется') return 'cadetblue';
-      if (this.value === 'Принято') return 'limegreen';
-      if (this.value === 'Комментарий') return 'lightcoral';
-      if (this.value === 'Не проверено') return 'palegoldenrod';
-      if (this.value === 'Пройдены') return 'forestgreen'
-      if (this.value === 'Не Пройдены') return 'navajowhite'
+      if (this.value === 'Не используется') return VColor.notUsed;
+      if (this.value === 'Принято') return VColor.accepted;
+      if (this.value === 'Комментарий') return VColor.comment;
+      if (this.value === 'Не проверено') return VColor.notChecked;
+      if (this.value === 'Пройдены') return VColor.completed;
+      if (this.value === 'Не Пройдены') return VColor.inProgress
     }
   },
 }

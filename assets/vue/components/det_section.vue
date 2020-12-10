@@ -1,3 +1,5 @@
+<!-- TODO сделать динамичную разметку сетки -->
+<!-- TODO  sectionColor() оптимизировать, уйти от цикла-->
 <template>
 <div>
   <div class="row" v-bind:class="[is_plus ? 'close-header' : 'open-header']">
@@ -19,9 +21,7 @@
 
 <script>
 import det_point from "./det_point";
-
-const completedColor = 'lime'
-const inProgressColor = 'royalblue'
+import {VColor} from "../../variables"
 
 export default {
   name: "det_section",
@@ -30,12 +30,16 @@ export default {
     section: {
       name: 'section',
       type: Object,
+    },
+    is_plus: {
+      name: 'is_plus',
+      type: Boolean,
     }
   },
   data: function (){
     return {
       'name': this.section.name,
-      'is_plus': true,
+      'is_plus': this.is_plus,
     }
   },
   computed: {
@@ -44,9 +48,9 @@ export default {
       else return '-';
     },
     sectionColor() {
-      let retColor = inProgressColor;
+      let retColor = VColor.inProgress;
       this.section.points.forEach(point =>{
-        if (point.value === 'Пройдены') retColor = completedColor;
+        if (point.value === 'Пройдены') retColor = VColor.completed;
       });
       return retColor;
     }
