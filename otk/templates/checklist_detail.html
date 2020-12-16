@@ -4,8 +4,8 @@
 
 {% block content %}
     <script>
-        checklist_data = {{ json_context|safe }}
-        checklist_name = {{ json_checklist_name|safe}}
+        g_checklist_data = {{ json_context|safe }}
+        g_checklist_name = {{ json_checklist_name|safe}}
     </script>
 
     <a href="{% url 'checklist_update' checklist_type checklist.id %}"> Заполнить  </a><br/>

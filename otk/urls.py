@@ -5,7 +5,7 @@ from otk.views.checklist_create import CheckListCreateView
 from otk.views.checklist_sections_create import CheckListSectionsCreateView
 from otk.views.order_config_create_view import OrderConfigCreateView
 from otk.views.order_config_update_view import OrderConfigUpdateView
-from otk.views.views import CheckListListView
+from otk.views.check_list_list_view import CheckListListView
 from otk.views.order_create_view import OrderCreateView
 from otk.views.checklist_detail_view import CheckListDetailView
 from otk.views.checklist_update_view import CheckListUpdateView

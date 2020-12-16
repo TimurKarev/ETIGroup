@@ -33,7 +33,7 @@ class CheckListDetailView(UserAccessMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         self._checklist_entry = Checklist.objects.get(id=kwargs['pk'])
-        context = self.get_context_data(**kwargs)
+        #context = self.get_context_data(**kwargs)
 
         if self._is_data_empty:
             try:

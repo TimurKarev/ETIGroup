@@ -1,39 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<script>
+    g_checklists_list = {{ gj_checklists_list|safe}}
+</script>
+    <app_toolbar :chlist_data="checklists_list"> </app_toolbar>
 
     <div class="container">
-        <div class="row">
-
-            <div class="col-1">
-                Заказ
-            </div>
-
-            <div class="col-1">
-                Стройка
-            </div>
-
-            <div class="col-1">
-                Электрика
-            </div>
-
-            <div class="col-1">
-                ТМ
-            </div>
-
-            <div class="col-1">
-                Документы
-            </div>
-
-            <div class="col-1">
-                Зип
-            </div>
-
-            <div class="col-1">
-                Заказчик
-            </div>
-
-        </div>
         <br/>
 
         {% for otkorder in object_list %}
@@ -41,7 +14,7 @@
                 <div class="col-1">
                     <a href="{% url 'order_detail' otkorder.pk %}"> {{ otkorder }} </a>
                 </div>
-                
+
                 <!-- Стройка-->
                 <div class="col-1">
                     {% if  otkorder.bm_checklist  %}
