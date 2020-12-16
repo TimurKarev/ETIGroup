@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col-8">
-        <div class="str">{{ header_str }}</div>
+        <div class="str">{{ header_str }} И еще чего нибудь</div>
         <a class="roll" href="" @click.prevent="rollUp">{{rollSymbol}}</a>
       </div>
     </div>

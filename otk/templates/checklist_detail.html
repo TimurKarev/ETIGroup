@@ -4,22 +4,19 @@
 
 {% block content %}
     <script>
-        const checklist_data = {{ json_context|safe }}
-        const checklist_name = {{ json_checklist_name|safe}}
+        checklist_data = {{ json_context|safe }}
+        checklist_name = {{ json_checklist_name|safe}}
     </script>
 
     <a href="{% url 'checklist_update' checklist_type checklist.id %}"> Заполнить  </a><br/>
 
-    <div id="app">
+            <mytoolbar> </mytoolbar>
         <div class="container">
+
             <checklist_header :header_props="header"
                               :sections="data_det"></checklist_header>
         </div>
-    </div>
+
+
     <a href="{% url 'checklist_update' checklist_type checklist.id %}"> Заполнить  </a><br/>
-
-    {% load static %}
-
-    <script type="module" src="{% static 'index-bundle.js' %}"></script>
-
 {% endblock content %}
