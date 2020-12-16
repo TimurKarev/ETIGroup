@@ -30,5 +30,4 @@ class CheckListListView(UserAccessMixin, TemplateView):
             })
 
         json_data = json.dumps(order_list)
-        print(json_data)
         return {'gj_checklists_list': json_data}

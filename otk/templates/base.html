@@ -3,6 +3,14 @@
     let g_checklist_data = 'None'
     let g_checklist_name = 'None'
     let g_checklists_list = 'None'
+
+    let g_toolbar_main_urls = {
+        checklist_list: "{% url 'checklist_list' %}",
+        order_create: "{% url 'order_create' %}",
+        logout: "{% url 'logout' %}",
+        login: "{% url 'login' %}"
+    }
+    //let g_username = 'Незнакомец'
 </script>
 <html>
     <head>
@@ -10,65 +18,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons">
 
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
         <title> {% block title %} Общий заголовок {% endblock title %} </title>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#"><img src="{% static 'img/logo.png'%}" alt=""/></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'checklist_list' %}">К списку заказов <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'order_create' %}">Создать заказ</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                {% if  user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="">{{ user.username }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Незнакомец</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Войти</a>
-                    </li>
-                {% endif %}
-            </ul>
+        <div id="app" style="min-height: 100%">
+            {% block content %}
+            {% endblock content %}
         </div>
-        </nav>
-        <div>
-            <header>
-                <div class="nav-right">
-
-                    
-                </div>
-
-            </header>
-        </div>
-            <div id="app">
-                {% block content %}
-                {% endblock content %}
-            </div>
 
     {% load static %}
     <script type="module" src="{% static 'index-bundle.js' %}"></script>
 
-    <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    </body>
+  </body>
 </html>

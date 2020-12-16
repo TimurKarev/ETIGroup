@@ -2,8 +2,7 @@ import Vue from "vue";
 
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default.css'
-import 'vue-material/dist/theme/default-dark.css'
+import 'vue-material/dist/theme/black-green-light.css'
 
 Vue.use(VueMaterial)
 
@@ -22,6 +21,7 @@ new Vue({
   data: {
     data_det: g_checklist_data,
     header: g_checklist_name,
-    checklists_list: g_checklists_list
+    checklists_list: g_checklists_list,
+    toolbar_main_urls: g_toolbar_main_urls
   }
 });

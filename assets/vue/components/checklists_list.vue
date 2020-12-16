@@ -4,17 +4,28 @@
       <md-list>
         <md-list-item md-expand
         v-for="num in this.chlist_data" :key="num.order_num">
-          <span class="md-list-item-text">
-                {{num.order_num}}
-          </span>
+  <div class="md-layout" style="max-height: 45px; align-items: center">
+    <div class="md-layout-item">dska;lds</div>
+    <div class="md-layout-item">LLLLL</div>
+    <md-button class="md-icon-button">
+          <md-icon>menu</md-icon>
+    </md-button>
+  </div>
           <md-list slot="md-expand">
             <md-list-item class="md-inset" v-for=" i in item_names" :key="i.item" >
-              {{ i.item }}
+  <div class="md-layout" style="max-height: 45px; align-items: center">
+    <div class="md-layout-item">dska;lds</div>
+    <div class="md-layout-item">LLLLL</div>
+    <md-button class="md-icon-button" @click="alert()">
+          <md-icon>menu</md-icon>
+    </md-button>
+  </div>
             </md-list-item>
           </md-list>
         </md-list-item>
       </md-list>
     </div>
+  </div>
   </div>
 </template>
 
