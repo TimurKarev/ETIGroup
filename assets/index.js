@@ -1,11 +1,9 @@
 import Vue from "vue";
 
-  import Vuesax from 'vuesax'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
-  import 'vuesax/dist/vuesax.css' //Vuesax styles
-  Vue.use(Vuesax, {
-    // options here
-  })
+Vue.use(ElementUI);
 
 import app_toolbar from "./vue/components/app_toolbar";
 

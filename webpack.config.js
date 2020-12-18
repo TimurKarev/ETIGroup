@@ -1,6 +1,7 @@
 const path = require('path');
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'development',
@@ -62,11 +63,16 @@ module.exports = {
           'css-loader',
           'sass-loader'
         ]
-      }
+      },
+            {
+        test: /\.(eot|svg|ttf|woff|woff2)$/i,
+        loader: 'url-loader'
+      },
+
     ]
   },
   plugins: [
     // make sure to include the plugin for the magic
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
   ]
 }
