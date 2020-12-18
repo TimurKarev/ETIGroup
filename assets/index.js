@@ -1,22 +1,20 @@
 import Vue from "vue";
 
-import VueMaterial from 'vue-material'
-import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/black-green-light.css'
+  import Vuesax from 'vuesax'
 
-Vue.use(VueMaterial)
+  import 'vuesax/dist/vuesax.css' //Vuesax styles
+  Vue.use(Vuesax, {
+    // options here
+  })
 
-import checklist_header from "./vue/components/checklist_header";
 import app_toolbar from "./vue/components/app_toolbar";
-import checklists_list from "./vue/components/checklists_list";
+
 
 new Vue({
   el: "#app",
   delimiters: ['[[',']]'],
   components: {
-    checklist_header,
     app_toolbar,
-    checklists_list,
   },
   data: {
     data_det: g_checklist_data,
