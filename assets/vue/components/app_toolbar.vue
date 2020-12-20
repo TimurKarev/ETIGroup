@@ -1,62 +1,57 @@
 <template>
-  <div>
-  <el-menu
-      class="el-menu-demo"
-      mode="horizontal"
+  <v-app-bar
+    color="primary"
+    dense
+    max-height="50"
   >
-    <el-row type="flex" justify="start">
-      <el-col :span="4">
-        <el-row type="flex" justify="start" gutter="30">
-          <el-col :span="6">
-            <el-menu-item>
-            <i class="el-icon-s-unfold"></i>
-          </el-menu-item>
-          </el-col>
-          <el-col :span="18">
-            <el-menu-item>
-            <i class="el-icon-s-home"></i>
-          </el-menu-item>
-          </el-col>
-        </el-row>
-      </el-col>
+    <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-      <el-col :span="18">
-        <el-row type="flex" justify="end" gutter="30">
-          <el-col :span="19" >
-            <el-menu-item index="1" style="{justify-content: end}">
-              <div class="name">Ytofmd,f</div>
-            </el-menu-item>
-          </el-col>
-          <el-col :span="5">
-           <el-menu-item>
-        <i class="el-icon-s-custom"></i>
-      </el-menu-item>
-          </el-col>
-        </el-row>
-  </el-col>
-    </el-row>
+    <v-btn
+      icon
+      :href="this.main_urls.checklist_list"
+    >
+        <v-icon>mdi-home</v-icon>
+    </v-btn>
 
-  </el-menu>
-    </div>
+    <v-spacer></v-spacer>
+
+    <v-toolbar-title>Незнакомец</v-toolbar-title>
+
+   <v-btn icon>
+      <v-icon>mdi-account-circle</v-icon>
+  </v-btn>
+  </v-app-bar>
 </template>
 
 <style lang="scss" scoped>
 
-
 </style>
 
 <script>
-
 export default {
   name: 'app_toolbar',
 
-  props: [
-      'title'
-  ],
+  props: {
+    main_urls: {
+      type: Object,
+    }
+  },
 
-  data:() => ({
-      active: 'guide'
-    })
+  data: function(){
+
+    return {
+      active: 'guide',
+      collapseOnScroll: true,
+    }
+  },
+  created() {
+    this.$eventHub.$on('button_click', this.someButtonClicked)
+  },
+  methods: {
+    someButtonClicked(data){
+      console.log(data)
+    }
+  }
 }
 
 </script>

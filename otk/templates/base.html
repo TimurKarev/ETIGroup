@@ -16,15 +16,18 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons">
+
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
 
         <title> {% block title %} Общий заголовок {% endblock title %} </title>
     </head>
     <body>
-        <div id="app">
+         <v-app id="app">
             {% block content %}
             {% endblock content %}
-        </div>
+         </v-app>
+
 
     {% load static %}
     <script type="module" src="{% static 'index-bundle.js' %}"></script>

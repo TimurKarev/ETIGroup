@@ -1,19 +1,20 @@
 import Vue from "vue";
-
-import ElementUI from 'element-ui';
-//import 'element-ui/lib/theme-chalk/index.css';
-import './eti-theme.css'
-
-Vue.use(ElementUI);
+import vuetify from './plugins/vuetify' // path to vuetify export
+import VueRouter from 'vue-router'
 
 import app_toolbar from "./vue/components/app_toolbar";
+import checklists_list from "./vue/components/checklists_list";
 
+Vue.use(VueRouter)
+Vue.prototype.$eventHub = new Vue();
 
 new Vue({
+  vuetify,
   el: "#app",
   delimiters: ['[[',']]'],
   components: {
     app_toolbar,
+    checklists_list
   },
   data: {
     data_det: g_checklist_data,

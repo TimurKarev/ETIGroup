@@ -1,10 +1,16 @@
+
 {% extends 'base.html' %}
 
-{% block content %}
-<script>
+<script type="application/javascript">
     g_checklists_list = {{ gj_checklists_list|safe}}
+    console.log(g_checklists_list)
 </script>
-    <app_toolbar :title="'Список заказов'"> </app_toolbar>
+
+{% block content %}
+    <app_toolbar v-bind:main_urls="toolbar_main_urls"></app_toolbar>
+        <checklists_list>   </checklists_list>
+
+
 
     <div class="container">
         <br/>
