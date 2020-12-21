@@ -24,7 +24,6 @@ export default {
   name: "checklists_list",
   props: ['list_data'],
   data: function() {
-    console.log("List - ", this.list_data)
     return {
       headers: [
           {text: 'Заказ', value: 'order_num'},

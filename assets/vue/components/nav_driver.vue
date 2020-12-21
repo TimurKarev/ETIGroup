@@ -7,12 +7,9 @@
 
     <v-list-item>
       <v-list-item-content>
-        <v-list-item-title class="title">
-          Application
+        <v-list-item-title class="title text-center">
+          {{this.data.page_title}}
         </v-list-item-title>
-        <v-list-item-subtitle>
-          subtext
-        </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
      <template v-slot:append>
@@ -28,7 +25,9 @@
 <script>
 export default {
   name: "nav_driver",
+  props: ['data'],
   data: function(){
+    console.log(this.data)
     return{
       driver: null
     }

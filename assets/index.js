@@ -24,6 +24,7 @@ new Vue({
     data_det: g_checklist_data,
     header: g_checklist_name,
     checklists_list: g_checklists_list,
-    toolbar_main_urls: g_toolbar_main_urls
+    toolbar_main_urls: g_toolbar_main_urls,
+    nav_driver_data: g_nav_driver_data,
   }
 });
