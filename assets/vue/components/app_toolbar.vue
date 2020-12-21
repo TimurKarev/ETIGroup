@@ -8,7 +8,7 @@
       elevate-on-scroll
       scroll-target="#scrolling-techniques-4"
   >
-    <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click="navButtonClicked"></v-app-bar-nav-icon>
 
     <v-btn
       icon
@@ -43,22 +43,17 @@ export default {
       type: Object,
     }
   },
-
   data: function(){
-
-    return {
+     return {
       active: 'guide',
       collapseOnScroll: true,
     }
   },
-  created() {
-    this.$eventHub.$on('button_click', this.someButtonClicked)
-  },
   methods: {
-    someButtonClicked(data){
-      console.log(data)
+    navButtonClicked(){
+       this.$eventHub.$emit('nav-button-click');
     }
-  }
+  },
 }
 
 </script>
