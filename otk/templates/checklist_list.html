@@ -6,7 +6,10 @@
     g_checklists_list = {{ gj_checklists_list|safe}}
 </script>
     <app_toolbar v-bind:main_urls="toolbar_main_urls"></app_toolbar>
+    <nav_driver></nav_driver>
+<v-content>
     <checklists_list v-bind:list_data="checklists_list"></checklists_list>
     <action_button v-bind:fab_link="{% url 'order_create' %}"></action_button>
+</v-content>
 
 {% endblock content %}

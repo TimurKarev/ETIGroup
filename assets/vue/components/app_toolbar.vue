@@ -1,11 +1,12 @@
 <template>
+  <div>
   <v-app-bar
-    color="primary"
-    dense
-    max-height="50"
-    elevate-on-scroll
-    fixed
-    scroll-target="#scrolling-techniques-7"
+      app
+      fixed
+      color="primary"
+      max-height="50"
+      elevate-on-scroll
+      scroll-target="#scrolling-techniques-4"
   >
     <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
@@ -24,6 +25,7 @@
       <v-icon>mdi-account-circle</v-icon>
   </v-btn>
   </v-app-bar>
+</div>
 </template>
 
 <style lang="scss" scoped>
@@ -31,9 +33,11 @@
 </style>
 
 <script>
+import nav_driver from "./nav_driver";
+
 export default {
   name: 'app_toolbar',
-
+  components: {nav_driver},
   props: {
     main_urls: {
       type: Object,
