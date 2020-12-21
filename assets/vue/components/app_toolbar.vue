@@ -3,6 +3,9 @@
     color="primary"
     dense
     max-height="50"
+    elevate-on-scroll
+    fixed
+    scroll-target="#scrolling-techniques-7"
   >
     <v-app-bar-nav-icon></v-app-bar-nav-icon>
 

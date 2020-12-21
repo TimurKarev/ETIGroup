@@ -1,5 +1,7 @@
 import json
 
+from django.urls import reverse
+
 from otk.views.mixins.user_access_mixin import UserAccessMixin
 
 from django.views.generic import TemplateView
@@ -19,15 +21,37 @@ class CheckListListView(UserAccessMixin, TemplateView):
         order_list = []
         for order in orders:
             order_list.append({
-                'order_num': order.man_number,
                 'order_id': order.id,
-                'build': str(order.bm_checklist),
-                'tm': str(order.tm_checklist),
-                # 'el': order.el_checklist,
-                # 'doc': order.doc_checklist,
-                # 'zip': order.zip_checklist,
-                # 'sal': order.sal_checklist,
+                'order_num': {
+                    'name': int(order.man_number),
+                    'link': reverse('order_detail', kwargs={'pk': order.id}),
+                },
+                'build': self.get_checklist_frontend_data(order, 'bm_checklist'),
+                'tm': self.get_checklist_frontend_data(order,  'tm_checklist'),
+                'el': self.get_checklist_frontend_data(order, 'el_checklist'),
+                'doc': self.get_checklist_frontend_data(order, 'doc_checklist'),
+                'zip': self.get_checklist_frontend_data(order, 'zip_checklist'),
+                'sal': self.get_checklist_frontend_data(order, 'sal_checklist'),
             })
 
         json_data = json.dumps(order_list)
         return {'gj_checklists_list': json_data}
+
+    def is_checklist_available(self, checklist):
+        if checklist:
+            return True
+        else:
+            return False
+
+    def get_checklist_frontend_data(self, order, checklist_name):
+        data = {}
+        if not getattr(order, checklist_name):
+            data['name'] = 'создать'
+            data['link'] = reverse('checklist_create', kwargs={'tp': checklist_name, 'pk': order.id})
+        else:
+            checklist = getattr(order, checklist_name)
+            print(checklist, checklist.id, reverse('checklist_detail', kwargs={'tp': checklist_name, 'pk': int(checklist.id)}))
+            data['name'] = 'просмотр'
+            data['link'] = reverse('checklist_detail', kwargs={'tp': checklist_name, 'pk': int(checklist.id)})
+        return data
+

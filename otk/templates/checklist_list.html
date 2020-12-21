@@ -1,37 +1,12 @@
 
 {% extends 'base.html' %}
 
+{% block content %}
 <script type="application/javascript">
     g_checklists_list = {{ gj_checklists_list|safe}}
-    console.log(g_checklists_list)
 </script>
-
-{% block content %}
     <app_toolbar v-bind:main_urls="toolbar_main_urls"></app_toolbar>
-        <checklists_list>   </checklists_list>
-
-
-
-    <div class="container">
-        <br/>
-
-        {% for otkorder in object_list %}
-            <div class="row">
-                <div class="col-1">
-                    <a href="{% url 'order_detail' otkorder.pk %}"> {{ otkorder }} </a>
-                </div>
-
-                <!-- Стройка-->
-                <div class="col-1">
-                    {% if  otkorder.bm_checklist  %}
-                        <a href="{% url 'checklist_detail' 'bm_checklist' otkorder.bm_checklist.id %}">просмотр </a>
-                    {% else %}
-                        <a href="{% url 'checklist_create' 'bm_checklist' otkorder.id %}">создать </a>
-                    {% endif %}
-                </div>
-
-            </div>
-        {% endfor %}
-    </div>
+    <checklists_list v-bind:list_data="checklists_list"></checklists_list>
+    <action_button v-bind:fab_link="{% url 'order_create' %}"></action_button>
 
 {% endblock content %}

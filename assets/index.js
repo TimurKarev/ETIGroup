@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 
 import app_toolbar from "./vue/components/app_toolbar";
 import checklists_list from "./vue/components/checklists_list";
+import action_button from "./vue/components/action_button";
 
 Vue.use(VueRouter)
 Vue.prototype.$eventHub = new Vue();
@@ -14,7 +15,8 @@ new Vue({
   delimiters: ['[[',']]'],
   components: {
     app_toolbar,
-    checklists_list
+    checklists_list,
+    action_button,
   },
   data: {
     data_det: g_checklist_data,
