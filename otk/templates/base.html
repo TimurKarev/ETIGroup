@@ -1,17 +1,45 @@
 {% load static %}
-<script>
+<script type="application/javascript">
     let g_checklist_data = 'None'
     let g_checklist_name = 'None'
     let g_checklists_list = 'None'
     let g_nav_driver_data = 'None'
+    let g_fab_data = 'None'
 
-    let g_toolbar_main_urls = {
-        checklist_list: "{% url 'checklist_list' %}",
-        order_create: "{% url 'order_create' %}",
-        logout: "{% url 'logout' %}",
-        login: "{% url 'login' %}"
+    let g_toolbar_data = {
+            menu_btn: {
+              tooltip: 'расширенное меню'
+            },
+            home_btn: {
+                icon: 'mdi-home',
+                tooltip: 'к списку заказов',
+                link: "{% url 'checklist_list' %}",
+            },
+            login: {
+            {% if user.is_authenticated %}
+                app_title: "{{ user.username }}",
+                tooltip: "Выйти",
+                icon: "mdi-login",
+                menu: [
+                        {
+                            title: 'Выйти',
+                            link: "{% url 'logout' %}",
+                        }
+               ]
+            {% else %}
+                app_title: "Незнакомец",
+                tooltip: "Войти",
+                icon: "mdi-account-circle",
+                menu: [
+                        {
+                            title: 'Войти',
+                            link: "{% url 'login' %}"
+                        }
+               ]
+            {% endif %}
+            },
     }
-    //let g_username = 'Незнакомец'
+    //console.log("BaseHTML - ", g_toolbar_data)
 </script>
 <html>
     <head>

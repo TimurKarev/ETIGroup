@@ -8,7 +8,11 @@
       fixed-header
     >
       <template v-slot:item.order_num="{value}">
-        <a :href="value.link">{{value.name}}</a>
+        <a
+            :href="value.link"
+        >
+          {{value.name}}
+        </a>
       </template>
 
       <template v-slot:item.build="{value}">
@@ -45,5 +49,7 @@ export default {
 </script>
 
 <style scoped>
-
+ a {
+   color: black!important;
+ }
 </style>

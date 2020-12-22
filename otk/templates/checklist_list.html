@@ -4,31 +4,48 @@
 {% block content %}
 <script type="application/javascript">
     g_checklists_list = {{ gj_checklists_list|safe}}
+
+    g_fab_data = {
+        tooltip: 'Создать заказ',
+        icon: 'mdi-plus',
+        link: "{% url 'order_create' %}",
+
+    }
+
     g_nav_driver_data = {
         page_title: 'Список заказов',
         nav_list: [
             {
                 name: 'Создать заказ',
                 icon: 'mdi-plus',
-                link: "{% url 'checklist_list' %}",
-            }
-        ]
+                link: "{% url 'order_create' %}",
+            },
+        ],
+        login: {
+            {% if user.is_authenticated %}
+                title: 'Выйти',
+                link: "{% url 'logout' %}",
+            {% else %}
+                title: 'Войти',
+                link: "{% url 'login' %}"
+            {% endif %}
+            },
     }
 
     g_nav_driver_data['user_name'] = 'Незнакомец'
+    {% if user.is_authenticated %}
+       g_nav_driver_data['user_name'] = "{{ user.username }}"
+       //console.log(g_nav_driver_data['user_name'], "{{ user.username }}")
+    {% endif %}
 </script>
 
-    {% if user.is_authenticated %}
-        <script type="application/javascript">
-            g_nav_driver_data['user_name'] = {{ user.username }}
-        </script>
-    {% endif %}
 
-    <app_toolbar v-bind:main_urls="toolbar_main_urls"></app_toolbar>
+
+    <app_toolbar v-bind:data="toolbar_data"></app_toolbar>
     <nav_driver v-bind:data="nav_driver_data"></nav_driver>
-<v-content>
+<v-main>
     <checklists_list v-bind:list_data="checklists_list"></checklists_list>
-    <action_button v-bind:fab_link="{% url 'order_create' %}"></action_button>
-</v-content>
+    <action_button v-bind:data="fab_data"></action_button>
+</v-main>
 
 {% endblock content %}
