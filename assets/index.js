@@ -6,6 +6,7 @@ import app_toolbar from "./vue/components/app_toolbar";
 import checklists_list from "./vue/components/checklists_list";
 import action_button from "./vue/components/action_button";
 import nav_driver from "./vue/components/nav_driver";
+import order_config from "./vue/components/order_config";
 
 Vue.use(VueRouter)
 Vue.prototype.$eventHub = new Vue();
@@ -19,6 +20,7 @@ new Vue({
     checklists_list,
     action_button,
     nav_driver,
+    order_config,
   },
   data: {
     data_det: g_checklist_data,

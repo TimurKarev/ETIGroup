@@ -21,8 +21,10 @@ class OrderConfigUpdateView(UserAccessMixin, TemplateView):
     def get_context_data(self, **kwargs):
         #context = super(OrderConfigUpdateView, self).get_context_data(**kwargs)
         context = {}
+
         if self.request.POST:
             post = self.request.POST
+            #del post['csrfmiddlewaretoken']
         else:
             post = None
 
@@ -31,18 +33,21 @@ class OrderConfigUpdateView(UserAccessMixin, TemplateView):
             get_config_section_from_order_id(int(kwargs['pk'])),
             post
         )
-        # print(context)
+        #print(context['section']['points'][0]['form'])
         return context
 
     def post(self, request, *args, **kwargs):
+        print(OrderConfigUpdateView.__name__, request.POST)
         context = self.get_context_data(**kwargs)
-        # print('OrderConfigUpdateView', context['section'])
+        #print('OrderConfigUpdateView', context['section']['points'][0]['form'])
+        #f = context['section']['points'][0]['form']
 
         # TODO сделать нормальную валидацию
         for point in context['section']['points']:
             point['form'].is_valid()
-            # print(point['form'].cleaned_data)
+            #print(point['form'].cleaned_data)
             point['form'].save()
+        print(OrderConfigUpdateView.__name__, 'GOGOG')
 
         return HttpResponseRedirect(
             reverse('order_detail', kwargs={'pk': kwargs['pk']})
