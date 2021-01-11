@@ -1,3 +1,6 @@
+from django.shortcuts import redirect
+
+from otk.models.checklists import IntegerPoint
 from otk.services.order_services import get_config_section_from_order_id
 from otk.services.services import get_section_context
 from otk.views.mixins.user_access_mixin import UserAccessMixin
@@ -8,7 +11,7 @@ from django.urls import reverse
 from otk.models.otk_order import OTKOrder
 
 from django.views.generic import TemplateView
-
+import json
 
 class OrderConfigUpdateView(UserAccessMixin, TemplateView):
     permission_required = 'otk.add_order'
@@ -20,7 +23,6 @@ class OrderConfigUpdateView(UserAccessMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         #context = super(OrderConfigUpdateView, self).get_context_data(**kwargs)
-        context = {}
 
         if self.request.POST:
             post = self.request.POST
@@ -28,28 +30,35 @@ class OrderConfigUpdateView(UserAccessMixin, TemplateView):
         else:
             post = None
 
-        context['order_number'] = OTKOrder.objects.get(id=kwargs['pk'])
-        context['section'] = get_section_context(
+        man_number = OTKOrder.objects.get(id=kwargs['pk']).man_number
+        pk = kwargs['pk']
+        section = get_section_context(
             get_config_section_from_order_id(int(kwargs['pk'])),
             post
         )
-        #print(context['section']['points'][0]['form'])
-        return context
+
+        config = {
+            "pk": pk,
+            "man_number": man_number,
+            "points": section['points']
+        }
+        json_data = json.dumps(config)
+        #print(json_data)
+        return {'j_order_config_data': json_data}
 
     def post(self, request, *args, **kwargs):
-        print(OrderConfigUpdateView.__name__, request.POST)
-        context = self.get_context_data(**kwargs)
-        #print('OrderConfigUpdateView', context['section']['points'][0]['form'])
-        #f = context['section']['points'][0]['form']
+        post_data = json.loads(request.body)
+        print(OrderConfigUpdateView.__name__, post_data, type(post_data))
+        # for point in post_data['points']:
+        #     if point['type'] == 'numeric':
+        #         try:
+        #             row = IntegerPoint.objects.get(id=point['id'])
+        #             row.point_value = point['value']
+        #             row.save()
+        #         except:
+        #             print('error')
 
-        # TODO сделать нормальную валидацию
-        for point in context['section']['points']:
-            point['form'].is_valid()
-            #print(point['form'].cleaned_data)
-            point['form'].save()
-        print(OrderConfigUpdateView.__name__, 'GOGOG')
-
-        return HttpResponseRedirect(
-            reverse('order_detail', kwargs={'pk': kwargs['pk']})
-        )
-
+        # return HttpResponseRedirect(
+        #     reverse('order_detail', kwargs={'pk': post_data['pk']})
+        # )
+        return redirect(request.path)

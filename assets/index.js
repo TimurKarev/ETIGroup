@@ -28,6 +28,7 @@ new Vue({
     checklists_list: g_checklists_list,
     toolbar_data: g_toolbar_data,
     nav_driver_data: g_nav_driver_data,
-    fab_data: g_fab_data
+    fab_data: g_fab_data,
+    order_config_data: g_order_config_data,
   }
 });

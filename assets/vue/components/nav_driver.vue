@@ -54,7 +54,7 @@ export default {
   name: "nav_driver",
   props: ['data'],
   data: function(){
-    console.log('NAV_DRIVER - ', this.data.login.title)
+    //console.log('NAV_DRIVER - ', this.data.login.title)
     return{
       login_btn_title: this.data.login.title,
       login_btn_link: this.data.login.link,

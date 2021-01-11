@@ -25,6 +25,7 @@
     <v-tooltip bottom>
       <template v-slot:activator="{ on }">
         <v-btn
+            @click="homeButtonClicked"
             icon
             v-on="on">
           <v-icon>{{home_icon}}</v-icon>
@@ -66,6 +67,9 @@ export default {
   props: {
     data: {
       type: Object,
+    },
+    header: {
+      type: String,
     }
   },
   data: function(){
@@ -74,13 +78,15 @@ export default {
       active: 'guide',
        home_icon: this.data.home_btn.icon,
        log_icon: this.data.login.icon,
-       log_link: this.data.login.menu[0].link
-
+       log_link: this.data.login.menu[0].link,
     }
   },
   methods: {
     navButtonClicked(){
-       this.$eventHub.$emit('nav-button-click');
+      this.$eventHub.$emit('nav-button-click');
+    },
+    homeButtonClicked(){
+      window.location.href = '/'
     }
   },
 }

@@ -1,6 +1,18 @@
 <template>
   <div>
-    <v-btn @click="btnClick">fk;ldaskf;s</v-btn>
+    <h4>Конфигурация заводского заказа №{{man_number}}</h4>
+    <br/>
+    <div v-for="c_data in config_data" :key="c_data.id">
+          <v-text-field
+            v-model="c_data.value"
+            type="number"
+          >
+           <template v-slot:label>
+             {{c_data.name}}
+           </template>
+          </v-text-field>
+    </div>
+    <v-btn @click="btnClick">Сохранить</v-btn>
   </div>
 </template>
 
@@ -10,31 +22,38 @@ import qs from 'qs'
 
 export default {
   name: "order_config",
-  props: ['token'],
+  props: ['data'],
+  data: function (){
+    console.log("ORDER_CONFIG", this.data)
+    return {
+      config_data: this.data.points,
+      pk: this.data.pk,
+      man_number: this.data.man_number
+    }
+  },
   methods:{
     btnClick(){
-      console.log("ORDER_CONFIG")
+      console.log("ORDER_CONFIG", this.config_data)
+      //console.log("ORDER_CONFIG")
       axios.defaults.xsrfCookieName = 'csrftoken'
       axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
-      const qs = require('qs');
-      const data = qs.stringify({
-                'i1sec-point_value': 11,
-                'i0sec-point_value': 21,
-                'i2sec-point_value': 31,
-            });
+      const data = {
+        "points": this.config_data,
+        "pk": this.data.pk,
+        }
       axios({
         method: 'post',
-        url: "http://127.0.0.1:8000/order_update_config/6/",
+        url: "http://127.0.0.1:8000/order_update_config/"+ this.pk + "/",
         data: data,
         headers:{
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
         }
-      })
-      .catch(function (error) {
-         console.log(error);
       });
-      location.replace('http://127.0.0.1:8000/order_detail_view/6/');
-    }
+      // .catch(function (error) {
+      //    console.log(error);
+      // });
+      //location.replace('http://127.0.0.1:8000/order_detail_view/' + this.pk + "/");
+    },
   }
 }
 </script>

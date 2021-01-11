@@ -325,14 +325,17 @@ def get_section_context(section, data=None, section_prefix='sec', form=True):
     for i, p in enumerate(section.integerpoint_set.all()):
         all_points_entries.append(
             {
+                "id": p.id,
                 "serial_number": p.serial_number,
                 "name": p.name,
                 "value": p.point_value,
-                "form": None if not form else IntegerPointForm(
-                    instance=p,
-                    data=data,
-                    prefix='i' + str(i) + str(section_prefix)
-                )
+                "type": "numeric"
+                #"form": serializers.serialize('json', p)
+                # "form": None if not form else IntegerPointForm(
+                #     instance=p,
+                #     data=data,
+                #     prefix='i' + str(i) + str(section_prefix)
+                # )
             }
         )
 

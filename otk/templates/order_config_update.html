@@ -3,30 +3,49 @@
 {% load addition_tags %}
 
 {% block content %}
+<script type="application/javascript">
+    g_order_config_data = {{ j_order_config_data|safe}}
+    //console.log(g_order_config_data)
+    g_nav_driver_data = {
+        page_title: 'Изменение конфигурации',
+        nav_list: [
+            {
+                name: "Сохранить Конфиг",
+                icon: "mdi-content-save",
+                link: "",
+            }
+        ],
+        login: {
+            {% if user.is_authenticated %}
+                title: 'Выйти',
+                link: "{% url 'logout' %}",
+            {% else %}
+                title: 'Войти',
+                link: "{% url 'login' %}"
+            {% endif %}
+            },
+    }
 
-<form action="" method="post">{% csrf_token %}
-<br/>
+    g_nav_driver_data['user_name'] = 'Незнакомец'
+    {% if user.is_authenticated %}
+       g_nav_driver_data['user_name'] = "{{ user.username }}"
+       //console.log(g_nav_driver_data['user_name'], "{{ user.username }}")
+    {% endif %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-6">
-            <table class="table table-bordered">
-                <tbody>
-                    <h5>Конфигурация заказа №{{ order_number }}</h5>
-                        {% for point in section.points %}
-                            <tr>
-                                <td>{{ point.name }}</td>
-                                <td>{{ point.form.point_value }}</td>
-                            </tr>
-                        {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-<br/>
-<input type="submit" value="Update">
-</form>
-<order_config></order_config>
+    g_fab_data = {
+        tooltip: 'Сохранить конфигурацию',
+        icon: 'mdi-content-save',
+        link: "/",
+
+    }
+</script>
+
+<app_toolbar v-bind:data="toolbar_data"></app_toolbar>
+<nav_driver v-bind:data="nav_driver_data"></nav_driver>
+<v-main>
+    <order_config v-bind:data="order_config_data"></order_config>
+    <action_button v-bind:data="fab_data"></action_button>
+</v-main>
+
 
 {% endblock content %}
