@@ -32,11 +32,11 @@ export default {
       headers: [
           {text: 'Заказ', value: 'order_num'},
           {text: 'Стройка', value: 'build'},
-          {text: 'Электрика', value: 'el'},
-          {text: 'Телемеханика', value: 'tm'},
-          {text: 'Зип', value: 'zip'},
-          {text: 'Документы', value: 'doc'},
-          {text: 'Заказчик', value: 'sal'},
+          // {text: 'Электрика', value: 'el'},
+          // {text: 'Телемеханика', value: 'tm'},
+          // {text: 'Зип', value: 'zip'},
+          // {text: 'Документы', value: 'doc'},
+          // {text: 'Заказчик', value: 'sal'},
       ],
       ch_list: this.list_data,
     }

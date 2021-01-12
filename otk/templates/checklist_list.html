@@ -6,10 +6,10 @@
     g_checklists_list = {{ gj_checklists_list|safe}}
 
     g_fab_data = {
-        tooltip: 'Создать заказ',
+        tooltip: 'Новый заказ',
         icon: 'mdi-plus',
         link: "{% url 'order_create' %}",
-
+        event: "Link"
     }
 
     g_nav_driver_data = {

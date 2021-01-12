@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h4 class="text-center">Конфигурация заводского заказа №{{man_number}}</h4>
+    <h4 class="text-center">Конфигурация строительной части заказа №{{this.data.order_number}}</h4>
     <br/>
-    <div v-for="c_data in config_data" :key="c_data.id">
+   <div v-for="c_data in config_list" :key="c_data.id">
           <v-text-field
             v-model="c_data.value"
             type="number"
@@ -18,7 +18,7 @@
           block
           @click="btnClick"
       >
-        Сохранить
+        Создать Чеклист
       </v-btn>
   </div>
 </template>
@@ -27,14 +27,13 @@
 import axios from 'axios'
 
 export default {
-  name: "order_config",
+  name: "checklist_config_update",
   props: ['data'],
   data: function (){
-    console.log("ORDER_CONFIG", this.data)
+    console.log("CHL_CONFIG_UPDT", this.data)
     return {
-      config_data: this.data.points,
+      config_list: this.data.config,
       pk: this.data.pk,
-      man_number: this.data.man_number,
       rules: {
          required: value => !!value || 'Обязательное поле',
          loanMin: value => value >= 0 || 'Значение не может быть отрицательным',
@@ -42,24 +41,24 @@ export default {
     }
   },
   created() {
-    this.$eventHub.$on('save-button-click', this.btnClick)
+    this.$eventHub.$on('createchecklist-button-click', this.btnClick)
   },
   beforeDestroy() {
-    this.$eventHub.$off('save-button-click')
+    this.$eventHub.$off('createchecklist-button-click')
   },
-  methods:{
-    btnClick(){
-      console.log("ORDER_CONFIG", this.config_data)
-      //console.log("ORDER_CONFIG")
+  methods: {
+    btnClick() {
+      console.log("CHL_CONFIG_UPDT", this.config_list)
+
       axios.defaults.xsrfCookieName = 'csrftoken'
       axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
       const data = {
-        "points": this.config_data,
-        "pk": this.data.pk,
+        "points": this.config_list,
+        //"pk": this.data.pk,
         }
       axios({
         method: 'post',
-        url: "http://127.0.0.1:8000/order_update_config/"+ this.pk + "/",
+        url: "http://127.0.0.1:8000/checklist_config_update/bm_checklist/"+ this.pk,
         data: data,
         headers:{
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -70,13 +69,13 @@ export default {
       })
       .then(response => {
         console.log(response.data);
-        location.replace('http://127.0.0.1:8000/order_detail_view/' + this.pk + "/");
+        location.replace("http://127.0.0.1:8000" + response.data.message);
       });
-
-      },
-  }
+    }
+  },
 }
 </script>
+
 
 <style scoped>
 

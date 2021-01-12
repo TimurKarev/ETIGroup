@@ -13,6 +13,21 @@ from otk.services.section_number_calc import SectionNumberCalculator
 from otk.views.forms.model_forms import StringPointForm, IntegerPointForm, YesNoChoicePointForm, FourChoicePointForm
 
 
+def update_point_values_by_dict_list(points: list) -> str:
+    """Обновляет значения points по словарю"""
+    response = 'ok'
+    for point in points:
+        if point['type'] == 'numeric':
+            try:
+                row = IntegerPoint.objects.get(id=point['id'])
+                row.point_value = point['value']
+                row.save()
+            except Exception as e:
+                response = e
+                print('error')
+    return response
+
+
 def is_checklist_have_several_sections(checklist_entry):
     """Проверяет имеет ли чеклист какие-нибудь секции кроме конфиг"""
     sections = checklist_entry.chlistsection_set.all()

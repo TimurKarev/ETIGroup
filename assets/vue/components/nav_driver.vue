@@ -73,8 +73,17 @@ export default {
     },
     listItemClick(click_item){
       console.log(click_item.link)
-      if(click_item.name === 'Создать заказ'){
+      if(click_item.name === 'Новый заказ'){
         window.location.href = click_item.link
+      }
+      else if(click_item.name === 'Сохранить Конфиг'){
+        this.$eventHub.$emit('save-button-click');
+      }
+      else if(click_item.name === 'Создать заказ'){
+        this.$eventHub.$emit('createorder-button-click');
+      }
+      else if(click_item.name === 'Создать чеклист'){
+        this.$eventHub.$emit('createchecklist-button-click');
       }
     },
   }
