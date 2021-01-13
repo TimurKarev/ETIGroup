@@ -88,6 +88,9 @@ export default {
       else if(click_item.name === 'Изменить заказ'){
         this.$eventHub.$emit('editorder-button-click');
       }
+      else if(click_item.name === 'Сохранить чеклист'){
+        this.$eventHub.$emit('savechecklist-button-click');
+      }
 
     },
   }

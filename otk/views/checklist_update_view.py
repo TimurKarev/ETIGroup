@@ -1,3 +1,5 @@
+import json
+
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -15,23 +17,22 @@ class CheckListUpdateView(TemplateView):
 
         checklist_entry = Checklist.objects.get(id=kwargs['pk'])
         self._checklist_entry = checklist_entry
-        context = {'checklist_name': checklist_entry.name}
+        context = {'checklist_name': checklist_entry.name, 'pk': kwargs['pk'], 'type': kwargs['tp']}
 
         if self.request.POST:
             post = self.request.POST
         else:
             post = None
 
-        context['sections'] = get_detail_context_from_checklist_object(
-            checklist_entry, post
-        )
+        context['sections'] = get_detail_context_from_checklist_object(checklist_entry)
 
         for section in context['sections']:
             for i, point in enumerate(section['points']):
                 if (point['value'] == 'Пройдены') or (point['value'] == 'Не Пройдены'):
                     section['points'].pop(i)
 
-        return context
+        #print("checklist_update", context)
+        return {"j_checklist_update_data": json.dumps(context)}
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)

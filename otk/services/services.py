@@ -329,11 +329,12 @@ def get_section_context(section, data=None, section_prefix='sec', form=True):
                 "serial_number": p.serial_number,
                 "name": p.name,
                 "value": p.point_value,
-                "form": None if not form else StringPointForm(
-                    instance=p,
-                    data=data,
-                    prefix='s' + str(i) + str(section_prefix)
-                )
+                "type": "string",
+                # "form": None if not form else StringPointForm(
+                #     instance=p,
+                #     data=data,
+                #     prefix='s' + str(i) + str(section_prefix)
+                # )
             }
         )
 
@@ -360,11 +361,12 @@ def get_section_context(section, data=None, section_prefix='sec', form=True):
                 "serial_number": p.serial_number,
                 "name": p.name,
                 "value": p.point_value,
-                "form": None if not form else YesNoChoicePointForm(
-                    instance=p,
-                    data=data,
-                    prefix='y' + str(i) + str(section_prefix)
-                )
+                "type": "yes_no"
+                # "form": None if not form else YesNoChoicePointForm(
+                #     instance=p,
+                #     data=data,
+                #     prefix='y' + str(i) + str(section_prefix)
+                # )
             }
         )
 
@@ -375,11 +377,12 @@ def get_section_context(section, data=None, section_prefix='sec', form=True):
                 "name": p.name,
                 "value": p.point_value,
                 "comment": p.comment,
-                "form": None if not form else FourChoicePointForm(
-                    instance=p,
-                    data=data,
-                    prefix='f' + str(i) + str(section_prefix)
-                )
+                "type": "fourpoint"
+                # "form": None if not form else FourChoicePointForm(
+                #     instance=p,
+                #     data=data,
+                #     prefix='f' + str(i) + str(section_prefix)
+                # )
             }
         )
 
