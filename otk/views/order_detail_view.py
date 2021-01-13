@@ -1,3 +1,5 @@
+import json
+
 from otk.services.services import get_section_context
 from otk.views.mixins.user_access_mixin import UserAccessMixin
 
@@ -20,4 +22,4 @@ class OrderDetailView(UserAccessMixin, TemplateView):
         context['subst_type'] = order.config_section.substationtypepoint_set.all()[0].point_value
         context['config'] = get_section_context(order.config_section)
 
-        return context
+        return {"j_order_detail_data": json.dumps(context)}
