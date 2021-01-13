@@ -5,8 +5,6 @@
       fixed
       color="primary"
       max-height="50"
-      elevate-on-scroll
-      scroll-target="#scrolling-techniques-4"
   >
 
     <v-tooltip bottom>

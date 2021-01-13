@@ -3,20 +3,48 @@
 {% load addition_tags %}
 
 {% block content %}
-    <script>
-        g_checklist_data = {{ json_context|safe }}
-        g_checklist_name = {{ json_checklist_name|safe}}
+    <script type="application/javascript">
+        g_checklist_detail = {{ j_checklist_detail|safe }}
+
+        g_nav_driver_data = {
+        page_title: 'Обзор Чеклиста',
+        nav_list: [
+            {
+                name: "Заполнить чеклист",
+                icon: "mdi-pencil",
+                link: "",
+            }
+        ],
+        login: {
+            {% if user.is_authenticated %}
+                title: 'Выйти',
+                link: "{% url 'logout' %}",
+            {% else %}
+                title: 'Войти',
+                link: "{% url 'login' %}"
+            {% endif %}
+            },
+    }
+    g_nav_driver_data['user_name'] = 'Незнакомец'
+        {% if user.is_authenticated %}
+           g_nav_driver_data['user_name'] = "{{ user.username }}"
+           //console.log(g_nav_driver_data['user_name'], "{{ user.username }}")
+        {% endif %}
+
+    g_fab_data = {
+        tooltip: 'Заполнить чеклист',
+        icon: 'mdi-pencil',
+        link: "/",
+        event: "editchecklist-button-click"
+    }
+
     </script>
 
-    <a href="{% url 'checklist_update' checklist_type checklist.id %}"> Заполнить  </a><br/>
+<app_toolbar v-bind:data="toolbar_data"></app_toolbar>
+<nav_driver v-bind:data="nav_driver_data"></nav_driver>
+<v-main>
+    <action_button v-bind:data="fab_data"></action_button>
+    <checklist_detail v-bind:data="checklist_detail"></checklist_detail>
+</v-main>
 
-            <mytoolbar> </mytoolbar>
-        <div class="container">
-
-            <checklist_header :header_props="header"
-                              :sections="data_det"></checklist_header>
-        </div>
-
-
-    <a href="{% url 'checklist_update' checklist_type checklist.id %}"> Заполнить  </a><br/>
 {% endblock content %}

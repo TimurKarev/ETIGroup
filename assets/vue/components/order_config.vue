@@ -70,7 +70,7 @@ export default {
       })
       .then(response => {
         console.log(response.data);
-        location.replace('http://127.0.0.1:8000/order_detail_view/' + this.pk + "/");
+        location.replace('http://127.0.0.1:8000/checklist_update/bm_/<int:pk>/' + this.pk + "/");
       });
 
       },
