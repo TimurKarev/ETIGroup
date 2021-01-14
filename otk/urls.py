@@ -3,6 +3,7 @@ from django.urls import path
 from otk.views.checklist_config_update import CheckListConfigUpdateView
 from otk.views.checklist_create import CheckListCreateView
 from otk.views.checklist_sections_create import CheckListSectionsCreateView
+from otk.views.login_view import LoginView
 from otk.views.order_config_create_view import OrderConfigCreateView
 from otk.views.order_config_update_view import OrderConfigUpdateView
 from otk.views.check_list_list_view import CheckListListView
@@ -26,4 +27,7 @@ urlpatterns = [
 
     path('checklist_detail/<slug:tp>/<int:pk>/', CheckListDetailView.as_view(), name='checklist_detail'),
     path('checklist_update/<slug:tp>/<int:pk>/', CheckListUpdateView.as_view(), name='checklist_update'),
+
+    path('custom_login/', LoginView.as_view(), name='login'),
+
 ]

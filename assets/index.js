@@ -12,6 +12,7 @@ import checklist_config_update from "./vue/components/checklist_config_update";
 import order_detail from "./vue/components/order_detail";
 import checklist_detail from "./vue/components/checklist_detail";
 import checklist_update from "./vue/components/checklist_update";
+import login from "./vue/components/login";
 
 Vue.use(VueRouter)
 Vue.prototype.$eventHub = new Vue();
@@ -31,6 +32,7 @@ new Vue({
     order_detail,
     checklist_detail,
     checklist_update,
+    login,
   },
   data: {
 //    data_det: g_checklist_data,

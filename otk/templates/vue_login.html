@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% load addition_tags %}
+
+{% block content %}
+
+<app_toolbar v-bind:data="toolbar_data"></app_toolbar>
+<v-main>
+    <login></login>
+</v-main>
+
+{% endblock content%}
