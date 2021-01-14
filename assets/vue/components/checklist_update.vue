@@ -45,13 +45,17 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "checklist_update",
   props: ['data'],
   data: function (){
     console.log("CHECKLIST_UPDATE", this.data)
     return {
-      sections: this.data.sections
+      sections: this.data.sections,
+      pk: this.data.pk,
+      type: this.data.type,
     }
   },
   created() {
@@ -78,7 +82,32 @@ export default {
       return 'grey'
     },
     saveChecklist: function () {
-      console.log("Click")
+      //console.log("Click")
+        axios.defaults.xsrfCookieName = 'csrftoken'
+        axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
+
+        const data = this.sections
+
+        axios({
+          method: 'post',
+          url: "/checklist_update/" + this.type + "/" + this.pk + "/",
+          data: data,
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+          }
+        })
+            .catch(function (error) {
+              console.log(error);
+            })
+            .then(response => {
+              // if(response.data.status === 'ok'){
+              //   const link = this.redirect_link.slice(0, -2) + response.data.id + "/"
+              //   //console.log("ORDER_CREATE", link);
+              //   location.replace(link);
+              // }
+              //location.replace('http://127.0.0.1:8000/order_detail_view/' + this.pk + "/");
+              console.log(response.data)
+            });
     },
   },
 

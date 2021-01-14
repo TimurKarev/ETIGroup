@@ -8,7 +8,7 @@ from django.views.generic import TemplateView
 from otk.models.checklists import ChListSection, IntegerPoint
 
 # TODO дописать для всего
-from otk.services.services import get_order_by_checklist, get_section_context, update_point_values_by_dict_list
+from otk.services.services import get_order_by_checklist, get_section_context, update_point_values_by_point_list
 
 
 class CheckListConfigUpdateView(TemplateView):
@@ -34,7 +34,7 @@ class CheckListConfigUpdateView(TemplateView):
         post_data = json.loads(request.body)
         print(CheckListConfigUpdateView.__name__, post_data, type(post_data))
 
-        update_point_values_by_dict_list(post_data['points'])
+        update_point_values_by_point_list(post_data['points'])
 
         config_section = ChListSection.objects.get(id=kwargs['pk'])
         self.order = get_order_by_checklist(config_section.checklist, kwargs['tp'])

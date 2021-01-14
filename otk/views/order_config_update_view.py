@@ -1,5 +1,5 @@
 from otk.services.order_services import get_config_section_from_order_id
-from otk.services.services import get_section_context, update_point_values_by_dict_list
+from otk.services.services import get_section_context, update_point_values_by_point_list
 from otk.views.mixins.user_access_mixin import UserAccessMixin
 
 from django.http import JsonResponse
@@ -44,6 +44,6 @@ class OrderConfigUpdateView(UserAccessMixin, TemplateView):
     def post(self, request, *args, **kwargs):
         post_data = json.loads(request.body)
         # print(OrderConfigUpdateView.__name__, post_data, type(post_data))
-        response = update_point_values_by_dict_list(post_data['points'])
+        response = update_point_values_by_point_list(post_data['points'])
 
         return JsonResponse({"message": response})
