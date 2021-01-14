@@ -41,8 +41,17 @@ export default {
       ch_list: this.list_data,
     }
   },
+  created() {
+    this.$eventHub.$on('oredercreate-button-click', this.createOrder)
+  },
+  beforeDestroy() {
+    this.$eventHub.$off('oredercreate-button-click')
+  },
   methods: {
-
+    createOrder: function (){
+      console.log("Click")
+      location.replace('http://127.0.0.1:8000/order_create/')
+    }
   },
 }
 

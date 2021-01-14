@@ -11,9 +11,9 @@ from otk.models.checklists import *
 
 
 class CheckListDetailView(UserAccessMixin, TemplateView):
-    permission_required = 'otk.view_otkchecklist'
+    permission_required = 'otk.view_checklist'
     raise_exception = False
-    redirect_without_permission: str = 'checklist_list'
+    redirect_without_permission = 'checklist_list'
 
     template_name = "checklist_detail.html"
 

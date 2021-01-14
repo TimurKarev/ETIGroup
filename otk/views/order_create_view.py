@@ -14,7 +14,7 @@ from otk.views.forms.model_forms import SubstationTypePointForm, OTKOrderForm
 
 
 class OrderCreateView(UserAccessMixin, TemplateView):
-    permission_required = 'otk.add_order'
+    permission_required = 'otk.add_otkorder'
     redirect_without_permission = 'checklist_list'
 
     template_name = 'order_create.html'

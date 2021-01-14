@@ -15,6 +15,7 @@ from otk.views.order_detail_view import OrderDetailView
 
 urlpatterns = [
     path('', CheckListListView.as_view(), name='checklist_list'),
+    path('checklist_list/<slug:tp>/<int:pk>/', CheckListListView.as_view(), name='chlist'),
 
     path('order_create/', OrderCreateView.as_view(), name='order_create'),
     path('order_create_config/<int:pk>/', OrderConfigCreateView.as_view(), name='order_create_config'),

@@ -30,7 +30,7 @@ export default {
   name: "order_config",
   props: ['data'],
   data: function (){
-    console.log("ORDER_CONFIG", this.data)
+    //console.log("ORDER_CONFIG", this.data)
     return {
       config_data: this.data.points,
       pk: this.data.pk,
@@ -70,7 +70,7 @@ export default {
       })
       .then(response => {
         console.log(response.data);
-        location.replace('http://127.0.0.1:8000/checklist_update/bm_/<int:pk>/' + this.pk + "/");
+        location.replace('http://127.0.0.1:8000/order_detail_view/' + this.pk + "/");
       });
 
       },

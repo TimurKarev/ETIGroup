@@ -11,8 +11,8 @@ import json
 
 
 class OrderConfigUpdateView(UserAccessMixin, TemplateView):
-    permission_required = 'otk.add_order'
-    redirect_without_permission = 'checklist_list'
+    permission_required = 'otk.add_otkorder'
+    redirect_without_permission = 'order_detail'
 
     template_name = 'order_config_update.html'
 

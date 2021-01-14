@@ -1,7 +1,7 @@
 import json
 
-from django.http import HttpResponseRedirect, JsonResponse
-from django.urls import reverse
+from django.http import JsonResponse
+from otk.views.mixins.user_access_mixin import UserAccessMixin
 
 from django.views.generic import TemplateView
 
@@ -10,7 +10,11 @@ from otk.services.services import get_detail_context_from_checklist_object, upda
     update_point_values_by_point_list
 
 
-class CheckListUpdateView(TemplateView):
+class CheckListUpdateView(UserAccessMixin, TemplateView):
+    permission_required = 'otk.add_checklist'
+    raise_exception = False
+    redirect_without_permission = 'checklist_detail'
+
     template_name = 'checklist_update.html'
 
     def get_context_data(self, **kwargs):

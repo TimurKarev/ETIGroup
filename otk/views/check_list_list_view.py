@@ -10,14 +10,13 @@ from otk.models.otk_order import OTKOrder
 
 # Create your views here.
 class CheckListListView(UserAccessMixin, TemplateView):
-    permission_required = 'otk.view_order'
+    permission_required = 'otk.view_checklist'
     redirect_without_permission = 'login'
 
     template_name = 'checklist_list.html'
 
     def get_context_data(self, **kwargs):
         orders = OTKOrder.objects.all()
-
         order_list = []
         for order in orders:
             order_list.append({
@@ -50,7 +49,6 @@ class CheckListListView(UserAccessMixin, TemplateView):
             data['link'] = reverse('checklist_create', kwargs={'tp': checklist_name, 'pk': order.id})
         else:
             checklist = getattr(order, checklist_name)
-            print(checklist, checklist.id, reverse('checklist_detail', kwargs={'tp': checklist_name, 'pk': int(checklist.id)}))
             data['name'] = 'просмотр'
             data['link'] = reverse('checklist_detail', kwargs={'tp': checklist_name, 'pk': int(checklist.id)})
         return data

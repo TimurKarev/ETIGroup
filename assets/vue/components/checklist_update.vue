@@ -105,7 +105,7 @@ export default {
               //   //console.log("ORDER_CREATE", link);
               //   location.replace(link);
               // }
-              //location.replace('http://127.0.0.1:8000/order_detail_view/' + this.pk + "/");
+              location.replace('http://127.0.0.1:8000/checklist_detail/' + this.type + "/" + this.pk);
               console.log(response.data)
             });
     },

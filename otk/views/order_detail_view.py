@@ -9,7 +9,7 @@ from django.views.generic import TemplateView
 
 
 class OrderDetailView(UserAccessMixin, TemplateView):
-    permission_required = 'otk.view_order'
+    permission_required = 'otk.view_checklist'
     redirect_without_permission = 'checklist_list'
 
     template_name = 'order_detail.html'

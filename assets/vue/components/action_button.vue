@@ -32,16 +32,8 @@ name: "action_button",
   },
   methods: {
     clickFab(){
-      let link = this.data.link
-      if (this.data.event === 'Link' && typeof link !== "undefined"){
-        location.replace(link);
-      }
-      else if(this.data.event !== 'None'){
-          const event = this.data.event
-          this.$eventHub.$emit(event);
-      } else {
-        location.replace("/");
-      }
+      const event = this.data.event
+      this.$eventHub.$emit(event);
     }
   }
 }

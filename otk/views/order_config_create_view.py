@@ -6,7 +6,7 @@ from otk.services.services import get_json_data, create_integer_point_entry, cre
 
 
 class OrderConfigCreateView(UserAccessMixin, RedirectView):
-    permission_required = 'otk.add_otkchecklist'
+    permission_required = 'otk.add_otkorder'
     raise_exception = False
     redirect_without_permission = 'checklist_list'
 

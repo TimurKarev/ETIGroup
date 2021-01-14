@@ -1,6 +1,6 @@
 import json
 
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import JsonResponse
 from django.urls import reverse
 
 from django.views.generic import TemplateView
@@ -9,9 +9,14 @@ from otk.models.checklists import ChListSection, IntegerPoint
 
 # TODO дописать для всего
 from otk.services.services import get_order_by_checklist, get_section_context, update_point_values_by_point_list
+from otk.views.mixins.user_access_mixin import UserAccessMixin
 
 
-class CheckListConfigUpdateView(TemplateView):
+class CheckListConfigUpdateView(UserAccessMixin, TemplateView):
+    permission_required = 'otk.add_checklist'
+    raise_exception = False
+    redirect_without_permission = 'checklist_list'
+
     template_name = 'checklist_config_update.html'
 
     def get_context_data(self, **kwargs):

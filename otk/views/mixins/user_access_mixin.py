@@ -16,9 +16,7 @@ class UserAccessMixin(PermissionRequiredMixin):
                                      # self.get_login_url(),
                                      self.get_redirect_field_name())
 
-        if (not self.has_permission()):
-            if (self.view_name is None):
-                return redirect(self.redirect_without_permission)
-            else:
-                return redirect(self.view_name, pk=kwargs['pk'])
+        if not self.has_permission():
+            return redirect(self.redirect_without_permission, *args, **kwargs)
+
         return super(UserAccessMixin, self).dispatch(request, *args, **kwargs)
