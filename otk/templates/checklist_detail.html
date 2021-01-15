@@ -3,32 +3,48 @@
 {% load addition_tags %}
 
 {% block content %}
-    <script>
-        const checklist_data = {{ json_context|safe }}
+    <script type="application/javascript">
+        g_checklist_detail = {{ j_checklist_detail|safe }}
+
+        g_nav_driver_data = {
+        page_title: 'Обзор Чеклиста',
+        nav_list: [
+            {
+                name: "Заполнить чеклист",
+                icon: "mdi-pencil",
+                link: "",
+            }
+        ],
+        login: {
+            {% if user.is_authenticated %}
+                title: 'Выйти',
+                link: "{% url 'logout' %}",
+            {% else %}
+                title: 'Войти',
+                link: "{% url 'login' %}"
+            {% endif %}
+            },
+    }
+    g_nav_driver_data['user_name'] = 'Незнакомец'
+        {% if user.is_authenticated %}
+           g_nav_driver_data['user_name'] = "{{ user.username }}"
+           //console.log(g_nav_driver_data['user_name'], "{{ user.username }}")
+        {% endif %}
+
+    g_fab_data = {
+        tooltip: 'Заполнить чеклист',
+        icon: 'mdi-pencil',
+        link: "/",
+        event: "editchecklist-button-click"
+    }
+
     </script>
 
-    <a href="{% url 'checklist_update' checklist_type checklist.id %}"> Заполнить  </a><br/>
-
-    <div id="app">
-        <div class="container">
-            <div class="row">
-                <div class="col-7">
-                    <h4>{{checklist.name}}<br/> </h4>
-               </div>
-            </div>
-            <div class="row" v-for="section in data_det">
-                <div class="col-7">
-                    <p>[[section.name]]</p>
-                    <hello v-for="point in section.points" :point="point"></hello>
-                </div>
-            </div>
-            <hello value="Коко"></hello>
-        </div>
-    </div>
-    <a href="{% url 'checklist_update' checklist_type checklist.id %}"> Заполнить  </a><br/>
-
-    {% load static %}
-
-    <script type="module" src="{% static 'index-bundle.js' %}"></script>
+<app_toolbar v-bind:data="toolbar_data"></app_toolbar>
+<nav_driver v-bind:data="nav_driver_data"></nav_driver>
+<v-main>
+    <action_button v-bind:data="fab_data"></action_button>
+    <checklist_detail v-bind:data="checklist_detail"></checklist_detail>
+</v-main>
 
 {% endblock content %}

@@ -11,28 +11,30 @@ from otk.models.checklists import *
 
 
 class CheckListDetailView(UserAccessMixin, TemplateView):
-    permission_required = 'otk.view_otkchecklist'
+    permission_required = 'otk.view_checklist'
     raise_exception = False
-    redirect_without_permission: str = 'checklist_list'
+    redirect_without_permission = 'checklist_list'
 
     template_name = "checklist_detail.html"
 
     def get_context_data(self, **kwargs):
-        # context = super(CheckListDetailView, self).get_context_data(**kwargs)
-
-        context = {'checklist': self._checklist_entry, 'checklist_type': kwargs['tp']}
+        #'checklist': self._checklist_entry, 'checklist_type': kwargs['tp']
+        context = {}
 
         data = get_detail_context_from_checklist_object(self._checklist_entry, form=False)
 
         self._is_data_empty = not data
-        # print('DATA', self._is_data_empty)
-        context['json_context'] = json.dumps(data)
 
-        return context
+        context['data'] = data
+        context['checklist_name'] = self._checklist_entry.name
+        context['pk'] = self._checklist_entry.id
+        context['checklist_type'] = kwargs['tp']
+
+        return {"j_checklist_detail": json.dumps(context)}
 
     def get(self, request, *args, **kwargs):
         self._checklist_entry = Checklist.objects.get(id=kwargs['pk'])
-        context = self.get_context_data(**kwargs)
+        self.get_context_data(**kwargs)
 
         if self._is_data_empty:
             try:

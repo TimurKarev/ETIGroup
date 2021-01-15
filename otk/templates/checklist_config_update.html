@@ -3,27 +3,56 @@
 {% load addition_tags %}
 
 {% block content %}
-<form action="" method="post">{% csrf_token %}
-<br/>
-<div class="container">
-    <div class="row">
-        <div class="col-6">
-            <table class="table table-bordered">
-                <tbody>
-                <h5>Конфигурация строительной части зз № {{ order_number }}</h5>
-                   {{ config.managment_form }}
-                   {% for point in config %}
-                       <tr>
-                           {{ point.managment_form }}
-                           <td>{{ point.name }}</td>
-                           <td>{{ point.form.point_value }}</td>
-                       </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-<input type="submit" value="Update">
-</form>
+<script type="application/javascript">
+
+    g_checklist_config_update_data = {{ j_checklist_config_update_data|safe}}
+    //console.log("HTML checklist_config_update", g_checklist_config_update_data)
+
+    g_nav_driver_data = {
+        page_title: 'Создать заказ',
+        nav_list: [
+            {
+                name: "Создать чеклист",
+                icon: "mdi-hammer",
+                link: "",
+            }
+        ],
+        login: {
+            {% if user.is_authenticated %}
+                title: 'Выйти',
+                link: "{% url 'logout' %}",
+            {% else %}
+                title: 'Войти',
+                link: "{% url 'login' %}"
+            {% endif %}
+            },
+    }
+    g_nav_driver_data['user_name'] = 'Незнакомец'
+        {% if user.is_authenticated %}
+           g_nav_driver_data['user_name'] = "{{ user.username }}"
+           //console.log(g_nav_driver_data['user_name'], "{{ user.username }}")
+        {% endif %}
+
+    g_fab_data = {
+        tooltip: 'Создать чеклист',
+        icon: 'mdi-hammer',
+        link: "/",
+        event: "createchecklist-button-click"
+    }
+</script>
+
+<app_toolbar v-bind:data="toolbar_data"></app_toolbar>
+<nav_driver v-bind:data="nav_driver_data"></nav_driver>
+
+<v-main>
+    <action_button v-bind:data="fab_data"></action_button>
+
+    <checklist_config_update
+            v-bind:data="checklist_config_update_data"
+    >
+    </checklist_config_update>
+</v-main>
+
+
+
 {% endblock content %}

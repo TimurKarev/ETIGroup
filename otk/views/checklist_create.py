@@ -7,9 +7,13 @@ from otk.models.otk_order import OTKOrder
 
 from otk.services.services import get_checklist_name_by_type, get_checklist_for_order_by_type, get_config_data_by_type, \
     create_config_section_by_data
+from otk.views.mixins.user_access_mixin import UserAccessMixin
 
 
-class CheckListCreateView(RedirectView):
+class CheckListCreateView(UserAccessMixin, RedirectView):
+    permission_required = 'otk.add_checklist'
+    raise_exception = False
+    redirect_without_permission = 'chlist'
 
     def get(self, request, *args, **kwargs):
         super(CheckListCreateView, self).get(request, *args, **kwargs)

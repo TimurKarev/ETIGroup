@@ -8,6 +8,17 @@ module.exports = {
   output: {
     filename: 'index-bundle.js',  // output bundle file name
     path: path.resolve(__dirname, './static'),  // path to our Django static directory
+    publicPath: "/static/"
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, './static'),
+    writeToDisk: true,
+    proxy: {
+     '!/static/**': {
+        target: 'http://localhost:8000', // points to django dev server
+        changeOrigin: true,
+      },
+    }
   },
   resolve: {
         alias: {
@@ -19,7 +30,10 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
+        options: {
+         extractCSS: process.env.NODE_ENV === 'production'
+        }
       },
       // this will apply to both plain `.js` files
       // AND `<script>` blocks in `.vue` files
@@ -33,13 +47,39 @@ module.exports = {
         test: /\.css$/,
         use: [
           'vue-style-loader',
-          'css-loader'
+          {
+            loader: 'css-loader',
+            options: {
+              esModule: false
+            }
+          }
         ]
-      }
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require('sass'),
+              sassOptions: {
+                indentedSyntax: true // optional
+              }
+            }
+          },
+        ]
+      },
+            {
+        test: /\.(eot|svg|ttf|woff|woff2|png|)$/i,
+        loader: 'url-loader'
+      },
+
     ]
   },
   plugins: [
     // make sure to include the plugin for the magic
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
   ]
 }

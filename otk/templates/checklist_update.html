@@ -3,41 +3,48 @@
 {% load addition_tags %}
 
 {% block content %}
-<form action="" method="post">{% csrf_token %}
-    <input type="submit" value="Сохранить">
-        <div class="container">
-            <div class="row">
-                <div class="col-6">
-                    <h4>{{checklist_name}}</h4>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <table class="table table-bordered table-sm">
-                        <tbody>
-                        {{ section.management_form }}
-                        {% for section in sections %}
-                            <tr>
-                                <td colspan="2"><h5>{{section.name}}</h5></td>
-                            </tr>
-                            {{ section.string_forms.management_form }}
-                            {% for point in section.points %}
-                                <tr>
-                                    <td>{{ point.name }}</td>
-                                    <td>{{ point.form.point_value }}</td>
-                                </tr>
-                                {% if point.form.comment %}
-                                <tr>
-                                    <td colspan="2">{{ point.form.comment }}</td>
-                                </tr>
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    <input type="submit" value="Сохранить">
-</form>
+<script type="application/javascript">
+    g_checklist_update_data = {{ j_checklist_update_data|safe}}
+    //console.log("HTML order_detail", g_checklist_update_data)
+
+    g_nav_driver_data = {
+        page_title: 'Заполение чеклиста',
+        nav_list: [
+            {
+                name: "Сохранить чеклист",
+                icon: "mdi-content-save",
+                link: "",
+            }
+        ],
+        login: {
+            {% if user.is_authenticated %}
+                title: 'Выйти',
+                link: "{% url 'logout' %}",
+            {% else %}
+                title: 'Войти',
+                link: "{% url 'login' %}"
+            {% endif %}
+            },
+    }
+    g_nav_driver_data['user_name'] = 'Незнакомец'
+        {% if user.is_authenticated %}
+           g_nav_driver_data['user_name'] = "{{ user.username }}"
+           //console.log(g_nav_driver_data['user_name'], "{{ user.username }}")
+        {% endif %}
+
+    g_fab_data = {
+        tooltip: 'Сохранить чеклист',
+        icon: 'mdi-content-save',
+        link: "/",
+        event: "savechecklist-button-click"
+    }
+</script>
+
+<app_toolbar v-bind:data="toolbar_data"></app_toolbar>
+<nav_driver v-bind:data="nav_driver_data"></nav_driver>
+<v-main>
+    <action_button v-bind:data="fab_data"></action_button>
+    <checklist_update v-bind:data="checklist_update_data"></checklist_update>
+</v-main>
+
 {% endblock content %}

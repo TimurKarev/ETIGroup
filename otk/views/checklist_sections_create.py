@@ -5,9 +5,13 @@ from django.http import HttpResponseRedirect
 from django.views.generic import RedirectView
 from otk.models.otk_order import OTKOrder
 from otk.services.services import get_checklist_name_by_type, create_checklist_by_checklist_type_from_json
+from otk.views.mixins.user_access_mixin import UserAccessMixin
 
 
-class CheckListSectionsCreateView(RedirectView):
+class CheckListSectionsCreateView(UserAccessMixin, RedirectView):
+    permission_required = 'otk.add_checklist'
+    raise_exception = False
+    redirect_without_permission = 'chlist'
 
     def get(self, request, *args, **kwargs):
         # print(request, args, kwargs)

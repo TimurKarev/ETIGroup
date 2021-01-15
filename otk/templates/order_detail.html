@@ -1,37 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<br />
-    <div class="container">
-        <div class="row">
-            <div class="col-6">
-                <table class="table table-bordered ">
-                    <tbody>
-                        <tr>
-                            <td>Номер заводского заказа</td>
-                            <td>{{ order_number }}</td>
-                        </tr>
-                        <tr>
-                            <td>Тип подстанции</td>
-                            <td>{{ subst_type }}</td>
-                        </tr>
+<script type="application/javascript">
 
+    g_order_detail_data = {{ j_order_detail_data|safe}}
+//    console.log("HTML order_detail", g_order_detail_data)
 
-                        {% for point in config.points %}
-                        <tr>
-                            <td>{{point.name}}</td>
-                            <td>{{point.value}}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+    g_nav_driver_data = {
+        page_title: 'Просмотр заказа',
+        nav_list: [
+            {
+                name: "Изменить заказ",
+                icon: "mdi-pencil",
+                link: "",
+            }
+        ],
+        login: {
+            {% if user.is_authenticated %}
+                title: 'Выйти',
+                link: "{% url 'logout' %}",
+            {% else %}
+                title: 'Войти',
+                link: "{% url 'login' %}"
+            {% endif %}
+            },
+    }
+    g_nav_driver_data['user_name'] = 'Незнакомец'
+        {% if user.is_authenticated %}
+           g_nav_driver_data['user_name'] = "{{ user.username }}"
+           //console.log(g_nav_driver_data['user_name'], "{{ user.username }}")
+        {% endif %}
 
-                <td><a href="{% url 'order_update_config' order_pk %}">Изменить конфигурацию</a> </td>
-                <br/><br/>
-                <td><a href="{% url 'checklist_list' %}">К списку заказов</a> </td>
+    g_fab_data = {
+        tooltip: 'Изменить заказ',
+        icon: 'mdi-pencil',
+        link: "/",
+        event: "editorder-button-click"
+    }
+</script>
 
-            </div>
-        </div>
-    </div>
+<app_toolbar v-bind:data="toolbar_data"></app_toolbar>
+<nav_driver v-bind:data="nav_driver_data"></nav_driver>
+<v-main>
+    <order_detail v-bind:data="order_detail_data"></order_detail>
+    <action_button v-bind:data="fab_data"></action_button>
+</v-main>
 
 {% endblock content %}

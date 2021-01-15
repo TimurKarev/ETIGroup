@@ -13,6 +13,49 @@ from otk.services.section_number_calc import SectionNumberCalculator
 from otk.views.forms.model_forms import StringPointForm, IntegerPointForm, YesNoChoicePointForm, FourChoicePointForm
 
 
+def update_point_values_by_point_list(points: list) -> str:
+    """Обновляет значения points по списку поинтов"""
+    response = 'ok'
+    for point in points:
+        if point['type'] == 'numeric':
+            try:
+                row = IntegerPoint.objects.get(id=point['id'])
+                if row.point_value != point['value']:
+                    row.point_value = point['value']
+                    row.save()
+            except Exception as e:
+                response = str(e)
+                print('error', e)
+
+        if point['type'] == 'string':
+            try:
+                row = StringPoint.objects.get(id=point['id'])
+                if row.point_value != point['value']:
+                    row.point_value = point['value']
+                    row.save()
+            except Exception as e:
+                response = str(e)
+                print('error', e)
+
+        if point['type'] == 'fourpoint':
+            try:
+                row = FourChoicePoint.objects.get(id=point['id'])
+                is_need_save = False
+                if row.point_value != point['value']:
+                    row.point_value = point['value']
+                    is_need_save = True
+                if row.comment != point['comment']:
+                    row.comment = point['comment']
+                    is_need_save = True
+                if is_need_save:
+                    row.save()
+            except Exception as e:
+                response = str(e)
+                print('error', e)
+
+    return response
+
+
 def is_checklist_have_several_sections(checklist_entry):
     """Проверяет имеет ли чеклист какие-нибудь секции кроме конфиг"""
     sections = checklist_entry.chlistsection_set.all()
@@ -311,57 +354,66 @@ def get_section_context(section, data=None, section_prefix='sec', form=True):
     for i, p in enumerate(section.stringpoint_set.all()):
         all_points_entries.append(
             {
+                "id": p.id,
                 "serial_number": p.serial_number,
                 "name": p.name,
                 "value": p.point_value,
-                "form": None if not form else StringPointForm(
-                    instance=p,
-                    data=data,
-                    prefix='s' + str(i) + str(section_prefix)
-                )
+                "type": "string",
+                # "form": None if not form else StringPointForm(
+                #     instance=p,
+                #     data=data,
+                #     prefix='s' + str(i) + str(section_prefix)
+                # )
             }
         )
 
     for i, p in enumerate(section.integerpoint_set.all()):
         all_points_entries.append(
             {
+                "id": p.id,
                 "serial_number": p.serial_number,
                 "name": p.name,
                 "value": p.point_value,
-                "form": None if not form else IntegerPointForm(
-                    instance=p,
-                    data=data,
-                    prefix='i' + str(i) + str(section_prefix)
-                )
+                "type": "numeric"
+                #"form": serializers.serialize('json', p)
+                # "form": None if not form else IntegerPointForm(
+                #     instance=p,
+                #     data=data,
+                #     prefix='i' + str(i) + str(section_prefix)
+                # )
             }
         )
 
     for i, p in enumerate(section.yesnochoicepoint_set.all()):
         all_points_entries.append(
             {
+                "id": p.id,
                 "serial_number": p.serial_number,
                 "name": p.name,
                 "value": p.point_value,
-                "form": None if not form else YesNoChoicePointForm(
-                    instance=p,
-                    data=data,
-                    prefix='y' + str(i) + str(section_prefix)
-                )
+                "type": "yes_no"
+                # "form": None if not form else YesNoChoicePointForm(
+                #     instance=p,
+                #     data=data,
+                #     prefix='y' + str(i) + str(section_prefix)
+                # )
             }
         )
 
     for i, p in enumerate(section.fourchoicepoint_set.all()):
         all_points_entries.append(
             {
+                "id": p.id,
                 "serial_number": p.serial_number,
                 "name": p.name,
                 "value": p.point_value,
                 "comment": p.comment,
-                "form": None if not form else FourChoicePointForm(
-                    instance=p,
-                    data=data,
-                    prefix='f' + str(i) + str(section_prefix)
-                )
+                "type": "fourpoint"
+                # "form": None if not form else FourChoicePointForm(
+                #     instance=p,
+                #     data=data,
+                #     prefix='f' + str(i) + str(section_prefix)
+                # )
             }
         )
 
