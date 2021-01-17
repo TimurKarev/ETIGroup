@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'ETIGroup_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'checklist_db',
+        'NAME': 'postgresql-flat-39566',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
