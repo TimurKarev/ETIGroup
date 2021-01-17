@@ -95,7 +95,7 @@ export default {
         }
         axios({
           method: 'post',
-          url: "http://127.0.0.1:8000/order_create/",
+          url: "/order_create/",
           data: data,
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'

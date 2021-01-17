@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     replace: function (){
-      location.replace('http://127.0.0.1:8000/checklist_update/' + this.type + "/" + this.pk + "/");
+      location.replace('/checklist_update/' + this.type + "/" + this.pk + "/");
     },
     headerColor: function(section) {
       //console.log(section.points.slice(-1)[0].value)

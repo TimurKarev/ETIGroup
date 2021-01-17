@@ -50,7 +50,7 @@ name: "login",
         }
       axios({
         method: 'post',
-        url: "http://127.0.0.1:8000/custom_login/",
+        url: "/custom_login/",
         data: data,
         headers:{
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -62,7 +62,7 @@ name: "login",
       .then(response => {
         console.log(response.data);
         if(response.data.message === 'ok'){
-          location.replace("http://127.0.0.1:8000/");
+          location.replace("/");
         }
         //location.replace("http://127.0.0.1:8000" + response.data.message);
       });

@@ -41,7 +41,7 @@ export default {
   methods: {
     replace() {
       //console.log("ORDER_DETAIL", "click")
-      location.replace('http://127.0.0.1:8000/order_update_config/' + this.pk + "/");
+      location.replace('/order_update_config/' + this.pk + "/");
     }
   }
 }

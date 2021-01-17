@@ -50,7 +50,7 @@ export default {
   methods: {
     createOrder: function (){
       console.log("Click")
-      location.replace('http://127.0.0.1:8000/order_create/')
+      location.replace('/order_create/')
     }
   },
 }

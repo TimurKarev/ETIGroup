@@ -7,17 +7,17 @@
       max-height="50"
   >
 
-    <v-tooltip bottom>
-      <template v-slot:activator="{ on, attrs }">
-        <v-app-bar-nav-icon
-            @click="navButtonClicked"
-            v-on="on"
-            v-bind="attrs"
-        >
-        </v-app-bar-nav-icon>
-      </template>
-      <span>{{this.data.menu_btn.tooltip}}</span>
-    </v-tooltip>
+<!--    <v-tooltip bottom>-->
+<!--      <template v-slot:activator="{ on, attrs }">-->
+<!--        <v-app-bar-nav-icon-->
+<!--            @click="navButtonClicked"-->
+<!--            v-on="on"-->
+<!--            v-bind="attrs"-->
+<!--        >-->
+<!--        </v-app-bar-nav-icon>-->
+<!--      </template>-->
+<!--      <span>{{this.data.menu_btn.tooltip}}</span>-->
+<!--    </v-tooltip>-->
 
 
     <v-tooltip bottom>

@@ -58,7 +58,7 @@ export default {
         }
       axios({
         method: 'post',
-        url: "http://127.0.0.1:8000/checklist_config_update/bm_checklist/"+ this.pk,
+        url: "/checklist_config_update/bm_checklist/"+ this.pk,
         data: data,
         headers:{
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -69,7 +69,7 @@ export default {
       })
       .then(response => {
         console.log(response.data);
-        location.replace("http://127.0.0.1:8000" + response.data.message);
+        location.replace("/" + response.data.message);
       });
     }
   },

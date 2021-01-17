@@ -59,7 +59,7 @@ export default {
         }
       axios({
         method: 'post',
-        url: "http://127.0.0.1:8000/order_update_config/"+ this.pk + "/",
+        url: "/order_update_config/"+ this.pk + "/",
         data: data,
         headers:{
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -70,7 +70,7 @@ export default {
       })
       .then(response => {
         console.log(response.data);
-        location.replace('http://127.0.0.1:8000/order_detail_view/' + this.pk + "/");
+        location.replace('/order_detail_view/' + this.pk + "/");
       });
 
       },
