@@ -15,7 +15,8 @@ module.exports = {
     writeToDisk: true,
     proxy: {
      '!/static/**': {
-        target: 'http://localhost:8000', // points to django dev server
+        //target: 'http://localhost:8000', // points to django dev server
+        target: 'https://etiotk.herokuapp.com/',
         changeOrigin: true,
       },
     }
