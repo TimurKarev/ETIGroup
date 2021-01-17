@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import dj_database_url
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -26,7 +28,7 @@ SECRET_KEY = 'sey3a5*bpk1t1wt9e5qkv1w#f1b6b2iilt(@wntbv@=(8ft7fz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'nameofapp.herokuapp.com']
 
 LOGIN_REDIRECT_URL = 'checklist_list'
 LOGOUT_REDIRECT_URL = 'checklist_list'
@@ -80,18 +82,19 @@ WSGI_APPLICATION = 'ETIGroup_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+db_from_env = dj_database_url.config(conn_max_age=600)
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgresql-flat-39566',
+        'NAME': 'postgres_db',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
-
     }
 }
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
