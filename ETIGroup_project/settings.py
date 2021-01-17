@@ -30,6 +30,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'etiotk.herokuapp.com']
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+]
+
 LOGIN_REDIRECT_URL = 'checklist_list'
 LOGOUT_REDIRECT_URL = 'checklist_list'
 # Application definition
