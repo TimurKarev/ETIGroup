@@ -69,7 +69,7 @@ export default {
       })
       .then(response => {
         console.log(response.data);
-        location.replace("/" + response.data.message);
+        location.replace(response.data.message);
       });
     }
   },
