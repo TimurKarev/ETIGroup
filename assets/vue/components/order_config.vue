@@ -47,7 +47,7 @@ export default {
   beforeDestroy() {
     this.$eventHub.$off('save-button-click')
   },
-  methods:{
+  methods: {
     btnClick(){
       console.log("ORDER_CONFIG", this.config_data)
       //console.log("ORDER_CONFIG")
